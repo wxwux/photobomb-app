@@ -1,0 +1,25 @@
+@function svg($url, $color) {
+  $base-color: str-slice(inspect($color), 2);
+  @return unquote('url("' + $url + "?fill=%23" + $base-color +'")');
+}
+
+@mixin proxima($style: light) {
+  font-family: 'proxima';
+
+  @if $style == light {
+    font-weight: 300;
+  }
+
+  @if $style == bold {
+    font-weight: 500;
+  }
+
+  @if $style == italic {
+    font-weight: 300;
+    font-style: italic;
+  }
+}
+
+@mixin panton() {
+  font-family: 'panton';
+}

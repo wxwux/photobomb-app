@@ -1,0 +1,26 @@
+.user {
+  display: flex;
+}
+
+.user__avatar {
+  width: 124px;
+  height: 124px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+
+.user__desc {
+  margin-left: 50px;
+}
+
+.user__name {
+  font-size: 21px;
+  @include panton();
+  margin-bottom: 16px;
+}
+
+.user__hobby {
+  margin-bottom: 30px;
+}
+

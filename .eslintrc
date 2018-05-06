@@ -1,0 +1,4 @@
+{
+  "extends": ["prettier", "plugin:vue/recommended"],
+  "parser": "vue-eslint-parser"
+}
