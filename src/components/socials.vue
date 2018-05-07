@@ -23,12 +23,12 @@ export default {
   },
   methods: {
     getImagePath(icon) {
-      const context = require.context('@/img/icons');
+      const context = require.context("@/img/icons");
       return context(`./${icon}`);
     }
   }
 };
 </script>
 
-<style lang="scss" scoped src="styles/socials.scss"></style>
-
+<style lang="scss" scoped src="styles/socials.scss">
+</style>

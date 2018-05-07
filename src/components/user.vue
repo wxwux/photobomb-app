@@ -10,7 +10,7 @@
         socials
 </template>
 <script>
-import socials from './socials'
+import socials from "./socials";
 
 export default {
   components: {
@@ -18,4 +18,5 @@ export default {
   }
 };
 </script>
-<style src="styles/user.scss" lang="scss" scoped></style>
+<style src="styles/user.scss" lang="scss" scoped>
+</style>

@@ -10,19 +10,20 @@
       //-   )
 </template>
 <script>
-import user from "./user"
-import slideButton from './slideButton'
+import user from "./user";
+import slideButton from "./slideButton";
 export default {
   components: {
-    user, slideButton
+    user,
+    slideButton
   },
   computed: {
     headerBg() {
-      const path = require('@/img/content/header-bg.jpg');
+      const path = require("@/img/content/header-bg.jpg");
       return `url(${path})`;
     }
-  },
-}
-
+  }
+};
 </script>
-<style src="styles/header.scss" lang="scss" scoped></style>
+<style src="styles/header.scss" lang="scss" scoped>
+</style>

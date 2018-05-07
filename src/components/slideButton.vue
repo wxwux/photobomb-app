@@ -8,7 +8,7 @@
       .slide-button__text {{text}}
 </template>
 <script>
-const icons = ['edit'];
+const icons = ["edit"];
 export default {
   props: {
     icon: {
@@ -25,4 +25,5 @@ export default {
   }
 };
 </script>
-<style src="styles/slideButton.scss" lang="scss" scoped></style>
+<style src="styles/slideButton.scss" lang="scss" scoped>
+</style>
