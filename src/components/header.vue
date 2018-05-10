@@ -3,11 +3,11 @@
     .container
       .header__user
         user
-      //- .header__edit-button
-      //-   slide-button(
-      //-     text="Редактировать"
-      //-     type="edit"
-      //-   )
+      .header__edit-button
+        slide-button(
+          text="Редактировать"
+          type="edit"
+        )
 </template>
 <script>
 import user from "./user";
