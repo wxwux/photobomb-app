@@ -2,7 +2,7 @@
   
 </template>
 <script>
-export default {
-}
+export default {};
 </script>
-<style src="style/search.scss" lang="scss" scoped></style>
+<style src="style/search.pcss" lang="scss" scoped>
+</style>

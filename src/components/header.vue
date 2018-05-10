@@ -3,11 +3,11 @@
     .container
       .header__user
         user
-      //- .header__edit-button
-      //-   slide-button(
-      //-     text="Редактировать"
-      //-     type="edit"
-      //-   )
+      .header__edit-button
+        slide-button(
+          text="Редактировать"
+          type="edit"
+        )
 </template>
 <script>
 import user from "./user";
@@ -25,5 +25,5 @@ export default {
   }
 };
 </script>
-<style src="styles/header.scss" lang="scss" scoped>
+<style src="styles/header.pcss" lang="pcss" scoped>
 </style>
