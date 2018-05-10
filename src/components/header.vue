@@ -25,5 +25,5 @@ export default {
   }
 };
 </script>
-<style src="styles/header.scss" lang="scss" scoped>
+<style src="styles/header.pcss" lang="pcss" scoped>
 </style>

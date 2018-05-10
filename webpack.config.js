@@ -18,21 +18,7 @@ module.exports = {
         loader: "vue-loader",
         options: {
           loaders: {
-            scss: [
-              "vue-style-loader",
-              "css-loader",
-              "svg-fill-loader/encodeSharp",
-              "sass-loader",
-              {
-                loader: "sass-resources-loader",
-                options: {
-                  resources: [
-                    "./src/styles/variables.scss",
-                    "./src/styles/mixins.scss"
-                  ]
-                }
-              }
-            ]
+            pcss: ["vue-style-loader", "css-loader", "postcss-loader"]
           }
         }
       },
@@ -40,7 +26,7 @@ module.exports = {
         enforce: "pre",
         test: /\.vue$/,
         exclude: /node_modules/,
-        loader: "eslint-loader",
+        loader: "eslint-loader"
       },
       {
         test: /\.js$/,
@@ -48,8 +34,9 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.scss$/,
-        loader: "style-loader!css-loader!sass-loader"
+        test: /\.pcss$/,
+        loader: "style-loader!css-loader!postcss-loader",
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,

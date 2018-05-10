@@ -1,3 +1,3 @@
-import "./layout/fonts.scss";
+import "./layout/fonts.pcss";
 import "normalize.css";
-import "./layout/base.scss";
+import "./layout/base.pcss";

@@ -30,5 +30,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped src="styles/socials.scss">
+<style lang="pcss" scoped src="styles/socials.pcss">
 </style>

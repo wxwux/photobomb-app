@@ -18,5 +18,5 @@ export default {
   }
 };
 </script>
-<style src="styles/user.scss" lang="scss" scoped>
+<style src="styles/user.pcss" lang="pcss" scoped>
 </style>

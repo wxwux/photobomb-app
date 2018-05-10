@@ -25,5 +25,5 @@ export default {
   }
 };
 </script>
-<style src="styles/slideButton.scss" lang="scss" scoped>
+<style src="styles/slideButton.pcss" lang="pcss" scoped>
 </style>

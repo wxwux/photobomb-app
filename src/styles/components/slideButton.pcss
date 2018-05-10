@@ -1,17 +1,17 @@
-//icons
-$icons: ('edit');
+/* icons file name */
+
+$icons: edit;
 .slide-button {
   background: #fff;
   max-width: 40px;
   padding: 10px;
   border-radius: 30px;
   overflow: hidden;
-  transition: .3s linear;
-  box-shadow: 0 1px 2px 0 rgba(#000, .22); 
+  transition: 0.3s linear;
+  box-shadow: 0 1px 2px 0 rgba(#000, 0.22);
   &:hover {
     background: $blue;
     max-width: 200px;
-    
     .slide-button__text {
       opacity: 1;
     }
@@ -25,7 +25,7 @@ $icons: ('edit');
 .slide-button__icon {
   width: 20px;
   height: 20px;
-  transition: .3s;
+  transition: 0.3s;
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
@@ -35,18 +35,18 @@ $icons: ('edit');
   display: inline-block;
   vertical-align: middle;
   opacity: 0;
-  transition: .3s;
+  transition: 0.3s;
   color: #fff;
 }
 
 @each $icon in $icons {
-  .slide-button__icon--#{$icon} {
-    background: svg('~@/img/icons/#{$icon}.svg', '#a0a09f') center center no-repeat;
+  .slide-button__icon--$icon {
+    background: svg-load("icons/$icon.svg", fill=#a0a09f) center center no-repeat;
   }
   .slide-button {
     &:hover {
-      .slide-button__icon--#{$icon} {
-        background: svg('~@/img/icons/#{$icon}.svg', '#fff') center center no-repeat;
+      .slide-button__icon--$icon {
+        background: svg-load("icons/$icon.svg", fill=#fff) center center no-repeat;
       }
     }
   }
