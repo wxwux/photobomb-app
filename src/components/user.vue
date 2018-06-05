@@ -17,7 +17,8 @@ import socials from "./socials.vue";
 @Component({
   components: {
     socials
-  }
+  },
+  name: "User"
 })
 export default class User extends Vue {}
 </script>

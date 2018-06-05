@@ -14,7 +14,9 @@ import { Prop } from "vue-property-decorator";
 
 const icons: string[] = ["edit"];
 
-@Component
+@Component({
+  name: "SlideButton"
+})
 export default class SlideButton extends Vue {
   @Prop({
     default: "edit",

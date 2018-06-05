@@ -18,6 +18,9 @@ interface Icon {
   icon: string;
 }
 
+@Component({
+  name: "Socials"
+})
 export default class Socials extends Vue {
   private socials: Icon[] = [
     { name: "vk", icon: "soc_vk.svg" },
