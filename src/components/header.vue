@@ -9,21 +9,25 @@
           type="edit"
         )
 </template>
-<script>
-import user from "./user";
-import slideButton from "./slideButton";
-export default {
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+import slideButton from "./slideButton.vue";
+import user from "./user.vue";
+declare const require: any;
+
+@Component({
   components: {
-    user,
-    slideButton
-  },
-  computed: {
-    headerBg() {
-      const path = require("@/img/content/header-bg.jpg");
-      return `url(${path})`;
-    }
+    slideButton,
+    user
   }
-};
+})
+export default class Header extends Vue {
+  public get headerBg(): string {
+    const path = require("@/img/content/header-bg.jpg");
+    return `url(${path})`;
+  }
+}
 </script>
 <style src="styles/header.pcss" lang="pcss" scoped>
 </style>

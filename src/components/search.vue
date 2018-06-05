@@ -1,7 +1,7 @@
 <template lang="pug">
-  
+
 </template>
-<script>
+<script lang="ts">
 export default {};
 </script>
 <style src="style/search.pcss" lang="scss" scoped>

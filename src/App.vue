@@ -1,19 +1,23 @@
 <template lang="pug">
-  app-header
+  .root
+    app-header
 </template>
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+import header from "./components/header.vue";
 
-<script>
-import header from "./components/header";
-
-export default {
-  name: "App",
+@Component({
   components: {
-    appHeader: header
+    appHeader: header,
   },
-  data() {
-    return {
-      msg: "Welcome to Your Vue.js App"
-    };
+  name: "RootApp",
+})
+export default class App extends Vue {
+  public message: string = "Hello World";
+
+  public mounted() {
+    console.log("adasd");
   }
-};
+}
 </script>

@@ -8,26 +8,30 @@
         ).socials__pic
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      socials: [
-        { name: "vk", icon: "soc_vk.svg" },
-        { name: "tw", icon: "soc_twitter.svg" },
-        { name: "fb", icon: "soc_fb.svg" },
-        { name: "gp", icon: "social_google.svg" },
-        { name: "mail", icon: "soc_email.svg" }
-      ]
-    };
-  },
-  methods: {
-    getImagePath(icon) {
-      const context = require.context("@/img/icons");
-      return context(`./${icon}`);
-    }
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+declare const require: any;
+
+interface Icon {
+  name: string;
+  icon: string;
+}
+
+export default class Socials extends Vue {
+  private socials: Icon[] = [
+    { name: "vk", icon: "soc_vk.svg" },
+    { name: "tw", icon: "soc_twitter.svg" },
+    { name: "fb", icon: "soc_fb.svg" },
+    { name: "gp", icon: "social_google.svg" },
+    { name: "mail", icon: "soc_email.svg" },
+  ];
+
+  private getImagePath(icon: string): string {
+    const context = require.context("@/img/icons");
+    return context(`./${icon}`);
   }
-};
+}
 </script>
 
 <style lang="pcss" scoped src="styles/socials.pcss">

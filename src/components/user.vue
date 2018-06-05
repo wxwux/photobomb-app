@@ -9,14 +9,17 @@
       .user__socials
         socials
 </template>
-<script>
-import socials from "./socials";
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+import socials from "./socials.vue";
 
-export default {
+@Component({
   components: {
     socials
   }
-};
+})
+export default class User extends Vue {}
 </script>
 <style src="styles/user.pcss" lang="pcss" scoped>
 </style>

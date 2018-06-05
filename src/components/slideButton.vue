@@ -7,23 +7,24 @@
       )
       .slide-button__text {{text}}
 </template>
-<script>
-const icons = ["edit"];
-export default {
-  props: {
-    icon: {
-      type: String,
-      default: "edit",
-      validator(value) {
-        return icons.indexOf(value) !== -1;
-      }
-    },
-    text: {
-      type: String,
-      default: "Button"
-    }
-  }
-};
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
+
+const icons: string[] = ["edit"];
+
+@Component
+export default class SlideButton extends Vue {
+  @Prop({
+    default: "edit",
+    validator: (value: string) => icons.indexOf(value) !== -1
+  })
+  public icon!: string;
+
+  @Prop({default: "Button"})
+  public text!: string;
+}
 </script>
 <style src="styles/slideButton.pcss" lang="pcss" scoped>
 </style>

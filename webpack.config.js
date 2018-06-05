@@ -1,9 +1,10 @@
 var path = require("path");
 var webpack = require("webpack");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 module.exports = {
   entry: {
-    entry: "./src/main.js",
+    entry: "./src/main.ts",
     styles: "./src/styles/index.js"
   },
   output: {
@@ -15,44 +16,42 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: "vue-loader",
-        options: {
-          loaders: {
-            pcss: ["vue-style-loader", "css-loader", "postcss-loader"]
-          }
-        }
+        loader: "vue-loader"
       },
       {
-        enforce: "pre",
-        test: /\.vue$/,
+        test: /\.ts$/,
+        // exclude: /node_modules|vue\/src/,
         exclude: /node_modules/,
-        loader: "eslint-loader"
+        use: [
+          {
+            loader: "ts-loader",
+            options: {
+              appendTsSuffixTo: [/\.vue$/]
+            }
+          },
+          "tslint-loader"
+        ]
       },
       {
         test: /\.js$/,
         loader: "babel-loader",
-        exclude: /node_modules/
+        exclude: file => /node_modules/.test(file) && !/\.vue\.js/.test(file)
       },
       {
         test: /\.pcss$/,
-        loader: "style-loader!css-loader!postcss-loader",
+        use: ["vue-style-loader", "css-loader", "postcss-loader"],
         exclude: /node_modules/
       },
       {
+        test: /\.pug$/,
+        loader: "pug-plain-loader"
+      },
+      {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        use: ["style-loader", "css-loader"]
       },
       {
-        test: /\.svg$/,
-        use: [
-          "file-loader",
-          {
-            loader: "svg-fill-loader?fill=white"
-          }
-        ]
-      },
-      {
-        test: /\.(png|jpg|gif|woff|woff2)$/,
+        test: /\.(png|jpg|gif|svg|woff|woff2)$/,
         loader: "file-loader",
         options: {
           name: "[name].[ext]?[hash]"
@@ -60,6 +59,7 @@ module.exports = {
       }
     ]
   },
+  plugins: [new VueLoaderPlugin()],
   resolve: {
     alias: {
       vue$: "vue/dist/vue.esm.js",
@@ -70,7 +70,8 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    noInfo: false
+    noInfo: false,
+    open: false
   },
   performance: {
     hints: false
