@@ -1,0 +1,28 @@
+.lac {
+  display: flex;
+  align-items: center;
+}
+
+.lac__comments,
+.lac__likes {
+  &:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 18px;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+}
+
+$iconsFill: #d6d6d6;
+.lac__comments {
+  margin-right: 18px;
+  &:before {
+    background: svg-load('icons/comments.svg', fill=$iconsFill) center center no-repeat / contain;
+  }
+}
+
+.lac__likes:before {
+  background: svg-load('icons/heart.svg', fill=$iconsFill) center center no-repeat / contain;
+}

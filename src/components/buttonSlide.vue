@@ -28,5 +28,5 @@ export default class SlideButton extends Vue {
   public text!: string;
 }
 </script>
-<style src="styles/slideButton.pcss" lang="pcss" scoped>
+<style src="styles/buttonSlide.pcss" lang="pcss" scoped>
 </style>
