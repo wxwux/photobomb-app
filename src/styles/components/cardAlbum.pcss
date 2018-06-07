@@ -1,0 +1,37 @@
+.album-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  border-radius: 7px;
+  box-shadow: 0 1px 4px 0 rgba(#000, .15);
+
+  &:hover {
+    .album-card__data {
+      &:before {
+        background-image: svg-load('icons/edit.svg', fill=#848484);
+      }
+    }
+  }
+}
+
+.album-card__photo {
+  height: 280px;
+  background: no-repeat center center / cover;
+}
+
+.album-card__data {
+  background: #fff;
+  padding: 15px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  &:before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: svg-load('icons/edit.svg', fill=#d6d6d6) center center no-repeat / contain;
+    transition: .3s;
+  }
+}

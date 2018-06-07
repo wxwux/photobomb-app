@@ -1,0 +1,37 @@
+.footer {
+  background: no-repeat center bottom;
+  padding: 20px 0;
+  color: #fff;
+  position: relative;
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(#000, .5);
+  }
+}
+
+.footer__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__col {
+  width: 40%;
+}
+
+.footer__copyright {
+  text-align: right;
+}
+
+.footer__up-btn {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background: svg-load('icons/top.svg', fill=#d1d1d0) center center no-repeat / contain;
+}

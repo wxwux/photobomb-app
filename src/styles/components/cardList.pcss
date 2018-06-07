@@ -1,9 +1,13 @@
 $items-margin: 20px;
-
 .cards-list {
   display: flex;
   flex-wrap: wrap;
   margin-left: -$items-margin;
+  &--row-by-4 {
+    .cards-list__item {
+      width: calc(100% / 4 - $items-margin);
+    }
+  }
 }
 
 .cards-list__item {
