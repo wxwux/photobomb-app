@@ -1,8 +1,8 @@
 <template lang="pug">
   div
-    section.section.section--white
-      .container
-        h1.section-title Новое в мире 
+    section.x-section.section--white
+      .x-container
+        h1.x-section-title Новое в мире 
         .section__content
           card-list
             div(slot-scope="{item}") {{item}}
@@ -10,9 +10,9 @@
         .section__load-btn
           round-button 
     section.section.section--gray
-      .container
+      .x-container
         .albums-title
-          h2.section-title Мои альбомы
+          h2.x-section-title Мои альбомы
           .albums-title__button
             slideButton(
               text="Добавить",

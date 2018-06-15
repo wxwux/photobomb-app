@@ -1,0 +1,57 @@
+.auth-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('../../assets/img/bg/auth.jpg') center center no-repeat / cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-page__form-wrapper {
+  display: flex;
+  justify-content: center;
+  color: #323232;
+  font-size: 14px;
+}
+
+.auth-page__content {
+  text-align: center;
+  color: #fff;
+  max-width: 650px;
+  width: 90%;
+  perspective: 1000px;
+}
+
+.auth-page__title-text {
+  font-family: "panton";
+  font-size: 42px;
+  margin-bottom: 15px;
+}
+
+.auth-page__title-sub {
+  font-weight: 300;
+}
+
+.flip-enter-active,
+.flip-leave-active {
+  transition: .4s linear;
+}
+
+.flip-leave {
+  transform: rotateY(0deg); 
+}
+
+.flip-leave-to {
+  transform: rotateY(90deg); 
+}
+
+.flip-enter {
+  transform: rotateY(-90deg); 
+}
+
+.flip-enter-to {
+  transform: rotateY(0deg); 
+}

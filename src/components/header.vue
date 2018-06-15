@@ -1,6 +1,6 @@
 <template lang="pug">
   header.header(:style="{backgroundImage: headerBg}")
-    .container
+    .x-container
       .header__user
         user
       .header__edit-button

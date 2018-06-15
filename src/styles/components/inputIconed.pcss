@@ -1,0 +1,45 @@
+.iconed-input {
+  padding: 12px 12px 12px 45px;
+  font-weight: 300;
+  color: #323232;
+  border: none;
+  border-bottom: 1px solid #e1e1e1;
+  display: block;
+  background: left 20px center / 15px auto no-repeat;
+  width: 100%;
+  transition: .3s;
+  
+  &:focus {
+    outline: none;
+    border-color: $blue;
+    color: $blue;
+  }
+
+  &--person {
+    background-image: svg-load('icons/man-user.svg', fill=#cccccc);
+    
+    &:focus {
+      background-image: svg-load('icons/man-user.svg', fill=$blue);
+    }
+  }
+
+  &--lock {
+    background-image: svg-load('icons/password.svg', fill=#cccccc);
+
+    &:focus {
+      background-image: svg-load('icons/password.svg', fill=$blue);
+    }
+  }
+  
+  &--mail {
+    background-image: svg-load('icons/envelope.svg', fill=#cccccc);
+    
+    &:focus {
+      background-image: svg-load('icons/envelope.svg', fill=$blue);
+    }
+  }
+}
+
+.auth-page__form-buttons {
+  padding: 20px;
+}

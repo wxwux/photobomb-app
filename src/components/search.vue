@@ -1,6 +1,6 @@
 <template lang="pug">
   .search
-    .container.search__container
+    .x-container.search__container
       .search__input-wrap
         input(
           type="text"

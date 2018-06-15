@@ -2,7 +2,7 @@
   footer.footer(
     :style="{backgroundImage: footerBg}"
   )
-    .container.footer__container
+    .x-container.footer__container
       .footer__col.footer__desc 
         | Перед вами сервис, который поможет вам организовать свои фотографии в альбомы и поделиться ими со всем миром!
       a(href="").footer__up-btn
