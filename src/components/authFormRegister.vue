@@ -23,6 +23,7 @@
         .auth-page__btns-wrap
           buttonRound(
             text="Создать аккаунт"
+            :filled="true"
           )
         .auth-page__btns-ps
           span Уже зарегистрированы?

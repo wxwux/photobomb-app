@@ -12,7 +12,8 @@
   "dependencies": {
     "normalize.css": "^8.0.0",
     "pug": "^2.0.3",
-    "vue": "^2.5.11"
+    "vue": "^2.5.11",
+    "vue-router": "^3.0.1"
   },
   "browserslist": [
     "> 5%",

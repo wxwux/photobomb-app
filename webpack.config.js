@@ -66,7 +66,7 @@ module.exports = {
       "@": path.resolve(__dirname, "src/assets"),
       styles: path.resolve(__dirname, "src/styles/components")
     },
-    extensions: [".js", ".vue"]
+    extensions: [".js", ".vue", ".ts"]
   },
   devServer: {
     historyApiFallback: true,

@@ -21,6 +21,7 @@
         .auth-page__btns-wrap
           buttonRound(
             text="Войти"
+            :filled="true"
           )
         .auth-page__btns-ps
           span Нет аккаунта

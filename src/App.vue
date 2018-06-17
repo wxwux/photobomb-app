@@ -1,25 +1,15 @@
 <template lang="pug">
   .root
-    auth
-    // .root__header
-    //   app-header
-    // main.root__content
-    //   main-page
-    // .root__footer
-    //   app-footer
+    router-view
 </template>
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import footer from "./components/footer.vue";
-import header from "./components/header.vue";
 import auth from "./components/pages/auth.vue";
 import mainPage from "./components/pages/main.vue";
 
 @Component({
   components: {
-    appFooter: footer,
-    appHeader: header,
     auth,
     mainPage,
   },

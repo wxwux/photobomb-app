@@ -16,7 +16,7 @@ export default class RoundButton extends Vue {
   @Prop({default: "Загрузить"})
   public text!: string;
 
-  @Prop({default: true})
+  @Prop({default: false})
   public filled!: boolean;
 
   @Prop({default: "button"})
