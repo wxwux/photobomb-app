@@ -27,7 +27,7 @@
           )
         .auth-page__btns-ps
           span Уже зарегистрированы?
-          a(href="").x-blue-link(
+          a.x-blue-link(
             @click.prevent="switchForm"
           ) Войти
 </template>

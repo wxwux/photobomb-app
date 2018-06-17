@@ -22,10 +22,11 @@
           buttonRound(
             text="Войти"
             :filled="true"
+            @click="login"
           )
         .auth-page__btns-ps
           span Нет аккаунта
-          a(href="").x-blue-link(
+          a.x-blue-link(
             @click.prevent="switchForm"
           ) Зарегистрироваться  
 </template>
@@ -44,6 +45,13 @@ import IconedInput from "./inputIconed.vue";
 export default class AuthFormLogin extends Vue {
   public switchForm(): void {
     this.$emit("switchForm", "auth-form-register");
+  }
+
+  public login(): void {
+    console.log("login");
+    this.$http.post("/register").then((response: object) => {
+      console.log(response);
+    });
   }
 }
 </script>

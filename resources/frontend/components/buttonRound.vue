@@ -2,6 +2,7 @@
   button(
     :type="type"
     :class="{'round-btn--filled': filled }"
+    v-on="$listeners"
   ).round-btn {{text}}
 </template>
 <script lang="ts">

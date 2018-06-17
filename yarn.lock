@@ -380,6 +380,13 @@ autoprefixer@^8.4.1:
     postcss "^6.0.22"
     postcss-value-parser "^3.2.3"
 
+axios@^0.17.1:
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.17.1.tgz#2d8e3e5d0bdbd7327f91bc814f5c57660f81824d"
+  dependencies:
+    follow-redirects "^1.2.5"
+    is-buffer "^1.1.5"
+
 babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
@@ -2238,6 +2245,12 @@ flush-write-stream@^1.0.0:
 follow-redirects@^1.0.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.4.1.tgz#d8120f4518190f55aac65bb6fc7b85fcd666d6aa"
+  dependencies:
+    debug "^3.1.0"
+
+follow-redirects@^1.2.5:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.0.tgz#234f49cf770b7f35b40e790f636ceba0c3a0ab77"
   dependencies:
     debug "^3.1.0"
 
@@ -5614,6 +5627,12 @@ vm-browserify@0.0.4:
 void-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
+
+vue-axios-plugin@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/vue-axios-plugin/-/vue-axios-plugin-1.3.0.tgz#692cd603e0bc49047b6f0228b8519c93276c4658"
+  dependencies:
+    axios "^0.17.1"
 
 vue-class-component@^6.0.0:
   version "6.2.0"

@@ -5,7 +5,8 @@
   "rules": {
     "no-consecutive-blank-lines": false,
     "no-console": false,
-    "trailing-comma": false
+    "trailing-comma": false,
+    "interface-name" : false
   },
   "rulesDirectory": []
 }

@@ -1,11 +1,12 @@
 {
   "name": "photobomb-app",
-  "description": "A Vue.js project",
+  "description": "example photo app",
   "version": "1.0.0",
   "author": "Vladimir Sabantsev <vladimir.sabantsev@gmail.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
+    "server": "php artisan serve",
     "dev": "webpack-dev-server --mode=development --hot",
     "build": "webpack --mode=production --progress --hide-modules"
   },
@@ -13,6 +14,7 @@
     "normalize.css": "^8.0.0",
     "pug": "^2.0.3",
     "vue": "^2.5.11",
+    "vue-axios-plugin": "^1.3.0",
     "vue-router": "^3.0.1"
   },
   "browserslist": [

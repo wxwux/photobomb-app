@@ -5,7 +5,9 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "plugins": [{ "name": "ts-vue-plugin" }]
+    "plugins": [{ "name": "ts-vue-plugin" }],
+    "noImplicitAny":false,
+    "noImplicitThis":false
   },
   "include": ["./**/*.ts", "./**/*.vue"],
   "exclude": [
