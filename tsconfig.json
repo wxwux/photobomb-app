@@ -8,5 +8,9 @@
     "plugins": [{ "name": "ts-vue-plugin" }]
   },
   "include": ["./**/*.ts", "./**/*.vue"],
+  "exclude": [
+    "node_modules",
+    "vendor"
+  ],
   "compileOnSave": false
 }

@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --mode=development --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "webpack --mode=production --progress --hide-modules"
   },
   "dependencies": {
     "normalize.css": "^8.0.0",

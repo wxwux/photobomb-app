@@ -4,12 +4,11 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 module.exports = {
   entry: {
-    entry: "./src/main.ts",
-    styles: "./src/styles/index.js"
+    entry: "./resources/frontend/main.ts",
+    styles: "./resources/frontend/styles/index.js"
   },
   output: {
-    path: path.resolve(__dirname, "./dist"),
-    publicPath: "/dist/",
+    path: path.resolve(__dirname, "./public"),
     filename: "[name].bundle.js"
   },
   module: {
@@ -21,7 +20,10 @@ module.exports = {
       {
         test: /\.ts$/,
         // exclude: /node_modules|vue\/src/,
-        exclude: /node_modules/,
+        exclude: [
+          path.resolve(__dirname, 'node_modules'),
+          path.resolve(__dirname, 'vendor'),
+        ],
         use: [
           {
             loader: "ts-loader",
@@ -63,12 +65,19 @@ module.exports = {
   resolve: {
     alias: {
       vue$: "vue/dist/vue.esm.js",
-      "@": path.resolve(__dirname, "src/assets"),
-      styles: path.resolve(__dirname, "src/styles/components")
+      "@": path.resolve(__dirname, "./resources/frontend/assets"),
+      styles: path.resolve(__dirname, "./resources/frontend/styles/components")
     },
     extensions: [".js", ".vue", ".ts"]
   },
   devServer: {
+    proxy: {
+      '*' : {
+        target: 'http://localhost:8000/',
+        secure: false,
+      }
+    },
+    contentBase: path.join(__dirname, 'public'),
     historyApiFallback: true,
     noInfo: false,
     open: false
