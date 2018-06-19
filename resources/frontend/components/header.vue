@@ -17,7 +17,6 @@ import Component from "vue-class-component";
 import slideButton from "./buttonSlide.vue";
 import search from "./search.vue";
 import user from "./user.vue";
-declare const require: any;
 
 @Component({
   components: {

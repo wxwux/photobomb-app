@@ -48,7 +48,6 @@ export default class AuthFormLogin extends Vue {
   }
 
   public login(): void {
-    console.log("login");
     this.$http.post("/register").then((response: object) => {
       console.log(response);
     });
