@@ -23,6 +23,7 @@
     "not ie <= 8"
   ],
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/webpack-env": "^1.13.6",
     "autoprefixer": "^8.4.1",
     "babel-core": "^6.26.0",

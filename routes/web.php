@@ -14,6 +14,3 @@
 Route::get('/', function () {
     return view('index');
 });
-
-Route::post('/register', 'Auth@register');
-

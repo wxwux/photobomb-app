@@ -11,9 +11,10 @@ declare module "vue/types/vue" {
   }
 }
 
-const PhotoApp: object = new Vue({
+const PhotoApp: any = new Vue({
   el: "#app",
   render: (h) => h(App),
   router,
 });
 
+PhotoApp.$axios.defaults.baseURL = "/api";

@@ -3,6 +3,8 @@
     :type="type"
     :placeholder="placeholder"
     :class="icon.length > 0 ? `iconed-input--${icon}` : '' "
+    :value="value"
+    @input="$emit('input', $event.target.value)"
   ).iconed-input
 </template>
 
@@ -15,6 +17,9 @@ import {Prop} from "vue-property-decorator";
   name: "IconedInput"
 })
 export default class IconedInput extends Vue {
+  @Prop()
+  public value!: string;
+
   @Prop({default: "Введите данные"})
   public placeholder!: string;
 
