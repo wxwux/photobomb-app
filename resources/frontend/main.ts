@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueAxiosPlugin from "vue-axios-plugin";
 import App from "./App.vue";
 import router from "./router";
+import store from "./store";
 
 Vue.use(VueAxiosPlugin);
 
@@ -15,6 +16,7 @@ const PhotoApp: any = new Vue({
   el: "#app",
   render: (h) => h(App),
   router,
+  store
 });
 
 PhotoApp.$axios.defaults.baseURL = "/api";

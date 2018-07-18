@@ -35,13 +35,17 @@
           ) Зарегистрироваться  
 </template>
 <script lang="ts">
-import { interfaceDeclaration } from "babel-types";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Emit } from "vue-property-decorator";
+import { Action } from "vuex-class";
+import { setupToken } from "../helpers/jwt";
+import { UserState } from "../store/modules/user/types";
 import authForm from "./authForm.vue";
 import buttonRound from "./buttonRound.vue";
 import IconedInput from "./inputIconed.vue";
+
+const namespace: string = "user";
 
 interface User {
   email: string;
@@ -53,21 +57,12 @@ interface User {
   name: "AuthFormLogin"
 })
 export default class AuthFormLogin extends Vue {
+  @Action("login", { namespace })
+  public login: any;
+
   public existedUser: User = {
     email: "",
     password: ""
   };
-
-  public login(): void {
-    this.$http
-      .post("/login", this.existedUser)
-      .then((response) => {
-        if (response.status === 200) {
-          const token = response.data.token;
-          localStorage.setItem("token", token);
-        }
-      })
-      .catch((e) => console.log(e));
-  }
 }
 </script>

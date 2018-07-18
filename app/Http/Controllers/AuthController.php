@@ -32,7 +32,7 @@ class AuthController extends Controller
             'user' => $user,
             'message' => 'Регистрация прошла успешно'
         ]);
-    }
+    }   
 
     public function login(Request $request)
     {
@@ -54,8 +54,9 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 1,
-            'message' => 'Регистрация прошла успешно',
+            'message' => 'Успешный вход',
             'token' => $token,
+            'ttl' => env('TTL') * 60,
             'user' => Auth::user()
         ]);
     }

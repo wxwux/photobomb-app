@@ -6,7 +6,8 @@
     "no-consecutive-blank-lines": false,
     "no-console": false,
     "trailing-comma": false,
-    "interface-name" : false
+    "interface-name" : false,
+    "object-literal-sort-keys": false
   },
   "rulesDirectory": []
 }
