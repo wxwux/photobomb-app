@@ -1,3 +1,4 @@
+import axios, { AxiosInstance } from "axios";
 import Vue from "vue";
 import VueAxiosPlugin from "vue-axios-plugin";
 import App from "./App.vue";
@@ -8,9 +9,15 @@ Vue.use(VueAxiosPlugin);
 
 declare module "vue/types/vue" {
   interface Vue {
-      $http: any;
+    $http: any;
   }
 }
+
+const storeRequests: AxiosInstance = axios.create({
+  baseURL: "/api"
+});
+
+store.$axios = storeRequests;
 
 const PhotoApp: any = new Vue({
   el: "#app",
@@ -18,5 +25,3 @@ const PhotoApp: any = new Vue({
   router,
   store
 });
-
-PhotoApp.$axios.defaults.baseURL = "/api";

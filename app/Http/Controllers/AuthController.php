@@ -29,7 +29,7 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json([
-            'user' => $user,
+            // 'user' => $user,
             'message' => 'Регистрация прошла успешно'
         ]);
     }   

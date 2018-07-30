@@ -1,23 +1,26 @@
-import { ActionTree, Module } from "vuex";
+import { Module, MutationTree } from "vuex";
 import { RootState } from "../../types";
-import { AlertsState } from "./types";
+import { AlertMessage, AlertsState } from "./types";
 
 const namespaced: boolean = true;
 
 const state: AlertsState = {
-  messages: null,
+  data: {
+    type: "",
+    messages: []
+  }
 };
 
-const actions: ActionTree<AlertsState, RootState> = {
-  showAlerts() {
-    console.log("hello");
+const mutations: MutationTree<AlertsState> = {
+  showAlerts(alertsState, messages: AlertMessage) {
+    alertsState.data = messages;
   }
 };
 
 const alerts: Module<AlertsState, RootState> = {
   namespaced,
   state,
-  actions
+  mutations
 };
 
 export default alerts;

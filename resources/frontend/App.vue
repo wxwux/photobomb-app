@@ -3,6 +3,7 @@
     router-view
     .alert-tooltip
     tooltips
+    
 </template>
 <script lang="ts">
 import Vue from "vue";

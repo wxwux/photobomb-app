@@ -1,5 +1,5 @@
 <template lang="pug">
-  auth-form(@submitForm="login")
+  auth-form(@submitForm="login(user)")
     div(slot="title")
       h1.auth-page__title-text Добро пожаловать
       .auth-page__title-sub 
@@ -8,14 +8,14 @@
       iconed-input(
         icon="mail",
         placeholder="Электронная почта"
-        v-model="existedUser.email"
+        v-model="user.email"
         autocomplete="username"
       )
       iconed-input(
         icon="lock",
         placeholder="Пароль",
         type="password"
-        v-model="existedUser.password"
+        v-model="user.password"
         autocomplete="current-password"
       )
     div(slot="buttons")
@@ -40,17 +40,12 @@ import Component from "vue-class-component";
 import { Emit } from "vue-property-decorator";
 import { Action } from "vuex-class";
 import { setupToken } from "../helpers/jwt";
-import { UserState } from "../store/modules/user/types";
+import { User, UserState } from "../store/modules/user/types";
 import authForm from "./authForm.vue";
 import buttonRound from "./buttonRound.vue";
 import IconedInput from "./inputIconed.vue";
 
 const namespace: string = "user";
-
-interface User {
-  email: string;
-  password: string;
-}
 
 @Component({
   components: { authForm, IconedInput, buttonRound },
@@ -60,7 +55,7 @@ export default class AuthFormLogin extends Vue {
   @Action("login", { namespace })
   public login: any;
 
-  public existedUser: User = {
+  public user: User = {
     email: "",
     password: ""
   };

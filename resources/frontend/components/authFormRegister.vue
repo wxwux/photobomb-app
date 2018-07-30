@@ -1,5 +1,5 @@
 <template lang="pug">
-  auth-form(@submitForm="register")
+  auth-form(@submitForm="register(newUser)")
     div(slot="title")
       h1.auth-page__title-text Регистрация
     div(slot="inputs")
@@ -38,37 +38,32 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import Component from "vue-class-component";
 import { Emit } from "vue-property-decorator";
+import { Component, Prop, Watch } from "vue-property-decorator";
+import { Action } from "vuex-class";
+import { NewUser } from "../store/modules/user/types";
 import authForm from "./authForm.vue";
 import buttonRound from "./buttonRound.vue";
 import IconedInput from "./inputIconed.vue";
 
-interface User {
-  name: string;
-  password: string;
-  email: string;
-}
+const namespace: string = "user";
 
 @Component({
   components: { authForm, IconedInput, buttonRound },
   name: "AuthFormLogin"
 })
 export default class AuthFormLogin extends Vue {
-  public newUser: User = {
+  public newUser: NewUser = {
     email: "",
     name: "",
     password: ""
   };
 
+  @Action("register", {namespace})
+  public register: any;
+
   public switchForm(): void {
     this.$emit("switchForm", "auth-form-login");
-  }
-
-  public register(): void {
-    this.$http.post("/register", this.newUser).then((response) => {
-      console.log(response);
-    }).catch((e) => console.error(e));
   }
 }
 </script>

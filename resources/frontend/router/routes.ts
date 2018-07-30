@@ -5,12 +5,15 @@ import main from "../components/pages/main.vue";
 
 const routes: RouteConfig[] = [
   {
+    component: main,
     path: "/",
-    component: auth,
+    meta: {
+      public: true
+    }
   },
   {
-    component: main,
-    path: "/about"
+    path: "/auth",
+    component: auth
   }
 ];
 

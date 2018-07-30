@@ -1,3 +1,8 @@
+export interface AlertMessage {
+  type: string;
+  messages: string[];
+}
+
 export interface AlertsState {
-  messages: string[] | null;
+  data: AlertMessage | object;
 }

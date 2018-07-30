@@ -13,7 +13,7 @@
           .section__load-btn
             .section__load-btn-container
               round-button 
-      section.section.section--gray
+      section.x-section.x-section--gray
         .x-container
           .albums-title
             h2.x-section-title Мои альбомы
