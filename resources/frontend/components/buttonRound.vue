@@ -1,9 +1,16 @@
 <template lang="pug">
   button(
+    v-if="purpose ==='button'"
     :type="type"
-    :class="{'round-btn--filled': filled }"
+    :class="[{'round-btn--filled': filled }, `round-btn--bg_${bgClass}`, {'round-btn--iconed': icon.length}, `round-btn--icon_${icon}`]"
     v-on="$listeners"
   ).round-btn {{text}}
+  label(v-else-if="purpose === 'file'")#round-file-input
+    .round-btn {{text}}
+    input(
+      v-on="$listeners"
+      type="file"
+    ).round-btn__file
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -22,6 +29,15 @@ export default class RoundButton extends Vue {
 
   @Prop({default: "button"})
   public type!: string;
+
+  @Prop({default: "button"})
+  public purpose!: string;
+
+  @Prop({default: "blue"})
+  public bgClass!: string;
+
+  @Prop({default: ""})
+  public icon!: string;
 }
 </script>
 

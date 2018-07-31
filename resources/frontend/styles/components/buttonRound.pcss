@@ -1,3 +1,13 @@
+#round-file-input {
+  position: relative;
+}
+
+.round-btn__file {
+  position: absolute;
+  top: 0;
+  left: -9999px;
+}
+
 .round-btn {
   padding: 10px 20px;
   border-radius: 100px;
@@ -9,19 +19,55 @@
   font-weight: bold;
   transition: .3s;
   outline: none;
-  
-  &:hover, &:focus {
+  cursor: pointer;
+  text-align: center;
+  &:hover,
+  &:focus {
     background: $blue;
     color: #fff;
   }
-
+  &--iconed {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    &.round-btn--icon_ {
+      &trash {
+        &:before {
+          background: svg-load('../../assets/img/icons/delete.svg', 'fill=#fff') center center / contain no-repeat;
+        }
+      }
+    }
+    &:before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      display: block;
+      margin-right: 10px;
+    }
+  }
   &--filled {
     background: $blue;
     color: #fff;
     width: 100%;
-
     &:hover {
       background: #24b0e3;
+    }
+  }
+  &--bg_transparent {
+    border-color: transparent;
+    background: transparent;
+    &:hover {
+      border-color: $blue;
+      color: $blue;
+      background: transparent;
+    }
+  }
+  &--bg_red {
+    background: $red;
+    border-color: $red;
+    &:hover {
+      background: firebrick;
+      border-color: firebrick;
     }
   }
 }

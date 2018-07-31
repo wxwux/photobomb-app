@@ -4,6 +4,7 @@ import { RootState } from "./types";
 
 Vue.use(Vuex);
 
+import albums from "./modules/albums";
 import alerts from "./modules/alerts";
 import user from "./modules/user";
 
@@ -15,7 +16,8 @@ class RootStore<S> extends Store<S> {
 const store: StoreOptions<RootState> = {
   modules: {
     alerts,
-    user
+    user,
+    albums
   }
 };
 

@@ -3,11 +3,12 @@
     router-view
     .alert-tooltip
     tooltips
-    
+    modals    
 </template>
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
+import modals from "./components/modals.vue";
 import auth from "./components/pages/auth.vue";
 import mainPage from "./components/pages/main.vue";
 import tooltips from "./components/tooltips.vue";
@@ -16,7 +17,8 @@ import tooltips from "./components/tooltips.vue";
   components: {
     auth,
     mainPage,
-    tooltips
+    tooltips,
+    modals
   },
   name: "RootApp",
 })
