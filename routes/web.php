@@ -11,6 +11,12 @@
 |
 */
 
+Route::prefix('api')->group(function () {
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+});
+
+
 Route::get('/', function () {
     return view('index');
 });

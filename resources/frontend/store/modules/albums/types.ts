@@ -1,3 +1,9 @@
 export interface Album {
-  data: object[]
+  data: object[];
+}
+
+export interface NewAlbum {
+  title: string;
+  desc: string;
+  cover: any;
 }

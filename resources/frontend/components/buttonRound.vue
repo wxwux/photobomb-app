@@ -5,6 +5,7 @@
     :class="[{'round-btn--filled': filled }, `round-btn--bg_${bgClass}`, {'round-btn--iconed': icon.length}, `round-btn--icon_${icon}`]"
     v-on="$listeners"
   ).round-btn {{text}}
+
   label(v-else-if="purpose === 'file'")#round-file-input
     .round-btn {{text}}
     input(
@@ -38,6 +39,10 @@ export default class RoundButton extends Vue {
 
   @Prop({default: ""})
   public icon!: string;
+
+  public mounted() {
+    console.log("listen", this.$listeners);
+  }
 }
 </script>
 

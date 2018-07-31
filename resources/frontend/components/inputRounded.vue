@@ -3,10 +3,14 @@
     v-if="element === 'input'"
     :type="type"
     :placeholder="placeholder"
+    :value="value"
+    @input="$emit('input', $event.target.value)"
   ).search__input
   textarea(
     v-else
     :placeholder="placeholder"
+    :value="value"
+    @input="$emit('input', $event.target.value)"
   ).search__input.search__input--textarea
 </template>
 <script lang="ts">
@@ -17,6 +21,9 @@ import { Component, Prop } from "vue-property-decorator";
   name: "InputRounded"
 })
 export default class Modals extends Vue {
+  @Prop()
+  public value!: string;
+
   @Prop({ default: "text" })
   public type!: string;
 

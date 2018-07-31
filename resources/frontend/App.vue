@@ -20,17 +20,16 @@ import tooltips from "./components/tooltips.vue";
     tooltips,
     modals
   },
-  name: "RootApp",
+  name: "RootApp"
 })
-export default class App extends Vue {
-}
+export default class App extends Vue {}
 </script>
 
 <style lang="pcss" scoped>
-  .root {
-    height: 100%;
-  }
-  .root__header {
-    margin-bottom: 40px;
-  }
+.root {
+  height: 100%;
+}
+.root__header {
+  margin-bottom: 40px;
+}
 </style>
