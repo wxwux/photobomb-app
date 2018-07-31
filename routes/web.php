@@ -14,6 +14,8 @@
 Route::prefix('api')->group(function () {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
+
+    // Route::post('albums');
 });
 
 
