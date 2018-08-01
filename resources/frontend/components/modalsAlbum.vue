@@ -11,6 +11,7 @@
               input-rounded(
                 placeholder="Введите название альбома"
                 v-model="newAlbum.title"
+                :error="validation.hasError('newAlbum.title')"
               )
         .modal__row
           label.modal__block
@@ -19,6 +20,7 @@
               input-rounded(
                 element="textarea"
                 v-model="newAlbum.desc"
+                :error="validation.hasError('newAlbum.desc')"
               )
         .modal__row.cover
           .modal__block-title.cover__left-col
@@ -32,8 +34,10 @@
                 purpose="file"
                 @change.native="gatherData"
               )
-            .cover__desc
-              | (файл должен быть размером не более 1024 КБ)
+            .cover__desc.error(v-if="validation.hasError('newAlbum.cover')") {{validation.firstError('newAlbum.cover')}}
+            .cover__desc(v-else-if="newAlbum.cover === null")
+              | (файл должен быть размером менее 1.5 МБ)
+
       template(slot="modal-buttons")
         .modal__buttons-common
           .modal__buttons-elem
@@ -41,6 +45,7 @@
               text="Сохранить"
               :filled="true"
               @click="createNewAlbum"
+              :disabled="!!validation.allErrors().length"
             )
           .modal__buttons-elem
             button-round(
@@ -57,7 +62,10 @@
 </template>
 
 <script lang="ts">
+import SimpleVueValidator from "simple-vue-validator";
+import { Validator } from "simple-vue-validator";
 import Vue from "vue";
+import { mixins } from "vue-class-component";
 import { Component, Prop } from "vue-property-decorator";
 import { Action, Mutation, namespace } from "vuex-class";
 import { NewAlbum } from "../store/modules/albums/types";
@@ -70,11 +78,31 @@ const modals = namespace("modals");
 
 @Component({
   name: "ModalsAlbum",
+  validators: {
+    "newAlbum.title"(value) {
+      return Validator.value(value).required("Заголовок не может быть пустым");
+    },
+    "newAlbum.desc"(value) {
+      return Validator.value(value).required("Описание не может быть пустым");
+    },
+    "newAlbum.cover"(value) {
+      return Validator.custom(() => {
+        if (
+          ["image/jpeg", "image/png", "image/gif"].indexOf(value.type) === -1
+        ) {
+          return "Файл должен быть изображением (jpeg, png, gif)";
+        }
+
+        if (value.size > 1500000) {
+          return "Файл весит больше чем 1.5 Мб";
+        }
+      });
+    }
+  },
   components: { inputRounded, buttonRound, modalsItem }
 })
-export default class ModalsAlbum extends Vue {
+export default class ModalsAlbum extends mixins() {
   @albums.Action("createNewAlbum") public createAlbumAction: any;
-
   @modals.Mutation("clearModal") public closeModal!: any;
 
   public newAlbum: NewAlbum = {
@@ -116,13 +144,19 @@ export default class ModalsAlbum extends Vue {
   public createNewAlbum() {
     const formData: any = new FormData();
 
-    Object.keys(this.newAlbum).forEach((prop) => {
-      formData.append(prop, this.newAlbum[prop]);
+    this.$validate().then((success) => {
+      if (!success) {
+        return;
+      }
     });
 
-    this.createAlbumAction(formData).then(() => {
-      this.closeModal();
-    });
+    // Object.keys(this.newAlbum).forEach((prop) => {
+    //   formData.append(prop, this.newAlbum[prop]);
+    // });
+
+    // this.createAlbumAction(formData).then(() => {
+    //   this.closeModal();
+    // });
   }
 
   public beforeDestroy() {

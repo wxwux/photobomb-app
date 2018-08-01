@@ -4,12 +4,14 @@
     :type="type"
     :placeholder="placeholder"
     :value="value"
+    :class="{error: error}"
     @input="$emit('input', $event.target.value)"
   ).search__input
   textarea(
     v-else
     :placeholder="placeholder"
     :value="value"
+    :class="{error: error}"
     @input="$emit('input', $event.target.value)"
   ).search__input.search__input--textarea
 </template>
@@ -32,6 +34,9 @@ export default class Modals extends Vue {
 
   @Prop({ default: "input" })
   public element!: string;
+
+  @Prop({default: false})
+  public error!: boolean;
 }
 </script>
 <style lang="pcss" src="styles/inputRounded.pcss">

@@ -1,6 +1,7 @@
 <template lang="pug">
   button(
     v-if="purpose ==='button'"
+    v-bind="$attrs"
     :type="type"
     :class="[{'round-btn--filled': filled }, `round-btn--bg_${bgClass}`, {'round-btn--iconed': icon.length}, `round-btn--icon_${icon}`]"
     v-on="$listeners"
@@ -9,6 +10,7 @@
   label(v-else-if="purpose === 'file'")#round-file-input
     .round-btn {{text}}
     input(
+      v-bind="$attrs"
       v-on="$listeners"
       type="file"
     ).round-btn__file
@@ -19,7 +21,8 @@ import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 
 @Component({
-  name: "buttonRound"
+  name: "buttonRound",
+  inheritAttrs: false
 })
 export default class RoundButton extends Vue {
   @Prop({default: "Загрузить"})

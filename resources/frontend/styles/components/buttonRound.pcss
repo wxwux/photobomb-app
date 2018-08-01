@@ -21,6 +21,13 @@
   outline: none;
   cursor: pointer;
   text-align: center;
+
+  &:disabled {
+    background: #5e5e5e;
+    opacity: .2;
+    pointer-events: none;
+    border-color: transparent;
+  }
   &:hover,
   &:focus {
     background: $blue;
