@@ -1,12 +1,24 @@
 #modals-container {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
+  left: -9999px;
   bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  transition: opacity .3s;
+  z-index: 1000;
+  
+  &.active {
+    left: 0;
+    right: 0;
+    opacity: 1;
+
+    .modals__container {
+      transform: scale(1);
+    }
+  }
 }
 
 .modals__layout {
@@ -21,6 +33,9 @@
 .modals__container {
   width: 50%;
   position: relative;
+  transform: scale(.9);
+  transition: .3s transform;
+  will-change: transform;
 }
 
 .modal__row {

@@ -14,7 +14,10 @@ declare module "vue/types/vue" {
 }
 
 const storeRequests: AxiosInstance = axios.create({
-  baseURL: "/api"
+  baseURL: "/api",
+  headers: {
+    Authorization : `Bearer ${localStorage.getItem("token")}`
+  }
 });
 
 store.$axios = storeRequests;

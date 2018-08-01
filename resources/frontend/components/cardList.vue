@@ -1,7 +1,7 @@
 <template lang="pug">
   ul.cards-list(:class="`cards-list--row-by-${itemsInRow}`")
-    li.cards-list__item(v-for="n in 6")
-      slot(:item="n")
+    li.cards-list__item(v-for="item in items")
+      slot(:item="item")
 </template>
 
 <script lang="ts">
@@ -15,6 +15,9 @@ import { Prop } from "vue-property-decorator";
 export default class CardList extends Vue {
   @Prop({default: 3})
   public itemsInRow!: number;
+
+  @Prop()
+  public items!: object[];
 }
 </script>
 

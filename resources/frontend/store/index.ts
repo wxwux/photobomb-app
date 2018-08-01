@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 import albums from "./modules/albums";
 import alerts from "./modules/alerts";
+import modals from "./modules/modals";
 import user from "./modules/user";
 
 class RootStore<S> extends Store<S> {
@@ -17,7 +18,8 @@ const store: StoreOptions<RootState> = {
   modules: {
     alerts,
     user,
-    albums
+    albums,
+    modals
   }
 };
 

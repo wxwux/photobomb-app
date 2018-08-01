@@ -1,9 +1,9 @@
 export interface Album {
-  data: object[];
+  data: NewAlbum[];
 }
 
 export interface NewAlbum {
   title: string;
   desc: string;
-  cover: any;
+  cover?: any;
 }

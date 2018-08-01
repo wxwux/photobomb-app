@@ -17,7 +17,7 @@ const actions: ActionTree<UserState, RootState> = {
           const { token, ttl } = response.data;
           setupToken(token, ttl);
 
-          router.replace("/");
+          // router.replace("/");
         }
       })
       .catch((e) => {

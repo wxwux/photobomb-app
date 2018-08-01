@@ -22,7 +22,9 @@
               )
         .modal__row.cover
           .modal__block-title.cover__left-col
-            .cover__thumb
+            .cover__thumb(
+              ref="cover"
+            )
           .modal__block-control.cover__right-col
             .cover__btn
               button-round(
@@ -57,21 +59,23 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
-import { Action } from "vuex-class";
+import { Action, Mutation, namespace } from "vuex-class";
 import { NewAlbum } from "../store/modules/albums/types";
 import buttonRound from "./buttonRound.vue";
 import inputRounded from "./inputRounded.vue";
 import modalsItem from "./modalsItem.vue";
 
-const namespace: string = "albums";
+const albums = namespace("albums");
+const modals = namespace("modals");
 
 @Component({
   name: "ModalsAlbum",
   components: { inputRounded, buttonRound, modalsItem }
 })
 export default class ModalsAlbum extends Vue {
-  @Action("createNewAlbum", { namespace })
-  public createAlbumAction: any;
+  @albums.Action("createNewAlbum") public createAlbumAction: any;
+
+  @modals.Mutation("clearModal") public closeModal!: any;
 
   public newAlbum: NewAlbum = {
     title: "",
@@ -79,11 +83,34 @@ export default class ModalsAlbum extends Vue {
     cover: null
   };
 
+  public setCoverPicture(cover: File) {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const coverBlock = this.$refs.cover as HTMLElement;
+      coverBlock.style.backgroundImage = `url(${reader.result})`;
+    };
+
+    reader.readAsDataURL(cover);
+  }
+
   public gatherData(e: any) {
     if (!e.target.files.length) {
       return;
     }
-    this.newAlbum.cover = e.target.files[0];
+    const file = e.target.files[0];
+
+    this.newAlbum.cover = file;
+    this.setCoverPicture(file);
+  }
+
+  public clearFormData() {
+    const coverElem = this.$refs.cover as HTMLElement;
+
+    this.newAlbum.title = "";
+    this.newAlbum.desc = "";
+    this.newAlbum.cover = "";
+    coverElem.style.background = "";
   }
 
   public createNewAlbum() {
@@ -93,8 +120,13 @@ export default class ModalsAlbum extends Vue {
       formData.append(prop, this.newAlbum[prop]);
     });
 
-    this.createAlbumAction(formData);
+    this.createAlbumAction(formData).then(() => {
+      this.closeModal();
+    });
+  }
 
+  public beforeDestroy() {
+    this.clearFormData();
   }
 }
 </script>

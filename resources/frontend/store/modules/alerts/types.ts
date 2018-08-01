@@ -1,5 +1,5 @@
 export interface AlertMessage {
-  type: string;
+  type: "success" | "error" | "warning";
   messages: string[];
 }
 

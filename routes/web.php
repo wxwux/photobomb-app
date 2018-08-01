@@ -15,9 +15,11 @@ Route::prefix('api')->group(function () {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
 
-    // Route::post('albums');
+    Route::middleware(['jwt.auth'])->group(function () {
+        Route::post('albums', 'AlbumsController@create');
+        Route::get('albums', 'AlbumsController@view');
+    });
 });
-
 
 Route::get('/', function () {
     return view('index');
