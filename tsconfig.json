@@ -1,19 +1,17 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "lib": ["es5", "dom", "es2015.promise"],
     "strict": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "plugins": [{ "name": "ts-vue-plugin" }],
-    "noImplicitAny":false,
-    "noImplicitThis":false
+    "noImplicitAny": false,
+    "noImplicitThis": false
   },
   "include": ["./**/*.ts", "./**/*.vue"],
-  "exclude": [
-    "node_modules",
-    "vendor"
-  ],
+  "exclude": ["node_modules", "vendor"],
   "types": ["webpack-env"],
   "compileOnSave": false
 }

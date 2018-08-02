@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Albums;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 
 class AlbumsController extends Controller
@@ -37,20 +38,34 @@ class AlbumsController extends Controller
         return $createdAlbum;
     }
 
-    public function view(Request $request) {
+    public function view(Request $request)
+    {
         return Albums::where('user_id', Auth::id())->get();
     }
 
     private function uploadFile($file, $folderName)
     {
-        $md5 = substr(md5($file->getClientOriginalName().$_SERVER ['HTTP_USER_AGENT']), 3, 10);
-        $name = Auth::id().'q'.$md5.'_origin.'.$file->getClientOriginalExtension();
+        $name = $this->generateFileName($file, 'origin');
         $dir = "uploads/$folderName";
-        $file->move($dir, $name);
-      
+        $file->move("$dir/origin", $name);
+
+        $resizedName = $this->generateFileName($file, 's500');
+        
+        $resizedImage = Image::make(public_path("$dir/origin/$name"))
+            ->resize(500, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->save(public_path("$dir/$resizedName"));
+
         return [
             'name' => $name,
             'folder' => $folderName
         ];
+    }
+
+    private function generateFileName($file, $modificator)
+    {
+        $md5 = substr(md5($file->getClientOriginalName().$_SERVER ['HTTP_USER_AGENT']), 3, 10);
+        return Auth::id().'q'.$md5.'.'.$file->getClientOriginalExtension();
     }
 }

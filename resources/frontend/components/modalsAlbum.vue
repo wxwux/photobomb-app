@@ -141,22 +141,20 @@ export default class ModalsAlbum extends mixins() {
     coverElem.style.background = "";
   }
 
-  public createNewAlbum() {
+  public async createNewAlbum() {
     const formData: any = new FormData();
+    const success = await this.$validate();
 
-    this.$validate().then((success) => {
-      if (!success) {
-        return;
-      }
+    if (!success) {
+      return;
+    }
+
+    Object.keys(this.newAlbum).forEach((prop) => {
+      formData.append(prop, this.newAlbum[prop]);
     });
 
-    // Object.keys(this.newAlbum).forEach((prop) => {
-    //   formData.append(prop, this.newAlbum[prop]);
-    // });
-
-    // this.createAlbumAction(formData).then(() => {
-    //   this.closeModal();
-    // });
+    const albumCreated = await this.createAlbumAction(formData);
+    this.closeModal();
   }
 
   public beforeDestroy() {
