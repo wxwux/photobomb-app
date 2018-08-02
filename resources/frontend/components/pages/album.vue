@@ -1,39 +1,18 @@
 <template lang="pug">
   div
     .root__header
-      app-header
+      app-header(
+        view="album-view"
+        :headerData="currentAlbum"
+      )
     main.root__content
-      section.x-section.section--white
-        .x-container
-          h1.x-section-title Новое в мире 
-          .section__content
-            card-list
-              div(slot-scope="{item}") {{item}}
-                card-photo
-          .section__load-btn
-            .section__load-btn-container
-              round-button 
       section.x-section.x-section--gray
         .x-container
-          .albums-title
-            h2.x-section-title Мои альбомы
-            .albums-title__button
-              slide-button(
-                text="Добавить"
-                icon="add"
-                @click.native="showModal('albums')"
-              )
-          card-list(
-            :itemsInRow="4"
-            :items="userAlbums"
-          )
-            div(slot-scope="{item}")
-              card-album(
-                :title="item.title"
-                :cover="item.cover"
-              )
+
     .root__footer
-      app-footer
+      app-footer(
+        :footerData="currentAlbum"
+      )
 </template>
 
 <script lang="ts">
@@ -41,11 +20,6 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Mutation, namespace, State } from "vuex-class";
 import { NewAlbum } from "../../store/modules/albums/types";
-import roundButton from "../buttonRound.vue";
-import slideButton from "../buttonSlide.vue";
-import cardAlbum from "../cardAlbum.vue";
-import cardList from "../cardList.vue";
-import cardPhoto from "../cardPhoto.vue";
 import footer from "../footer.vue";
 import header from "../header.vue";
 
@@ -56,7 +30,6 @@ const albums = namespace("albums");
   components: {
     appFooter: footer,
     appHeader: header,
-    cardAlbum, cardList, cardPhoto, roundButton, slideButton
   },
   name: "MainPage"
 })
@@ -64,14 +37,17 @@ export default class MainPage extends Vue {
   @modals.Mutation("showModal")
   public showModal!: void;
 
-  @albums.Action("fetchUserAlbums")
-  public fetchUserAlbums!: any;
+  @albums.Action("fetchAlbumById")
+  public fetchAlbumById!: any;
 
-  @albums.State((state) => state.data)
-  public userAlbums!: NewAlbum[];
+  @albums.State((state) => state.currentAlbum)
+  public currentAlbum!: NewAlbum;
+
+  // @albums.State((state) => state.data)
+  // public userAlbums!: NewAlbum[];
 
   public created() {
-    this.fetchUserAlbums();
+    this.fetchAlbumById(this.$route.params.id);
   }
 }
 </script>

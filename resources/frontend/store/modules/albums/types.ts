@@ -1,5 +1,6 @@
 export interface Album {
   data: NewAlbum[];
+  currentAlbum: NewAlbum;
 }
 
 export interface NewAlbum {

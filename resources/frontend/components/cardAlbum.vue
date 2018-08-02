@@ -1,8 +1,12 @@
 <template lang="pug">
-  a(href="").album-card
-    .album-card__photo(
-      :style="`background-image: url(${fullCoverUrl})`"
-    )
+  .album-card
+    router-link(
+      tag="div"
+      :to="href"
+    ).album-cart__display
+      .album-card__photo(
+        :style="`background-image: url(${fullCoverUrl})`"
+      )
     .album-card__data {{title}}
 
 </template>
@@ -21,6 +25,9 @@ export default class CardAlbum extends Vue {
 
   @Prop()
   public cover!: string;
+
+  @Prop({default: "/"})
+  public href!: string;
 
   get fullCoverUrl() {
     return `/uploads/albums_covers/${this.cover}`;

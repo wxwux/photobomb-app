@@ -63,6 +63,10 @@ class AlbumsController extends Controller
         ];
     }
 
+    public function getById($id) {
+        return Albums::where('user_id', Auth::id())->findOrFail($id);
+    }
+
     private function generateFileName($file, $modificator)
     {
         $md5 = substr(md5($file->getClientOriginalName().$_SERVER ['HTTP_USER_AGENT']), 3, 10);

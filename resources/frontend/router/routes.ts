@@ -1,7 +1,8 @@
 import { RouteConfig } from "vue-router";
 
-import auth from "../components/pages/auth.vue";
-import main from "../components/pages/main.vue";
+import album from "../components/pages/album";
+import auth from "../components/pages/auth";
+import main from "../components/pages/main";
 
 const routes: RouteConfig[] = [
   {
@@ -10,6 +11,10 @@ const routes: RouteConfig[] = [
     meta: {
       public: true
     }
+  },
+  {
+    component: album,
+    path: "/album/:id"
   },
   {
     path: "/auth",

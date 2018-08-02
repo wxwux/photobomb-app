@@ -31,6 +31,7 @@
               card-album(
                 :title="item.title"
                 :cover="item.cover"
+                :href="`/album/${item.id}`"
               )
     .root__footer
       app-footer

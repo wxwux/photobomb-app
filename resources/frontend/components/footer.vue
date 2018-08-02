@@ -13,15 +13,25 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Component from "vue-class-component";
+import { Component, Prop } from "vue-property-decorator";
+import { NewAlbum } from "../store/modules/albums/types";
 
 @Component({
   name: "Footer"
 })
 export default class Footer extends Vue {
+  @Prop({default: () => ({})})
+  public footerData!: NewAlbum;
+
   public get footerBg(): string {
-    const path = require("@/img/content/header-bg.jpg");
-    return `url(${path})`;
+      // const path = require("@/img/content/header-bg.jpg");
+
+    if (this.footerData.cover) {
+      const path = `/uploads/albums_covers/origin/${this.footerData.cover}`;
+      return `url(${path})`;
+    } else {
+      return "none";
+    }
   }
 }
 

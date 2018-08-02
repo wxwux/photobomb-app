@@ -6,7 +6,11 @@ import { Album, NewAlbum } from "./types";
 const namespaced: boolean = true;
 
 const state: Album = {
-  data: []
+  data: [],
+  currentAlbum: {
+    title: "",
+    desc: ""
+  }
 };
 
 const mutations: MutationTree<Album> = {
@@ -16,6 +20,10 @@ const mutations: MutationTree<Album> = {
 
   addNewUserAlbum(albumsState, newAlbum: NewAlbum) {
     albumsState.data.push(newAlbum);
+  },
+
+  addCurrentAlbum(albumsState, currentAlbum: NewAlbum) {
+    albumsState.currentAlbum = currentAlbum;
   }
 };
 
@@ -47,6 +55,12 @@ const actions: ActionTree<Album, RootState> = {
         );
       }
     );
+  },
+
+  fetchAlbumById({commit}, albumId: number) {
+    this.$axios(`/albums/${albumId}`).then((response: AxiosResponse) => {
+      commit("addCurrentAlbum", response.data);
+    });
   },
 
   fetchUserAlbums({ commit }, store) {

@@ -5,14 +5,19 @@
   overflow: hidden;
   border-radius: 7px;
   box-shadow: 0 1px 4px 0 rgba(#000, .15);
+}
 
+.album-card__data {
+  cursor: pointer;
   &:hover {
-    .album-card__data {
-      &:before {
-        background-image: svg-load('icons/edit.svg', fill=#848484);
-      }
+    &:before {
+      background-image: svg-load('icons/edit.svg', fill=#848484);
     }
   }
+}
+
+.album-cart__display {
+  cursor: pointer;
 }
 
 .album-card__photo {

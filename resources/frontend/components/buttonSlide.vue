@@ -12,7 +12,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 
-const icons: string[] = ["edit", "add"];
+const icons: string[] = ["edit", "add", "home"];
 
 @Component({
   name: "SlideButton"

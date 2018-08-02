@@ -1,5 +1,27 @@
 .user {
   display: flex;
+
+  &__minimized {
+    align-items: center;
+
+    .user__avatar {
+      width: 56px;
+      height: 56px;
+
+      .user__avatar-pic {
+        max-width: 100%;
+      }
+    }
+
+    .user__name {
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+
+    .user__desc {
+      margin-left: 20px;
+    }
+  }
 }
 
 .user__avatar {
