@@ -2,12 +2,14 @@
   .uploader-item(
     :style="{backgroundImage: `url('${pic.url}'`}"
   )
-    .uploader-item__close
+    .uploader-item__close(
+      @click="$emit('removeItem', pic.id)"
+    )
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import { Component, Emit, Prop } from "vue-property-decorator";
 import { renderFile } from "../helpers/files";
 
 @Component({

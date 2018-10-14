@@ -17,6 +17,7 @@
           v-for="pic in picsToRender"
           :pic="pic"
           :key="pic.id"
+          @removeItem="removeItem"
         )
       .uploader__desc(v-if="anyPicsUploaded === false") 
         span.uploader__desc-text Перетащите фото сюда или #[a.uploader__link выберите файл]
@@ -30,6 +31,13 @@ import { Component, Prop } from "vue-property-decorator";
 import { renderFile } from "../helpers/files";
 import uploaderItem from "./uploaderItem.vue";
 
+const ObjectInstance = Object;
+
+interface PicData {
+  id: number;
+  url: string;
+}
+
 @Component({
   name: "Uploader",
   components: { uploaderItem }
@@ -39,7 +47,7 @@ export default class Uploader extends Vue {
 
   public picsToRender: object[] = [];
 
-  get anyPicsUploaded() {
+  get anyPicsUploaded(): boolean {
     return this.picsToRender.length !== 0;
   }
   public handleUpload(e): void {
@@ -54,15 +62,10 @@ export default class Uploader extends Vue {
 
     for (const currentFile of files) {
       this.drawPictures(currentFile).then((reader) => {
-        console.log(reader);
-
-        const picData = {
+        const picData: PicData = {
           id: uuid(),
           url: reader.result
         };
-
-        console.log(picData);
-
         this.picsToRender.push(picData);
       });
     }
@@ -80,9 +83,12 @@ export default class Uploader extends Vue {
         throw new Error("error");
       };
     });
-    // reader.onloadend = () => {
-    //   whereToRender.style.backgroundImage = `url(${reader.result})`;
-    // };
+  }
+
+  public removeItem(idToRemove: number) {
+    this.picsToRender = this.picsToRender.filter(
+      (pic: any) => pic.id !== idToRemove
+    );
   }
 }
 </script>
