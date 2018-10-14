@@ -6,7 +6,7 @@
   position: relative;
   margin-bottom: 15px;
   margin-left: calc((100% - (135px * 4)) / 3);
-
+  background: center center / cover no-repeat;
   &:nth-child(4n + 1) {
     margin-left: 0;
   }
@@ -22,12 +22,14 @@
   right: -10px;
   background: $red;
   border: 2px solid #fff;
+  cursor: pointer;
   &:before {
     content: "";
     display: block;
     width: 8px;
     height: 8px;
-    background: svg-load('icons/close.svg', fill=#fff) center center / contain no-repeat;
+    background: svg-load("icons/close.svg", fill=#fff) center center / contain
+      no-repeat;
     position: absolute;
     top: 50%;
     left: 50%;
