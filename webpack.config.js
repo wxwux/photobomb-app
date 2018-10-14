@@ -21,8 +21,8 @@ module.exports = {
         test: /\.ts$/,
         // exclude: /node_modules|vue\/src/,
         exclude: [
-          path.resolve(__dirname, 'node_modules'),
-          path.resolve(__dirname, 'vendor'),
+          path.resolve(__dirname, "node_modules"),
+          path.resolve(__dirname, "vendor")
         ],
         use: [
           {
@@ -72,12 +72,12 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '*' : {
-        target: 'http://localhost:8000/',
-        secure: false,
+      "*": {
+        target: "http://localhost:8000/",
+        secure: false
       }
     },
-    contentBase: path.join(__dirname, 'public'),
+    contentBase: path.join(__dirname, "public"),
     historyApiFallback: true,
     noInfo: false,
     open: false

@@ -2,7 +2,7 @@
   position: relative;
   color: #fff;
   padding: 55px 0 80px 0;
-  background: center center /cover no-repeat;
+  background: center center / cover no-repeat;
   &:before {
     content: "";
     position: absolute;
@@ -10,10 +10,17 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+    background: -webkit-linear-gradient(
+      top,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
-
   &--album-view {
     padding-top: 20px;
   }
@@ -61,4 +68,15 @@
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.header__bar {
+  background: rgba(#f1f1f1, 0.9);
+}
+
+.header__bar-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  flex-direction: column;
 }

@@ -1,0 +1,36 @@
+.uploader-item {
+  width: 135px;
+  height: 135px;
+  background: #ccc;
+  border-radius: 5px;
+  position: relative;
+  margin-bottom: 15px;
+  margin-left: calc((100% - (135px * 4)) / 3);
+
+  &:nth-child(4n + 1) {
+    margin-left: 0;
+  }
+}
+
+.uploader-item__close {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: $red;
+  border: 2px solid #fff;
+  &:before {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: svg-load('icons/close.svg', fill=#fff) center center / contain no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

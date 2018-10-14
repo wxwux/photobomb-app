@@ -7,26 +7,28 @@
       .album-card__photo(
         :style="`background-image: url(${fullCoverUrl})`"
       )
-    .album-card__data {{title}}
+    .album-card__data 
+      card-edit-line(:title="title")
+      
 
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
+import CardEditLine from "./card-edit-line.vue";
 
 @Component({
-  name: "CardAlbum"
+  name: "CardAlbum",
+  components: { CardEditLine }
 })
 export default class CardAlbum extends Vue {
-
-  @Prop({default: "Новый альбом"})
+  @Prop({ default: "Новый альбом" })
   public title!: string;
 
-  @Prop()
-  public cover!: string;
+  @Prop() public cover!: string;
 
-  @Prop({default: "/"})
+  @Prop({ default: "/" })
   public href!: string;
 
   get fullCoverUrl() {

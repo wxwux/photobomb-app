@@ -2,6 +2,9 @@
   div
     .root__header
       app-header
+        template(slot="header-bottom")
+          .search-container
+            search
     main.root__content
       section.x-section.section--white
         .x-container
@@ -49,6 +52,8 @@ import cardList from "../cardList.vue";
 import cardPhoto from "../cardPhoto.vue";
 import footer from "../footer.vue";
 import header from "../header.vue";
+import search from "../search.vue";
+
 
 const modals = namespace("modals");
 const albums = namespace("albums");
@@ -57,7 +62,7 @@ const albums = namespace("albums");
   components: {
     appFooter: footer,
     appHeader: header,
-    cardAlbum, cardList, cardPhoto, roundButton, slideButton
+    cardAlbum, cardList, cardPhoto, roundButton, slideButton, search
   },
   name: "MainPage"
 })
@@ -78,6 +83,11 @@ export default class MainPage extends Vue {
 </script>
 
 <style lang="pcss" scoped>
+  .search-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .section__load-btn {
     display: flex;
     justify-content: center;

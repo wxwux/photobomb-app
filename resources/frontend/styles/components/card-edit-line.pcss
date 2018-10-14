@@ -1,0 +1,28 @@
+.card-edit-line {
+  display: flex;
+  position: relative;
+  padding-left: 46px;
+  justify-content: flex-end;
+  width: 100%;
+  &:before {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: svg-load('icons/edit.svg', fill=#d6d6d6) center center no-repeat / contain;
+    transition: .3s;
+    min-width: 20px;
+  }
+}
+
+.card-edit-line {
+  cursor: pointer;
+  &:hover {
+    &:before {
+      background-image: svg-load('icons/edit.svg', fill=#848484);
+    }
+  }
+}

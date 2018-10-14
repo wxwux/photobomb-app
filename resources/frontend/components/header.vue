@@ -32,7 +32,9 @@
               icon="edit"
             )
     .header__search
-      search
+      .header__bar
+        .x-container.header__bar-container
+          slot(name="header-bottom")
 
 </template>
 <script lang="ts">
@@ -41,12 +43,10 @@ import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import { NewAlbum } from "../store/modules/albums/types";
 import slideButton from "./buttonSlide.vue";
-import search from "./search.vue";
 import user from "./user.vue";
 
 @Component({
   components: {
-    search,
     slideButton,
     user
   },

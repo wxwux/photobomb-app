@@ -5,10 +5,20 @@
         view="album-view"
         :headerData="currentAlbum"
       )
+        template(slot="header-bottom")
+          likes-display
     main.root__content
       section.x-section.x-section--gray
         .x-container
-
+          .x-section-side-buttons
+            slide-button(
+              text="Добавить"
+              icon="add"
+              @click.native="showModal('upload-photos')"
+            )
+          .section__content.x-section_padding_top
+            card-list(props="props" :items="[{}, {}, {}, {}, {}, {}]")
+              card-photo(view="simple")
     .root__footer
       app-footer(
         :footerData="currentAlbum"
@@ -20,8 +30,12 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Mutation, namespace, State } from "vuex-class";
 import { NewAlbum } from "../../store/modules/albums/types";
+import slideButton from "../buttonSlide.vue";
+import cardList from "../cardList.vue";
+import cardPhoto from "../cardPhoto.vue";
 import footer from "../footer.vue";
 import header from "../header.vue";
+import likesDisplay from "../likes-display.vue";
 
 const modals = namespace("modals");
 const albums = namespace("albums");
@@ -30,8 +44,12 @@ const albums = namespace("albums");
   components: {
     appFooter: footer,
     appHeader: header,
+    likesDisplay,
+    slideButton,
+    cardList,
+    cardPhoto
   },
-  name: "MainPage"
+  name: "AlbumPage"
 })
 export default class MainPage extends Vue {
   @modals.Mutation("showModal")

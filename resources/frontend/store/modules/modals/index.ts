@@ -10,7 +10,6 @@ const state: ModalsState = {
 
 const mutations: MutationTree<ModalsState> = {
   showModal(modalsState: any, modalToShow: ModalsState) {
-    console.log("showModal");
     modalsState.currentModal = modalToShow;
   },
   clearModal(modalsState: any) {

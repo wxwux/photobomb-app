@@ -68,6 +68,7 @@ import Vue from "vue";
 import { mixins } from "vue-class-component";
 import { Component, Prop } from "vue-property-decorator";
 import { Action, Mutation, namespace } from "vuex-class";
+import { renderFile } from "../helpers/files";
 import { NewAlbum } from "../store/modules/albums/types";
 import buttonRound from "./buttonRound.vue";
 import inputRounded from "./inputRounded.vue";
@@ -102,8 +103,10 @@ const modals = namespace("modals");
   components: { inputRounded, buttonRound, modalsItem }
 })
 export default class ModalsAlbum extends mixins() {
-  @albums.Action("createNewAlbum") public createAlbumAction: any;
-  @modals.Mutation("clearModal") public closeModal!: any;
+  @albums.Action("createNewAlbum")
+  public createAlbumAction: any;
+  @modals.Mutation("clearModal")
+  public closeModal!: any;
 
   public newAlbum: NewAlbum = {
     title: "",
@@ -111,25 +114,15 @@ export default class ModalsAlbum extends mixins() {
     cover: null
   };
 
-  public setCoverPicture(cover: File) {
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      const coverBlock = this.$refs.cover as HTMLElement;
-      coverBlock.style.backgroundImage = `url(${reader.result})`;
-    };
-
-    reader.readAsDataURL(cover);
-  }
-
   public gatherData(e: any) {
     if (!e.target.files.length) {
       return;
     }
     const file = e.target.files[0];
+    const cover = this.$refs.cover as HTMLElement;
 
     this.newAlbum.cover = file;
-    this.setCoverPicture(file);
+    renderFile(file, cover);
   }
 
   public clearFormData() {
