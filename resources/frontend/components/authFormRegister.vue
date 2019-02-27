@@ -1,5 +1,5 @@
 <template lang="pug">
-  auth-form(@submitForm="register(newUser)")
+  auth-form(@submitForm="registerNewUser(newUser)")
     div(slot="title")
       h1.auth-page__title-text Регистрация
     div(slot="inputs")
@@ -40,7 +40,7 @@
 import Vue from "vue";
 import { Emit } from "vue-property-decorator";
 import { Component, Prop, Watch } from "vue-property-decorator";
-import { Action } from "vuex-class";
+import { Action, Mutation } from "vuex-class";
 import { NewUser } from "../store/modules/user/types";
 import authForm from "./authForm.vue";
 import buttonRound from "./buttonRound.vue";
@@ -59,11 +59,39 @@ export default class AuthFormLogin extends Vue {
     password: ""
   };
 
-  @Action("register", {namespace})
+  @Action("register", { namespace })
   public register: any;
+
+  @Mutation("showAlerts", { namespace: "alerts" })
+  public showAlerts: any;
 
   public switchForm(): void {
     this.$emit("switchForm", "auth-form-login");
+  }
+
+  public async registerNewUser(userData: NewUser): Promise<any> {
+    try {
+      const response = await this.register(userData);
+
+      this.showAlerts({
+        type: "warning",
+        messages: ["Регистрация прошла успешно"]
+      });
+
+      this.newUser.name = "";
+      this.newUser.email = "";
+      this.newUser.password = "";
+
+      this.switchForm();
+    } catch (error) {
+      const errors = error.response.data.errors;
+      const errorMessages = Object.keys(errors).map(field => errors[field][0]);
+
+      this.showAlerts({
+        type: "error",
+        messages: [errorMessages[0]]
+      });
+    }
   }
 }
 </script>

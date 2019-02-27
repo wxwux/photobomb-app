@@ -1,4 +1,4 @@
-import axios, {AxiosInstance} from "axios";
+import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
 import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes";
@@ -18,11 +18,22 @@ const router: VueRouter = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.public)) {
-    console.log("не пуплик");
-  }
+  const isPublicRoute: boolean = to.matched.some(record => record.meta.public);
+  if (isPublicRoute === false) next();
 
-  next();
+  protectRequests
+    .get("/user", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    })
+    .then((response: AxiosResponse) => {
+      next();
+    })
+    .catch((error: AxiosError) => {
+      router.replace("/auth");
+      localStorage.removeItem("token");
+    });
 });
 
 export default router;

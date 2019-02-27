@@ -1,5 +1,5 @@
 <template lang="pug">
-  auth-form(@submitForm="login(user)")
+  auth-form(@submitForm="enter(user)")
     div(slot="title")
       h1.auth-page__title-text Добро пожаловать
       .auth-page__title-sub 
@@ -38,7 +38,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Emit } from "vue-property-decorator";
-import { Action } from "vuex-class";
+import { Action, Mutation } from "vuex-class";
 import { setupToken } from "../helpers/jwt";
 import { User, UserState } from "../store/modules/user/types";
 import authForm from "./authForm.vue";
@@ -55,9 +55,25 @@ export default class AuthFormLogin extends Vue {
   @Action("login", { namespace })
   public login: any;
 
+  @Mutation("showAlerts", { namespace: "alerts" })
+  public showAlerts: any;
+
   public user: User = {
     email: "",
     password: ""
   };
+
+  async enter(user: User) {
+    try {
+      await this.login(user);
+
+      this.$router.replace('/');
+    } catch (error) {
+      this.showAlerts({
+        type: "warning",
+        messages: [error.message]
+      });
+    }
+  }
 }
 </script>

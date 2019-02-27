@@ -1,10 +1,10 @@
-import axios, { AxiosInstance } from "axios";
+import App from "./App.vue";
+import axiosRequests from "./requests";
+import router from "./router";
+import store from "./store";
 import SimpleVueValidation from "simple-vue-validator";
 import Vue from "vue";
 import VueAxiosPlugin from "vue-axios-plugin";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
 
 Vue.use(SimpleVueValidation);
 Vue.use(VueAxiosPlugin);
@@ -22,18 +22,11 @@ declare module "vue/types/options" {
   }
 }
 
-const storeRequests: AxiosInstance = axios.create({
-  baseURL: "/api",
-  headers: {
-    Authorization : `Bearer ${localStorage.getItem("token")}`
-  }
-});
-
-store.$axios = storeRequests;
+store.$axios = axiosRequests;
 
 const PhotoApp: any = new Vue({
   el: "#app",
-  render: (h) => h(App),
+  render: h => h(App),
   router,
   store
 });

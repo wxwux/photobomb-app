@@ -17,6 +17,10 @@ class AuthController extends Controller
             'name' => 'required|unique:users',
             'password' => 'required',
             'email' => 'required|email|unique:users'
+        ], [
+            'required' => "Поле обязательно для заполнения",
+            'name.unique' => "Пользователь с таким имененм уже существует",
+            'email.unique' => "Пользователь с таким email уже существует"
         ])->validate();
         
         $user = new User([
@@ -32,7 +36,7 @@ class AuthController extends Controller
             // 'user' => $user,
             'message' => 'Регистрация прошла успешно'
         ]);
-    }   
+    }  
 
     public function login(Request $request)
     {
@@ -42,7 +46,7 @@ class AuthController extends Controller
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json([
                     'status' => 0,
-                    'error' => 'Не верное имя поля или пароль'
+                    'error' => 'Не верное имя пользователя или пароль'
                 ], 401);
             }
         } catch (JWTException $e) {
@@ -56,7 +60,11 @@ class AuthController extends Controller
             'status' => 1,
             'message' => 'Успешный вход',
             'token' => $token,
-            'ttl' => env('TTL') * 60,
+        ]);
+    }
+
+    public function getUser() {
+        return response()->json([
             'user' => Auth::user()
         ]);
     }
