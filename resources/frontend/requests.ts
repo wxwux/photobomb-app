@@ -1,34 +1,41 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosInstance } from "axios";
+import { setAuthHeaderToAxios, setTokenToStorage } from "./helpers/jwt";
+
 const token = localStorage.getItem("token");
 
-axios.defaults.baseURL = "/api";
+const requests: AxiosInstance = axios.create({
+  baseURL: "/api",
+  headers : {
+    Authorization : `Bearer ${token}`
+  }
+})
 
-if (token) {
-  axios.defaults.headers.Authorization = `Bearer ${token}`;
-}
+requests.interceptors.response.use(
+  (response: AxiosResponse) => {
+    return response;
+  },
+  (error: AxiosError) => {
+    if (error.response!.status !== 401) {
+      return Promise.reject(error);
+    }
 
-// axios.interceptors.response.use(
-//   (response: AxiosResponse) => {
-//     return response;
-//   },
-//   (error: AxiosError) => {
-//     if (error.response!.status !== 401) {
-//       return Promise.reject(error);
-//     }
+    const originalRequest: AxiosRequestConfig = error.config;
 
-//     const originalRequest: AxiosRequestConfig = error.config;
+    originalRequest.baseURL = '';
 
-//     return axios.post("/refreshToken").then((response: AxiosResponse) => {
-//       const newToken: string = response.data.token;
+    console.log(originalRequest);
+    
+    return requests.post("/refreshToken").then((response: AxiosResponse) => {
+      const newToken: string = response.data.token;
 
-//       localStorage.setItem("token", newToken);
+      setTokenToStorage(newToken);
+      setAuthHeaderToAxios(requests, newToken);
 
-//       axios.defaults.headers.Authorization = `Bearer ${newToken}`;
-//       originalRequest.headers.Authorization = `Bearer ${newToken}`;
+      originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
-//       return axios(originalRequest);
-//     });
-//   }
-// );
+      return axios(originalRequest);
+    });
+  }
+);
 
-export default axios;
+export default requests;

@@ -10,5 +10,5 @@ export interface NewUser {
 }
 
 export interface UserState {
-  data: object[] | null;
+  user: object | null;
 }

@@ -6,6 +6,10 @@ import requests from "../../../requests";
 
 const namespaced: boolean = true;
 
+// const state: UserState  = {
+//   user: null
+// }
+
 const actions: ActionTree<UserState, RootState> = {
   async login({ commit }, existedUser: User): Promise<any> {
     try {
@@ -13,12 +17,6 @@ const actions: ActionTree<UserState, RootState> = {
         "/login",
         existedUser
       );
-
-      if (response.status === 200) {
-        const { token } = response.data;
-        localStorage.setItem("token", token);
-        requests.defaults.headers.Authorization = `Bearer ${token}`;
-      }
 
       return response;
     } catch (error) {
@@ -41,6 +39,7 @@ const actions: ActionTree<UserState, RootState> = {
 
 const user: Module<UserState, RootState> = {
   namespaced,
+  // state,
   actions
 };
 

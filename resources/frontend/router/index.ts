@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
+import routes from "./routes";
 import Vue from "vue";
 import VueRouter from "vue-router";
-import routes from "./routes";
 
 Vue.use(VueRouter);
 
@@ -19,7 +19,9 @@ const router: VueRouter = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const isPublicRoute: boolean = to.matched.some(record => record.meta.public);
-  if (isPublicRoute === false) next();
+  if (isPublicRoute === false) {
+    next();
+  }
 
   protectRequests
     .get("/user", {

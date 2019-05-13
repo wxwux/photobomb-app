@@ -1,6 +1,6 @@
 <template lang="pug">
   ul.cards-list(:class="`cards-list--row-by-${itemsInRow}`")
-    li.cards-list__item(v-for="item in items" :key="Math.random()")
+    li.cards-list__item(v-for="item in items" :key="item.id")
       slot(:item="item")
 </template>
 

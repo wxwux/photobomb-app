@@ -18,7 +18,8 @@
             )
           .section__content.x-section_padding_top
             card-list(props="props" :items="[{}, {}, {}, {}, {}, {}]")
-              card-photo(view="simple")
+              template(scope="card")
+                card-photo(view="simple")
     .root__footer
       app-footer(
         :footerData="currentAlbum"

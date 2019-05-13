@@ -39,11 +39,13 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Emit } from "vue-property-decorator";
 import { Action, Mutation } from "vuex-class";
-import { setupToken } from "../helpers/jwt";
+import { setTokenToStorage, setAuthHeaderToAxios } from "../helpers/jwt";
 import { User, UserState } from "../store/modules/user/types";
 import authForm from "./authForm.vue";
 import buttonRound from "./buttonRound.vue";
 import IconedInput from "./inputIconed.vue";
+import axiosRequests from "../requests";
+import { AxiosResponse } from "axios";
 
 const namespace: string = "user";
 
@@ -65,9 +67,13 @@ export default class AuthFormLogin extends Vue {
 
   async enter(user: User) {
     try {
-      await this.login(user);
+      const response: AxiosResponse = await this.login(user);
+      const token: string = response.data.token;
 
-      this.$router.replace('/');
+      setTokenToStorage(token);
+      setAuthHeaderToAxios(axiosRequests, token);
+
+      this.$router.replace("/");
     } catch (error) {
       this.showAlerts({
         type: "warning",

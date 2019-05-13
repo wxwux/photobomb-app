@@ -1,5 +1,13 @@
-export const setupToken = (token: string, ttlInSeconds: number): void => {
-  const tokenTime: number = Math.floor(Date.now() / 1000 + ttlInSeconds);
+import { AxiosInstance } from "axios";
+
+export const setTokenToStorage = (token: string): void => {
   localStorage.setItem("token", token);
-  localStorage.setItem("ttl", tokenTime.toString());
+};
+
+export const getTokenFromStorage = (): string | null => {
+  return localStorage.getItem("token");
+};
+
+export const setAuthHeaderToAxios = (axiosInstance: AxiosInstance, token: string) => {
+  axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
 };
