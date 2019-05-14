@@ -44,7 +44,7 @@ export default class RoundButton extends Vue {
   public icon!: string;
 
   public mounted() {
-    console.log("listen", this.$listeners);
+    // console.log("listen", this.$listeners);
   }
 }
 </script>

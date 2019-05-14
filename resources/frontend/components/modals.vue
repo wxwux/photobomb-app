@@ -1,13 +1,14 @@
 <template lang="pug">
-  #modals-container.modals(:class="{active: currentModal.length}")
+  #modals-container.modals(:class="{active: modalHasShown}")
     .modals__layout
-    .modals__container
-      component(
-        v-for="modal in modals"
-        v-if="currentModal === modal"
-        :is="modal"
-        :key="modal"
-      ) 
+    .modals__positioner
+      .modals__container
+        component(
+          v-for="modal in modals"
+          v-if="currentModal === modal"
+          :is="modal"
+          :key="modal"
+        ) 
           
 </template>
 
@@ -30,6 +31,19 @@ export default class Modals extends Vue {
   public currentModal!: string;
 
   public modals: string[] = ["albums", "upload-photos"];
+
+  get modalHasShown() {
+    return !!this.currentModal.length;
+  }
+
+  @Watch('modalHasShown')
+  public lockTheBody(val: boolean) {
+    if (val) {
+      document.body.classList.add('locked');
+    } else {
+      document.body.classList.remove('locked');
+    }
+  }
 }
 </script>
 <style lang="pcss" src="styles/modals.pcss" scoped></style> 

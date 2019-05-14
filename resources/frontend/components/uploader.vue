@@ -3,14 +3,15 @@
     label.uploader__elem(
     :class="{active: isActiveView, uploaded: anyPicsUploaded}"
       @dragover.prevent="isActiveView = true"
-      @dragleave.prevent="isActionView = false"
+      @dragleave.prevent="isActiveView = false"
       @drop.prevent="handleUpload"
     )
       input(
         type="file"
         multiple="true"
         ref="uploader"
-        v-if="anyPicsUploaded === false"
+        v-if="anyPicsUploaded === false",
+        @change="handleUpload"
       ).uploader__real
       .uploader__items
         uploader-item(
@@ -50,18 +51,22 @@ export default class Uploader extends Vue {
   get anyPicsUploaded(): boolean {
     return this.picsToRender.length !== 0;
   }
+
   public handleUpload(e): void {
     e.preventDefault();
     this.isActiveView = false;
-    this.renderUploadedFiles(e);
+
+    const filesObject = e.dataTransfer || e.target;
+
+    const files = filesObject.files;
+
+    this.renderUploadedFiles(files);
   }
 
-  public renderUploadedFiles(e): void {
-    const uploader = this.$refs.uploader as HTMLElement;
-    const files = e.dataTransfer.files;
-
+  public renderUploadedFiles(files): void {
+    // const uploader = this.$refs.uploader as HTMLElement;
     for (const currentFile of files) {
-      this.drawPictures(currentFile).then((reader) => {
+      this.drawPictures(currentFile).then(reader => {
         const picData: PicData = {
           id: uuid(),
           url: reader.result
@@ -79,7 +84,7 @@ export default class Uploader extends Vue {
       reader.onloadend = () => {
         resolve(reader);
       };
-      reader.onerror = (e) => {
+      reader.onerror = e => {
         throw new Error("error");
       };
     });

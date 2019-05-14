@@ -3,12 +3,13 @@
   top: 0;
   left: -9999px;
   bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
   opacity: 0;
   transition: opacity .3s;
   z-index: 1000;
+  overflow: hidden;
   
   &.active {
     left: 0;
@@ -37,6 +38,15 @@
   transform: scale(.9);
   transition: .3s transform;
   will-change: transform;
+}
+
+.modals__positioner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 100%;
+  overflow-y: scroll;
 }
 
 .modal__row {
