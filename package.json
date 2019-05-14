@@ -43,6 +43,7 @@
     "postcss-preset-env": "^4.1.0",
     "postcss-property-lookup": "^2.0.0",
     "postcss-rgb": "^1.0.0",
+    "postcss-scss": "^2.0.0",
     "postcss-svgo": "^2.1.6",
     "pug-plain-loader": "^1.0.0",
     "style-loader": "^0.21.0",
