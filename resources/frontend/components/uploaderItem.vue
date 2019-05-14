@@ -3,6 +3,7 @@
     :style="{backgroundImage: `url('${pic.url}'`}"
   )
     .uploader-item__close(
+      v-if="hideRemoveBtn === false"
       @click="$emit('removeItem', pic.id)"
     )
 </template>
@@ -16,8 +17,11 @@ import { renderFile } from "../helpers/files";
   name: "UploadItem"
 })
 export default class UploaderItem extends Vue {
-  @Prop({ default: {} })
+  @Prop()
   public pic!: string;
+
+  @Prop({default: false})
+  public hideRemoveBtn!: boolean;
 }
 </script>
 

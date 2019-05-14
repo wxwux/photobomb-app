@@ -12,8 +12,19 @@
   border-radius: 7px;
   position: relative;
   cursor: pointer;
+  margin-bottom: 30px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   &.uploaded {
     cursor: default;
+  }
+
+  &--error {
+    min-height: 0;
+    border-color: $red;
   }
 
   &.active {
