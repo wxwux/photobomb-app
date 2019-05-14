@@ -21,12 +21,27 @@ const modals = namespace("modals");
 @Component({
   name: "ModalsItem"
 })
+
 export default class ModalsItem extends Vue {
   @Prop({ default: "Модальное окно" })
   public title!: string;
 
   @modals.Mutation("clearModal")
-  public clearModal!: void;
+  public clearModal;
+
+  public closeModalByEsc(e) {
+    if (e.keyCode === 27) {
+      this.clearModal();
+    }
+  }
+
+  public mounted() {
+    document.addEventListener("keydown", this.closeModalByEsc);
+  }
+
+  public destroyed() {
+    document.removeEventListener("keydown", this.closeModalByEsc);
+  }
 }
 </script>
 

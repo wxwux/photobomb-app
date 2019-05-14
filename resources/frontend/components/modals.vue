@@ -1,6 +1,5 @@
 <template lang="pug">
   #modals-container.modals(
-    v-if="modalHasShown"
     :class="{active: modalHasShown}"
   )
     .modals__layout(
@@ -25,7 +24,6 @@ import { namespace, State } from "vuex-class";
 import { ModalsState } from "../store/modules/modals/types";
 import albums from "./modalsAlbum.vue";
 import uploadPhotos from "./modalsUploadPhotos.vue";
-
 
 const modals: BindingHelpers = namespace("modals");
 
@@ -55,24 +53,6 @@ export default class Modals extends Vue {
     }
   }
 
-  public closeModalByEsc(e) {
-    console.log(e);
-
-    // if (e.keyCode === 27) {
-
-    // }
-  }
-
-  public mounted() {
-    console.log("mounted");
-    // document.addEventListener("keydown", this.closeModalByEsc);
-  }
-
-  public destroyed() {
-    console.log("destroy");
-
-    // document.removeEventListener('keydown', this.closeModalByEsc);
-  }
 }
 </script>
 <style lang="pcss" src="styles/modals.pcss" scoped></style> 
