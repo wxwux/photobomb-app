@@ -8,7 +8,7 @@ const requests: AxiosInstance = axios.create({
   headers : {
     Authorization : `Bearer ${token}`
   }
-})
+});
 
 requests.interceptors.response.use(
   (response: AxiosResponse) => {
@@ -21,10 +21,10 @@ requests.interceptors.response.use(
 
     const originalRequest: AxiosRequestConfig = error.config;
 
-    originalRequest.baseURL = '';
+    originalRequest.baseURL = "";
 
     console.log(originalRequest);
-    
+
     return requests.post("/refreshToken").then((response: AxiosResponse) => {
       const newToken: string = response.data.token;
 

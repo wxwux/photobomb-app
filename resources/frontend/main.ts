@@ -26,7 +26,7 @@ store.$axios = axiosRequests;
 
 const PhotoApp: any = new Vue({
   el: "#app",
-  render: h => h(App),
+  render: (h) => h(App),
   router,
   store
 });

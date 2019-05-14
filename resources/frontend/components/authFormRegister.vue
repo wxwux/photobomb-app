@@ -85,7 +85,7 @@ export default class AuthFormLogin extends Vue {
       this.switchForm();
     } catch (error) {
       const errors = error.response.data.errors;
-      const errorMessages = Object.keys(errors).map(field => errors[field][0]);
+      const errorMessages = Object.keys(errors).map((field) => errors[field][0]);
 
       this.showAlerts({
         type: "error",

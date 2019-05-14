@@ -1,6 +1,11 @@
 <template lang="pug">
-  #modals-container.modals(:class="{active: modalHasShown}")
-    .modals__layout
+  #modals-container.modals(
+    v-if="modalHasShown"
+    :class="{active: modalHasShown}"
+  )
+    .modals__layout(
+      @click="clearModal"
+    )
     .modals__positioner
       .modals__container
         component(
@@ -14,13 +19,15 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { BindingHelpers } from "vuex-class/lib/bindings";
 import { Component, Watch } from "vue-property-decorator";
 import { namespace, State } from "vuex-class";
 import { ModalsState } from "../store/modules/modals/types";
 import albums from "./modalsAlbum.vue";
 import uploadPhotos from "./modalsUploadPhotos.vue";
 
-const modals = namespace("modals");
+
+const modals: BindingHelpers = namespace("modals");
 
 @Component({
   name: "Modals",
@@ -30,19 +37,41 @@ export default class Modals extends Vue {
   @modals.State((state: ModalsState) => state.currentModal)
   public currentModal!: string;
 
+  @modals.Mutation("clearModal")
+  public clearModal!: void;
+
   public modals: string[] = ["albums", "upload-photos"];
 
   get modalHasShown() {
     return !!this.currentModal.length;
   }
 
-  @Watch('modalHasShown')
+  @Watch("modalHasShown")
   public lockTheBody(val: boolean) {
     if (val) {
-      document.body.classList.add('locked');
+      document.body.classList.add("locked");
     } else {
-      document.body.classList.remove('locked');
+      document.body.classList.remove("locked");
     }
+  }
+
+  public closeModalByEsc(e) {
+    console.log(e);
+
+    // if (e.keyCode === 27) {
+
+    // }
+  }
+
+  public mounted() {
+    console.log("mounted");
+    // document.addEventListener("keydown", this.closeModalByEsc);
+  }
+
+  public destroyed() {
+    console.log("destroy");
+
+    // document.removeEventListener('keydown', this.closeModalByEsc);
   }
 }
 </script>

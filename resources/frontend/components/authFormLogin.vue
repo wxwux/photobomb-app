@@ -65,7 +65,7 @@ export default class AuthFormLogin extends Vue {
     password: ""
   };
 
-  async enter(user: User) {
+  public async enter(user: User) {
     try {
       const response: AxiosResponse = await this.login(user);
       const token: string = response.data.token;

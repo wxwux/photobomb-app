@@ -31,7 +31,6 @@ const actions: ActionTree<Album, RootState> = {
   createNewAlbum({ commit }, newAlbum: Album) {
     return this.$axios.post("/albums", newAlbum).then(
       (response: AxiosResponse) => {
-        console.log("albums response", response);
         const createdAlbum = response.data;
         commit("addNewUserAlbum", response.data);
         commit(
@@ -64,7 +63,6 @@ const actions: ActionTree<Album, RootState> = {
   },
 
   fetchUserAlbums({ commit }, store) {
-    console.log("fetcho");
     this.$axios.get("/albums").then((response: AxiosResponse) => {
       commit("addAllUserAlbums", response.data);
     });

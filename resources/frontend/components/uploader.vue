@@ -66,7 +66,7 @@ export default class Uploader extends Vue {
   public renderUploadedFiles(files): void {
     // const uploader = this.$refs.uploader as HTMLElement;
     for (const currentFile of files) {
-      this.drawPictures(currentFile).then(reader => {
+      this.drawPictures(currentFile).then((reader) => {
         const picData: PicData = {
           id: uuid(),
           url: reader.result
@@ -84,7 +84,7 @@ export default class Uploader extends Vue {
       reader.onloadend = () => {
         resolve(reader);
       };
-      reader.onerror = e => {
+      reader.onerror = (e) => {
         throw new Error("error");
       };
     });
