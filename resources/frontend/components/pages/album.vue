@@ -18,7 +18,7 @@
             )
           .section__content.x-section_padding_top
             card-list(props="props" :items="[{}, {}, {}, {}, {}, {}]")
-              template(scope="card")
+              template(slot-scope="card")
                 card-photo(view="simple")
     .root__footer
       app-footer(
