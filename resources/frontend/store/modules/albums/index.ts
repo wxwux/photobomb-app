@@ -28,36 +28,17 @@ const mutations: MutationTree<Album> = {
 };
 
 const actions: ActionTree<Album, RootState> = {
-  createNewAlbum({ commit }, newAlbum: Album) {
-    return this.$axios.post("/albums", newAlbum).then(
-      (response: AxiosResponse) => {
-        const createdAlbum = response.data;
-        commit("addNewUserAlbum", response.data);
-        commit(
-          "alerts/showAlerts",
-          {
-            type: "success",
-            messages: ["Альбом добавлен"]
-          },
-          { root: true }
-        );
-      },
-      (error: AxiosError) => {
-        console.error(error);
-        commit(
-          "alerts/showAlerts",
-          {
-            type: "error",
-            messages: ["Ошибка. Не удалось добавить альбом"]
-          },
-          { root: true }
-        );
-      }
-    );
+  async createNewAlbum({ commit }, newAlbum: Album): Promise<any> {
+    try {
+      const response: AxiosResponse = await this.$axios.post("/albums", newAlbum);
+      commit("addNewUserAlbum", response.data);
+    } catch (error) {
+      throw new Error(error);
+    }
   },
 
-  fetchAlbumById({commit}, albumId: number) {
-    this.$axios(`/albums/${albumId}`).then((response: AxiosResponse) => {
+  fetchAlbumById({ commit }, albumId: number) {
+    this.$axios.get(`/albums/${albumId}`).then((response: AxiosResponse) => {
       commit("addCurrentAlbum", response.data);
     });
   },

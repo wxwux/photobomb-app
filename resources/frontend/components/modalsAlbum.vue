@@ -76,6 +76,7 @@ import modalsItem from "./modalsItem.vue";
 
 const albums = namespace("albums");
 const modals = namespace("modals");
+const alerts = namespace("alerts");
 
 @Component({
   name: "ModalsAlbum",
@@ -105,8 +106,12 @@ const modals = namespace("modals");
 export default class ModalsAlbum extends mixins() {
   @albums.Action("createNewAlbum")
   public createAlbumAction: any;
+
   @modals.Mutation("clearModal")
   public closeModal!: any;
+
+  @alerts.Mutation("showAlerts")
+  public showAlerts;
 
   public newAlbum: NewAlbum = {
     title: "",
@@ -142,11 +147,22 @@ export default class ModalsAlbum extends mixins() {
       return;
     }
 
-    Object.keys(this.newAlbum).forEach((prop) => {
+    Object.keys(this.newAlbum).forEach(prop => {
       formData.append(prop, this.newAlbum[prop]);
     });
 
-    const albumCreated = await this.createAlbumAction(formData);
+    try {
+      const albumCreated = await this.createAlbumAction(formData);
+      this.showAlerts({
+        type: "success",
+        messages: ["Альбом добавлен"]
+      });
+    } catch (error) {
+      this.showAlerts({
+        type: "error",
+        messages: ["Ошибка. Не удалось добавить альбом"]
+      });
+    }
     this.closeModal();
   }
 
