@@ -15,11 +15,13 @@
             button-round(
               text="Сохранить"
               :filled="true"
+              @click="uploadPhotosToAlbum"
             )
           .modal__buttons-elem
             button-round(
               text="Отменить"
               bgClass="transparent"
+              @click="clearModal"
             )
 </template>
 
@@ -33,7 +35,10 @@ import { BindingHelpers } from "vuex-class/lib/bindings";
 import { namespace, State } from "vuex-class";
 
 import { Album } from "../store/modules/albums/types";
+
 const album: BindingHelpers = namespace("albums");
+const modals: BindingHelpers = namespace("modals");
+const photos: BindingHelpers = namespace("photos");
 
 @Component({
   name: "ModalsUploadPhoto",
@@ -42,6 +47,12 @@ const album: BindingHelpers = namespace("albums");
 export default class ModalsUploadPhotos extends Vue {
   @album.State((state: Album) => state.currentAlbum)
   public currentAlbum!: object;
+
+  @modals.Mutation("clearModal")
+  public clearModal;
+
+  @photos.Action("uploadPhotosToAlbum")
+  public uploadPhotosToAlbum;
 }
 </script>
 

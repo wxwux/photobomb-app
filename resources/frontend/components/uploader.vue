@@ -16,10 +16,10 @@
       ).uploader__real
       .uploader__items
         uploader-item(
-          v-for="pic in picsToRender"
+          v-for="pic in uploadedPhotos"
           :pic="pic.rendered"
           :key="pic.rendered.id"
-          @removeItem="removeItem"
+          @removeItem="removeUploadedPhoto"
         )
       .uploader__desc(v-if="anyPicsUploaded === false") 
         span.uploader__desc-text Перетащите сюда либо #[a.uploader__link выберите фотографии]
@@ -43,11 +43,15 @@ import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import { renderFile } from "../helpers/files";
 import uploaderItem from "./uploaderItem.vue";
+import { namespace } from "vuex-class";
+import { BindingHelpers } from "vuex-class/lib/bindings";
 
 interface PicData {
   id: number;
   url: string;
 }
+
+const photos: BindingHelpers = namespace("photos");
 
 @Component({
   name: "Uploader",
@@ -60,8 +64,17 @@ export default class Uploader extends Vue {
 
   public picsLoadedWithErrors: object[] = [];
 
+  @photos.Mutation("addUploadedPhoto")
+  public addUploadedPhoto;
+
+  @photos.Mutation("removeUploadedPhoto")
+  public removeUploadedPhoto;
+
+  @photos.State((state) => state.uploadedPhotos)
+  public uploadedPhotos!: object[];
+
   get anyPicsUploaded(): boolean {
-    return this.picsToRender.length !== 0;
+    return this.uploadedPhotos.length !== 0;
   }
 
   public handleUpload(e): void {
@@ -96,13 +109,13 @@ export default class Uploader extends Vue {
           continue;
         }
 
-        this.picsToRender.push({
+        this.addUploadedPhoto({
           original: currentFile,
           rendered: renderedInfo
         });
+
       } catch (error) {
         console.log(error);
-        continue;
       }
     }
   }
@@ -115,16 +128,10 @@ export default class Uploader extends Vue {
       reader.onloadend = () => {
         resolve(reader);
       };
-      reader.onerror = e => {
+      reader.onerror = (e) => {
         throw new Error("error");
       };
     });
-  }
-
-  public removeItem(idToRemove: number) {
-    this.picsToRender = this.picsToRender.filter(
-      (pic: any) => pic.rendered.id !== idToRemove
-    );
   }
 }
 </script>

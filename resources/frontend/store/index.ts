@@ -8,6 +8,7 @@ import albums from "./modules/albums";
 import alerts from "./modules/alerts";
 import modals from "./modules/modals";
 import user from "./modules/user";
+import photos from "./modules/photos";
 
 class RootStore<S> extends Store<S> {
   public $axios: any;
@@ -19,7 +20,8 @@ const store: StoreOptions<RootState> = {
     alerts,
     user,
     albums,
-    modals
+    modals,
+    photos
   }
 };
 

@@ -147,7 +147,7 @@ export default class ModalsAlbum extends mixins() {
       return;
     }
 
-    Object.keys(this.newAlbum).forEach(prop => {
+    Object.keys(this.newAlbum).forEach((prop) => {
       formData.append(prop, this.newAlbum[prop]);
     });
 
