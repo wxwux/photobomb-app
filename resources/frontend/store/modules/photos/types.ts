@@ -3,6 +3,7 @@ export interface PhotosState {
   photosWithErrors: PhotoItem[];
   uploadedPhotos: UploadedPhotos;
   photoToEdit: Photo;
+  recentPhotos: Photo[];
 }
 
 export interface UploadedPhotos {

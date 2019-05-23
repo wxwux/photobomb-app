@@ -1,7 +1,7 @@
 <template lang="pug">
-  .card-photo(v-if="view === 'full'")
+  .card-photo.card-photo--full(v-if="view === 'full'")
     .card-photo__picture(
-      style="background-image: url('https://picsum.photos/400/400')"
+      :style="photoStyle"
     )
     .card-photo__user-info
       .card-photo__pics
@@ -10,7 +10,7 @@
             src="https://picsum.photos/100/100", alt=""
           ).card-photo__avatar-pic
       .card-photo__data
-        h3.card-photo__title Путешествие на лодке по озеру
+        h3.card-photo__title {{card.title}}
         .card-photo__social
           likes-and-comments
     .card-photo__photo-info

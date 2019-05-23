@@ -10,9 +10,11 @@
         .x-container
           h1.x-section-title Новое в мире 
           .section__content
-            card-list
-              div(slot-scope="{item}") {{item}}
-                card-photo
+            card-list(props="props" :items="recentPhotos")
+              template(slot-scope="{item: card}")
+                card-photo(
+                  :card="card"
+                )
           .section__load-btn
             .section__load-btn-container
               round-button 
@@ -53,16 +55,23 @@ import cardPhoto from "../cardPhoto.vue";
 import footer from "../footer.vue";
 import header from "../header.vue";
 import search from "../search.vue";
+import { BindingHelpers } from "vuex-class/lib/bindings";
+import { Photo } from "../../store/modules/photos/types";
 
-
-const modals = namespace("modals");
-const albums = namespace("albums");
+const modals: BindingHelpers = namespace("modals");
+const albums: BindingHelpers = namespace("albums");
+const photos: BindingHelpers = namespace("photos");
 
 @Component({
   components: {
     appFooter: footer,
     appHeader: header,
-    cardAlbum, cardList, cardPhoto, roundButton, slideButton, search
+    cardAlbum,
+    cardList,
+    cardPhoto,
+    roundButton,
+    slideButton,
+    search
   },
   name: "MainPage"
 })
@@ -73,38 +82,45 @@ export default class MainPage extends Vue {
   @albums.Action("fetchUserAlbums")
   public fetchUserAlbums!: any;
 
-  @albums.State((state) => state.data)
+  @albums.State(state => state.data)
   public userAlbums!: AlbumItem[];
+
+  @photos.Action("getRecentPhotos")
+  public getRecentPhotos;
+
+  @photos.State(state => state.recentPhotos)
+  public recentPhotos!: Photo[];
 
   public created() {
     this.fetchUserAlbums();
+    this.getRecentPhotos();
   }
 }
 </script>
 
 <style lang="pcss" scoped>
-  .search-container {
-    display: flex;
-    justify-content: flex-end;
-  }
+.search-container {
+  display: flex;
+  justify-content: flex-end;
+}
 
-  .section__load-btn {
-    display: flex;
-    justify-content: center;
-  }
+.section__load-btn {
+  display: flex;
+  justify-content: center;
+}
 
-  .section__load-btn-container {
-    width: 200px;
-  }
+.section__load-btn-container {
+  width: 200px;
+}
 
-  .albums-title {
-    position: relative;
-  }
+.albums-title {
+  position: relative;
+}
 
-  .albums-title__button {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+.albums-title__button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
 </style>

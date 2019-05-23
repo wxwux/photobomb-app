@@ -8,6 +8,7 @@ const namespaced: boolean = true;
 const state: PhotosState = {
   photosToUpload: [],
   photosWithErrors: [],
+  recentPhotos: [],
   photoToEdit: {
     id: 0,
     title: "",
@@ -20,10 +21,12 @@ const state: PhotosState = {
 };
 
 const mutations: MutationTree<PhotosState> = {
+  addRecentPhotos(photosState: PhotosState, recentPhotos: Photo[]) {
+    photosState.recentPhotos = recentPhotos;
+  },
   setUploadedPhotos(photosState: PhotosState, data: UploadedPhotos): void {
     photosState.uploadedPhotos = data;
   },
-
   setPhotoToEdit(photosState: PhotosState, editedPhotoId: number) {
     const getPhotoById = (photo: Photo): boolean => photo.id === editedPhotoId;
 
@@ -99,8 +102,16 @@ const actions: ActionTree<PhotosState, RootState> = {
     } catch (error) {
       console.log(error);
     }
-  }
+  },
 
+  async getRecentPhotos({ commit }): Promise<any> {
+    try {
+      const response: AxiosResponse = await this.$axios.get("/photos/recent");
+      commit("addRecentPhotos", response.data.photos);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 };
 
 const photos: Module<PhotosState, RootState> = {

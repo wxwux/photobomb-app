@@ -73,4 +73,27 @@ class PhotosController extends Controller
             ]);
         }
     }
+
+    public function getRecent() {
+        $photos = AlbumsPhotos::where('user_id', '<>', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->offset(0)
+            ->limit(6)
+            ->get();
+
+        $photosArray = $photos->toArray();
+        shuffle($photosArray);
+
+        $shuffled = [];
+
+        foreach ($photosArray as $photo) {
+            $shuffled[] = $photo;
+        };
+
+        return response()->json([
+            'photos' => $shuffled
+        ]);
+
+    }
+
 }

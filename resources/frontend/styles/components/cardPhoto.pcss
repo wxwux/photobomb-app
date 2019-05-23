@@ -8,12 +8,19 @@
       margin-bottom: 0;
     }
   }
+
+  &--full {
+    .card-photo__user-info {
+      padding: 15px;
+    }
+  }
 }
 
 .card-photo__picture {
   background: no-repeat center center / cover;
   height: 250px;
   cursor: pointer;
+  position: relative;
 
   &:hover {
     &:after {
