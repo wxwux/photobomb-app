@@ -7,7 +7,12 @@
 
 <script lang="ts">
 import Vue from "vue";
-export default class ModalsAlbum extends Vue {}
+import { Component } from "vue-property-decorator";
+
+@Component({
+  name: "LikesButton"
+})
+export default class LikesButton extends Vue {}
 </script>
 
 

@@ -1,0 +1,30 @@
+.comments-component {
+  background: #f6f6f6; 
+  padding: 20px 0;
+}
+
+.comments__title {
+  margin-left: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+
+  &:after {
+    content: "";
+    width: 8px;
+    height: 15px;
+    display: block;
+    background: svg-load('icons/arrow_right.svg', fill=#cfcfcf, width=100%, height=100%) center center / contain no-repeat;
+    transform: rotate(90deg);
+    margin-left: 10px;
+  }
+}
+
+.comments__row {
+  padding: 15px 20px 15px 10%;
+  border-bottom: 1px solid #e1e1e1;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}

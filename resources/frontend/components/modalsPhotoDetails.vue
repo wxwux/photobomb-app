@@ -6,6 +6,7 @@
       template(slot="modal-content")
         .inner-content
           slider
+
           .details
             .details__header
               .details__user
@@ -18,10 +19,8 @@
               .details__title Путешествие на трамвайчике
               .details__text 
                 p text text text
-        
-          
 
-
+          comments
 </template>
 
 <script lang="ts">
@@ -30,12 +29,13 @@ import { Component, Prop } from "vue-property-decorator";
 import modalsItem from "./modalsItem.vue";
 import likesButton from "./likesButton.vue";
 import slider from "./slider.vue";
+import comments from "./comments.vue";
 
 @Component({
-  name: "ModalsPhotoEdit",
-  components: { modalsItem, slider, likesButton }
+  name: "ModalsPhotoDetails",
+  components: { modalsItem, slider, likesButton, comments }
 })
-export default class ModalsAlbum extends Vue {}
+export default class ModalsPhotoDetails extends Vue {}
 </script>
 
 
