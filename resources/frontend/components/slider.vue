@@ -24,4 +24,3 @@ export default class ModalsAlbum extends Vue {}
 
 
 <style lang="pcss" scoped src="styles/slider.pcss"></style>
-

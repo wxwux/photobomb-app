@@ -1,0 +1,57 @@
+.like-btn-component {
+  padding: 10px 15px;
+  border-radius: 100px;
+  background: $red;
+  color: #fff;
+  font-family: "panton";
+  font-weight: bold;
+  align-items: center;
+  display: flex;
+  position: relative;
+
+  &:hover {
+    &:before {
+      background: svg-load("icons/like.svg", fill=#fff, width=100%, height=100%)
+        center center / contain no-repeat;
+    }
+  }
+
+  &.liked {
+    &:hover {
+      &:before {
+        background: svg-load(
+            "icons/like.svg",
+            fill=#fff,
+            width=100%,
+            height=100%
+          )
+          center center / contain no-repeat;
+      }
+    }
+    
+    &:before {
+      background: svg-load("icons/like.svg", fill=#fff, width=100%, height=100%)
+        center center / contain no-repeat;
+    }
+  }
+
+  &.blocked {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    width: 23px;
+    height: 19px;
+    background: svg-load(
+        "icons/no_like.svg",
+        fill=transparent,
+        width=100%,
+        height=100%
+      )
+      center center / contain no-repeat;
+    margin-right: 10px;
+  }
+}
