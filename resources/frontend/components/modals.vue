@@ -26,12 +26,13 @@ import { ModalsState } from "../store/modules/modals/types";
 import albums from "./modalsAlbum.vue";
 import uploadPhotos from "./modalsUploadPhotos.vue";
 import photoEdit from "./modalsPhotoEdit.vue";
+import photoDetails from "./modalsPhotoDetails.vue";
 
 const modals: BindingHelpers = namespace("modals");
 
 @Component({
   name: "Modals",
-  components: { albums, uploadPhotos, photoEdit }
+  components: { albums, uploadPhotos, photoEdit, photoDetails }
 })
 export default class Modals extends Vue {
   @modals.State((state: ModalsState) => state.currentModal)
@@ -40,7 +41,7 @@ export default class Modals extends Vue {
   @modals.Mutation("clearModal")
   public clearModal!: void;
 
-  public modals: string[] = ["albums", "upload-photos", "photo-edit"];
+  public modals: string[] = ["albums", "upload-photos", "photo-edit", "photo-details"];
 
   get modalHasShown() {
     return !!this.currentModal.length;

@@ -20,6 +20,7 @@
     .card-photo__picture-wrap
       .card-photo__picture(
         :style="photoStyle"
+        @click="showModal('photo-details')"
       )
       .card-photo__onpicture-data
         likes-and-comments

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .modal
+  .modal(v-if="view === 'template'")
     .modal__header
       .modal__title {{title}}
       .modal__close(
@@ -9,6 +9,9 @@
       slot(name="modal-content")
     .modal__buttons
       slot(name="modal-buttons")
+
+  .modal.modal--view_blank(v-else-if="view === 'blank'")
+    slot(name="modal-content")
 </template>
 
 <script lang="ts">
@@ -24,6 +27,9 @@ const modals = namespace("modals");
 export default class ModalsItem extends Vue {
   @Prop({ default: "Модальное окно" })
   public title!: string;
+
+  @Prop({default: "template"})
+  public view!: string;
 
   @modals.Mutation("clearModal")
   public clearModal;
