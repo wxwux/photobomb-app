@@ -1,10 +1,18 @@
-export interface Album {
-  data: NewAlbum[];
-  currentAlbum: NewAlbum;
+export interface AlbumState {
+  data: AlbumItem[];
+  currentAlbum: CurrentAlbum;
 }
 
-export interface NewAlbum {
+export interface AlbumItem {
   title: string;
   desc: string;
   cover?: any;
+}
+
+
+export interface CurrentAlbum {
+  id: number;
+  title: string;
+  desc: string;
+  cover: any;
 }

@@ -14,14 +14,14 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
-import { NewAlbum } from "../store/modules/albums/types";
+import { AlbumItem } from "../store/modules/albums/types";
 
 @Component({
   name: "Footer"
 })
 export default class Footer extends Vue {
   @Prop({default: () => ({})})
-  public footerData!: NewAlbum;
+  public footerData!: AlbumItem;
 
   public get footerBg(): string {
       // const path = require("@/img/content/header-bg.jpg");

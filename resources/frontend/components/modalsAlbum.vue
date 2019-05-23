@@ -69,7 +69,7 @@ import { mixins } from "vue-class-component";
 import { Component, Prop } from "vue-property-decorator";
 import { Action, Mutation, namespace } from "vuex-class";
 import { renderFile } from "../helpers/files";
-import { NewAlbum } from "../store/modules/albums/types";
+import { AlbumItem } from "../store/modules/albums/types";
 import buttonRound from "./buttonRound.vue";
 import inputRounded from "./inputRounded.vue";
 import modalsItem from "./modalsItem.vue";
@@ -113,7 +113,7 @@ export default class ModalsAlbum extends mixins() {
   @alerts.Mutation("showAlerts")
   public showAlerts;
 
-  public newAlbum: NewAlbum = {
+  public newAlbum: AlbumItem = {
     title: "",
     desc: "",
     cover: null

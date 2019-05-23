@@ -7,3 +7,16 @@ export function renderFile(fileToRender: File, whereToRender: HTMLElement) {
 
   reader.readAsDataURL(fileToRender);
 }
+
+interface FileOptions {
+  getOriginal: boolean;
+}
+
+export function getPhotoPath(fileName: string, folder: string, options?: FileOptions): string {
+  const originalFolder = "origin";
+  const uploadsFolder = "uploads";
+
+  return options && options.getOriginal
+    ? `/${uploadsFolder}/${folder}/${originalFolder}/${fileName}`
+    : `/${uploadsFolder}/${folder}/${fileName}`;
+}

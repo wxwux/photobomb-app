@@ -24,7 +24,8 @@ Route::prefix('api')->group(function () {
         Route::get('albums/{id}', 'AlbumsController@getById');
 
         Route::post('photos', 'PhotosController@uploadPhotos');
-
+        Route::post('photos/{photoId}', 'PhotosController@edit');
+        Route::get('photos/{albumId}', 'PhotosController@view');
     });
 });
 

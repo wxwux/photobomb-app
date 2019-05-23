@@ -9,10 +9,10 @@ const state: ModalsState = {
 };
 
 const mutations: MutationTree<ModalsState> = {
-  showModal(modalsState: any, modalToShow: ModalsState) {
+  showModal(modalsState: any, modalToShow: ModalsState): void {
     modalsState.currentModal = modalToShow;
   },
-  clearModal(modalsState: any) {
+  clearModal(modalsState: any): void {
     modalsState.currentModal = "";
   }
 };

@@ -1,5 +1,7 @@
 <template lang="pug">
-  .uploader
+  .uploader(
+    :class="{ blocked: blocked }"
+  )
     label.uploader__elem(
       :class="{active: isActiveView, uploaded: anyPicsUploaded}"
       @dragover.prevent="isActiveView = true"
@@ -24,12 +26,12 @@
       .uploader__desc(v-if="anyPicsUploaded === false") 
         span.uploader__desc-text Перетащите сюда либо #[a.uploader__link выберите фотографии]
 
-    .error-wrapper(v-if="picsLoadedWithErrors.length") 
+    .error-wrapper(v-if="photosWithErrors.length") 
       .error-wrapper__desc Размер файла превышает 1.5 MB
       .uploader__elem.uploader__elem--error
         .uploader__items
           uploader-item(
-            v-for="pic in picsLoadedWithErrors"
+            v-for="pic in photosWithErrors"
             :pic="pic"
             :key="pic.id"
             hideRemoveBtn
@@ -64,14 +66,26 @@ export default class Uploader extends Vue {
 
   public picsLoadedWithErrors: object[] = [];
 
+  @Prop({ default: false })
+  public readonly blocked!: boolean;
+
+  @photos.State((state) => state.photosToUpload)
+  public uploadedPhotos!: object[];
+
+  @photos.State((state) => state.photosWithErrors)
+  public photosWithErrors!: object[];
+
   @photos.Mutation("addUploadedPhoto")
   public addUploadedPhoto;
 
   @photos.Mutation("removeUploadedPhoto")
   public removeUploadedPhoto;
 
-  @photos.State((state) => state.uploadedPhotos)
-  public uploadedPhotos!: object[];
+  @photos.Mutation("clearBrokenPhoto")
+  public clearBrokenPhoto;
+
+  @photos.Mutation("addBrokenPhoto")
+  public addBrokenPhoto;
 
   get anyPicsUploaded(): boolean {
     return this.uploadedPhotos.length !== 0;
@@ -79,13 +93,12 @@ export default class Uploader extends Vue {
 
   public handleUpload(e): void {
     e.preventDefault();
-    this.isActiveView = false;
-    this.picsLoadedWithErrors = [];
-
     const filesObject = e.dataTransfer || e.target;
-
     const files = filesObject.files;
 
+    this.isActiveView = false;
+
+    this.clearBrokenPhoto();
     this.renderUploadedFiles(files);
   }
 
@@ -96,24 +109,20 @@ export default class Uploader extends Vue {
       try {
         const reader = await this.drawPictures(currentFile);
         const overSized = currentFile.size > 1.5 * 1000 * 1000;
-        const renderedInfo: PicData = {
+        const renderedPhoto: PicData = {
           id: uuid(),
           url: reader.result
         };
 
         if (overSized) {
-          this.picsLoadedWithErrors.push({
-            id: uuid(),
-            url: reader.result
-          });
+          this.addBrokenPhoto(renderedPhoto);
           continue;
         }
 
         this.addUploadedPhoto({
           original: currentFile,
-          rendered: renderedInfo
+          rendered: renderedPhoto
         });
-
       } catch (error) {
         console.log(error);
       }

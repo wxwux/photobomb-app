@@ -3,7 +3,7 @@
     .modal__header
       .modal__title {{title}}
       .modal__close(
-        @click="clearModal"
+        @click="closeModal"
       )
     .modal__content
       slot(name="modal-content")
@@ -21,7 +21,6 @@ const modals = namespace("modals");
 @Component({
   name: "ModalsItem"
 })
-
 export default class ModalsItem extends Vue {
   @Prop({ default: "Модальное окно" })
   public title!: string;
@@ -31,8 +30,13 @@ export default class ModalsItem extends Vue {
 
   public closeModalByEsc(e) {
     if (e.keyCode === 27) {
-      this.clearModal();
+      this.closeModal();
     }
+  }
+
+  public closeModal() {
+    this.clearModal();
+    this.$emit("onClose");
   }
 
   public mounted() {

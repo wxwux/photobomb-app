@@ -1,5 +1,7 @@
 <template lang="pug">
-  .card-edit-line {{title}}
+  .card-edit-line(
+    @click="() => $emit('onEdit')"
+  ) {{title}}
 </template>
 <script lang="ts">
 import Vue from "vue";

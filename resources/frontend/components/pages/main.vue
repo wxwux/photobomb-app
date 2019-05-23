@@ -44,7 +44,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Mutation, namespace, State } from "vuex-class";
-import { NewAlbum } from "../../store/modules/albums/types";
+import { AlbumItem } from "../../store/modules/albums/types";
 import roundButton from "../buttonRound.vue";
 import slideButton from "../buttonSlide.vue";
 import cardAlbum from "../cardAlbum.vue";
@@ -74,7 +74,7 @@ export default class MainPage extends Vue {
   public fetchUserAlbums!: any;
 
   @albums.State((state) => state.data)
-  public userAlbums!: NewAlbum[];
+  public userAlbums!: AlbumItem[];
 
   public created() {
     this.fetchUserAlbums();

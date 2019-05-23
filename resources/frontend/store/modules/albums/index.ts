@@ -1,34 +1,42 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { ActionTree, Module, MutationTree } from "vuex";
+import { ActionTree, Module, MutationTree, GetterTree } from "vuex";
 import { RootState } from "../../types";
-import { Album, NewAlbum } from "./types";
+import { AlbumState, AlbumItem, CurrentAlbum } from "./types";
 
 const namespaced: boolean = true;
 
-const state: Album = {
+const state: AlbumState = {
   data: [],
   currentAlbum: {
+    id: 0,
     title: "",
-    desc: ""
+    desc: "",
+    cover: ""
   }
 };
 
-const mutations: MutationTree<Album> = {
-  addAllUserAlbums(albumsState, userAlbums: NewAlbum[]) {
+const getters: GetterTree<AlbumState, RootState> = {
+  getCurrentAlbumId(albumsState: AlbumState): number {
+    return albumsState.currentAlbum.id;
+  }
+};
+
+const mutations: MutationTree<AlbumState> = {
+  addAllUserAlbums(albumsState, userAlbums: AlbumItem[]) {
     albumsState.data = userAlbums;
   },
 
-  addNewUserAlbum(albumsState, newAlbum: NewAlbum) {
+  addNewUserAlbum(albumsState, newAlbum: AlbumItem) {
     albumsState.data.push(newAlbum);
   },
 
-  addCurrentAlbum(albumsState, currentAlbum: NewAlbum) {
+  addCurrentAlbum(albumsState, currentAlbum: CurrentAlbum) {
     albumsState.currentAlbum = currentAlbum;
   }
 };
 
-const actions: ActionTree<Album, RootState> = {
-  async createNewAlbum({ commit }, newAlbum: Album): Promise<any> {
+const actions: ActionTree<AlbumState, RootState> = {
+  async createNewAlbum({ commit }, newAlbum: AlbumItem): Promise<any> {
     try {
       const response: AxiosResponse = await this.$axios.post("/albums", newAlbum);
       commit("addNewUserAlbum", response.data);
@@ -50,11 +58,12 @@ const actions: ActionTree<Album, RootState> = {
   }
 };
 
-const albums: Module<Album, RootState> = {
+const albums: Module<AlbumState, RootState> = {
   state,
   namespaced,
   actions,
-  mutations
+  mutations,
+  getters
 };
 
 export default albums;

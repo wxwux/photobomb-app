@@ -17,9 +17,13 @@
               @click.native="showModal('upload-photos')"
             )
           .section__content.x-section_padding_top
-            card-list(props="props" :items="[{}, {}, {}, {}, {}, {}]")
-              template(slot-scope="card")
-                card-photo(view="simple")
+            card-list(props="props" :items="uploadedPhotos.photos")
+              template(slot-scope="{item: card}")
+                card-photo(
+                  view="simple"
+                  :card="card"
+                  @onEdit="onEdit"
+                )
     .root__footer
       app-footer(
         :footerData="currentAlbum"
@@ -30,16 +34,19 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Mutation, namespace, State } from "vuex-class";
-import { NewAlbum } from "../../store/modules/albums/types";
+import { AlbumItem } from "../../store/modules/albums/types";
 import slideButton from "../buttonSlide.vue";
 import cardList from "../cardList.vue";
 import cardPhoto from "../cardPhoto.vue";
 import footer from "../footer.vue";
 import header from "../header.vue";
 import likesDisplay from "../likes-display.vue";
+import { BindingHelpers } from "vuex-class/lib/bindings";
+import { UploadedPhotos } from "../../store/modules/photos/types";
 
-const modals = namespace("modals");
-const albums = namespace("albums");
+const modals: BindingHelpers = namespace("modals");
+const albums: BindingHelpers = namespace("albums");
+const photos: BindingHelpers = namespace("photos");
 
 @Component({
   components: {
@@ -54,41 +61,57 @@ const albums = namespace("albums");
 })
 export default class MainPage extends Vue {
   @modals.Mutation("showModal")
-  public showModal!: void;
+  public showModal;
 
   @albums.Action("fetchAlbumById")
   public fetchAlbumById!: any;
 
+  @photos.Action("fetchPhotos")
+  public fetchPhotos!: any;
+
+  @photos.State((state) => state.uploadedPhotos)
+  public uploadedPhotos!: UploadedPhotos;
+
+  @photos.Mutation("setPhotoToEdit")
+  public setPhotoToEdit;
+
   @albums.State((state) => state.currentAlbum)
-  public currentAlbum!: NewAlbum;
+  public currentAlbum!: AlbumItem;
 
-  // @albums.State((state) => state.data)
-  // public userAlbums!: NewAlbum[];
+  public onEdit(albumId: number): void {
+    this.showModal("photo-edit");
+    this.setPhotoToEdit(albumId);
+  }
 
-  public created() {
+  public created(): void {
     this.fetchAlbumById(this.$route.params.id);
+  }
+
+  public async mounted(): Promise<any> {
+    const albumId: number = Number(this.$route.params.id);
+    await this.fetchPhotos(albumId);
   }
 }
 </script>
 
 <style lang="pcss" scoped>
-  .section__load-btn {
-    display: flex;
-    justify-content: center;
-  }
+.section__load-btn {
+  display: flex;
+  justify-content: center;
+}
 
-  .section__load-btn-container {
-    width: 200px;
-  }
+.section__load-btn-container {
+  width: 200px;
+}
 
-  .albums-title {
-    position: relative;
-  }
+.albums-title {
+  position: relative;
+}
 
-  .albums-title__button {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+.albums-title__button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
 </style>

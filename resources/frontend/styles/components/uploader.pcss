@@ -1,3 +1,54 @@
+.uploader {
+  position: relative;
+
+  &.blocked {
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(#fff, 0.5);
+      z-index: 10;
+    }
+
+    &:after {
+      content: "";
+      background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.15) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 1rem 1rem;
+      background-color: $blue;
+      height: 16px;
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      right: 20px;
+      z-index: 20;
+      border-radius: 3px;
+      animation: progress 0.4s infinite linear;
+    }
+  }
+}
+
+@keyframes progress {
+  0% {
+    background-position-x: 0;
+  }
+
+  100% {
+    background-position-x: 16px;
+  }
+}
+
 .uploader__items {
   display: flex;
   flex-wrap: wrap;
