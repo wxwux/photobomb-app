@@ -1,18 +1,21 @@
 <template lang="pug">
   button(
     type="text"
-  ).like-btn-component 20
+  ).like-btn-component {{amount}}
     
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 
 @Component({
   name: "LikesButton"
 })
-export default class LikesButton extends Vue {}
+export default class LikesButton extends Vue {
+  @Prop({default: 0})
+  public amount!: number;
+}
 </script>
 
 

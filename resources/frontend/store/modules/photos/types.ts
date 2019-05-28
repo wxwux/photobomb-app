@@ -4,11 +4,7 @@ export interface PhotosState {
   uploadedPhotos: UploadedPhotos;
   photoToEdit: Photo;
   recentPhotos: Photo[];
-  photoInfo: PhotoInfo[];
-}
-
-export interface PhotoInfo {
-  id: number;
+  photoInfo: Photo;
 }
 
 export interface UploadedPhotos {
@@ -22,6 +18,8 @@ export interface Photo {
   description: string;
   filename?: string;
   title: string;
+  likes?: number;
+  comments?: object[];
 }
 
 export interface PhotoItem {

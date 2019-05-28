@@ -1,14 +1,15 @@
 .slider__picture {
   overflow: hidden;
   border-radius: 3px 3px 0px 0px;
+  background: black;
 }
 
 .slider__picture-display {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  height: 450px;
+  object-fit: contain;
+  max-height: 450px;
 }
 
 .slider__inner {
@@ -16,26 +17,35 @@
 }
 
 .slider__btn--left {
-  left: -44px;
-  background: svg-load("icons/arrow_left.svg", fill=white) center center
-    no-repeat;
+  left: -58px;
+  &:before {
+    background: svg-load("icons/arrow_left.svg", fill=white) center center
+      no-repeat;
+  }
 }
 
 .slider__btn--right {
-  right: -60px;
-  background: svg-load("icons/arrow_right.svg", fill=white) center center
-    no-repeat;
+  right: -58px;
+  &:before {
+    background: svg-load("icons/arrow_right.svg", fill=white) center center
+      no-repeat;
+  }
 }
 
 .slider__btn {
+  padding: 20px;
   position: absolute;
-  top: 50%;
-  transform: translate(-50%);
-  width: 16px;
-  height: 26px;
+  top: 200px;
+
+  &:before {
+    content: "";
+    display: block;
+    width: 16px;
+    height: 26px;
+    background-size: contain;
+  }
   opacity: 0.5;
-  transition: .2s;
-  background-size: contain;
+  transition: 0.2s;
 
   &:hover {
     opacity: 1;

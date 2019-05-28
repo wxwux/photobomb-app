@@ -21,9 +21,12 @@
         .card-photo__data
           h3.card-photo__title {{card.title}}
           .card-photo__social
-            likes-and-comments
+            likes-and-comments(
+              :comments="card.comments.length"
+              :likes="card.likes"
+            )
       .card-photo__photo-info
-        .card-photo__album-name Прогулки по воде
+        .card-photo__album-name {{card['album_name']}}
 
   .card-photo.card-photo_simple-view(v-else-if="view === 'simple'")
     .card-photo__picture-wrap
@@ -52,6 +55,7 @@ import { UploadedPhotos } from "../store/modules/photos/types";
 import loader from "./loader.vue";
 
 const modals: BindingHelpers = namespace("modals");
+const photos: BindingHelpers = namespace("photos");
 
 interface Card {
   id: number;
@@ -82,6 +86,9 @@ export default class CardPhoto extends Vue {
   @modals.Mutation("showModal")
   public showModal;
 
+  @photos.Mutation("setDetailedPhoto")
+  public setDetailedPhoto;
+
   public blocked: boolean = false;
 
   public photoStyle: object = {
@@ -93,9 +100,13 @@ export default class CardPhoto extends Vue {
   }
 
   public showDetails() {
-    // this.showModal("photo-details");
-    this.blocked = true;
-    this.$emit("onLoading", this.card.id);
+    this.showModal("photo-details");
+    this.setDetailedPhoto(this.card.id);
+    // // this.blocked = true;
+    // // this.$emit("onLoading", this.card.id);
+
+    // this.getInfoById(this.card.id);
+
   }
 
   public onEditHandler(): void {

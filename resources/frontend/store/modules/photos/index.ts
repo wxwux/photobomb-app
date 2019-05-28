@@ -18,10 +18,23 @@ const state: PhotosState = {
     folder: "",
     photos: []
   },
-  photoInfo: []
+  photoInfo: {
+    id: 0,
+    title: "",
+    description: "",
+    likes: 0,
+    comments: [],
+    filename: ""
+  }
 };
 
 const mutations: MutationTree<PhotosState> = {
+  setDetailedPhoto(photosState: PhotosState, choosedPhotoId: number) {
+    photosState.photoInfo = photosState.recentPhotos.filter((photo: Photo) => {
+      return photo.id === choosedPhotoId;
+    })[0];
+  },
+
   addRecentPhotos(photosState: PhotosState, recentPhotos: Photo[]) {
     photosState.recentPhotos = recentPhotos;
   },
@@ -114,8 +127,10 @@ const actions: ActionTree<PhotosState, RootState> = {
     }
   },
 
-  async getInfoById({commit}, photoId: number): Promise<any> {
-    // test
+  async getInfoById({ commit }, photoId: number): Promise<any> {
+    const response: AxiosResponse = await this.$axios.get(`/photos/${photoId}`);
+    console.log(response);
+
   }
 };
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Photo;
+use App\Albums;
 use App\AlbumsPhotos;
 use Illuminate\Http\Request;
 use App\Traits\Uploader\Uploader;
@@ -51,8 +52,13 @@ class PhotosController extends Controller
         ]);
     }
 
-    public function getPhotoInfo() {
-        //code
+    public function getPhotoInfo(Request $request, $photoId) {
+        $photos = AlbumsPhotos::find($photoId);
+
+        return response()->json([
+            'description' => $photos->description,
+            'title' => $photos->title
+        ]);
     }
 
     public function edit(Request $request, $photoId) {
@@ -91,6 +97,11 @@ class PhotosController extends Controller
         $shuffled = [];
 
         foreach ($photosArray as $photo) {
+            $album = Albums::find($photo['albums_id']);
+            $photo['album_name'] = $album->title;
+            $photo['likes'] = 0;
+            $photo['comments'] = [];
+
             $shuffled[] = $photo;
         };
 

@@ -5,8 +5,11 @@
     )
       template(slot="modal-content")
         .inner-content
-          slider
-
+          slider(
+            :imgPath="`/uploads/photos/origin/${photoInfo.filename}`"
+            @onNext="slide('next')"
+            @onPrev="slide('prev')"
+          )
           .details
             .details__header
               .details__user
@@ -14,28 +17,86 @@
                   img(src="https://picsum.photos/100/100").user__avatar
                   .user__name Анна Богданова
               .details__likes
-                likes-button
+                likes-button(
+                  :amount="photoInfo.likes"
+                )
             .details__data    
-              .details__title Путешествие на трамвайчике
+              .details__title {{photoInfo.title}}
               .details__text 
-                p text text text
-
+                p {{photoInfo.description}}
           comments
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import { Component, Prop, Watch } from "vue-property-decorator";
 import modalsItem from "./modalsItem.vue";
 import likesButton from "./likesButton.vue";
 import slider from "./slider.vue";
 import comments from "./comments.vue";
+import { namespace } from "vuex-class";
+import { BindingHelpers } from "vuex-class/lib/bindings";
+import { PhotosState, Photo } from "../store/modules/photos/types";
+
+const photos: BindingHelpers = namespace("photos");
 
 @Component({
   name: "ModalsPhotoDetails",
   components: { modalsItem, slider, likesButton, comments }
 })
-export default class ModalsPhotoDetails extends Vue {}
+export default class ModalsPhotoDetails extends Vue {
+  @photos.State((state: PhotosState) => state.photoInfo)
+  public photoInfo!: Photo;
+
+  @photos.State((state: PhotosState) => state.recentPhotos)
+  public recentPhotos!: Photo[];
+
+  @photos.Mutation("setDetailedPhoto")
+  public setDetailedPhoto;
+
+  public currentItemIndex: number = 0;
+
+  public makeInfiniteScroll(value: number): void {
+    const recentPhotos = this.recentPhotos;
+
+    if (value >= recentPhotos.length) {
+      this.currentItemIndex = 0;
+    }
+    if (value < 0) {
+      this.currentItemIndex = recentPhotos.length - 1;
+    }
+
+    const targetItemInRecentPhotos = recentPhotos[this.currentItemIndex];
+
+    this.setDetailedPhoto(targetItemInRecentPhotos.id);
+  }
+
+  public setCurrentItemsIndex() {
+    const itemIndexInArray: number = this.recentPhotos.indexOf(this.photoInfo);
+    this.currentItemIndex = itemIndexInArray;
+  }
+
+  @Watch("currentItemIndex")
+  public onCurrentIndexChanged(value: number): void {
+    this.makeInfiniteScroll(value);
+  }
+
+  public slide(direction: string) {
+    switch (direction) {
+      case "next":
+        this.currentItemIndex++;
+        break;
+
+      case "prev":
+        this.currentItemIndex--;
+        break;
+    }
+  }
+
+  public created() {
+    this.setCurrentItemsIndex();
+  }
+}
 </script>
 
 
