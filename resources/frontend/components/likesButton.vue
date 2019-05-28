@@ -18,16 +18,18 @@ export default class LikesButton extends Vue {
   @Prop({ default: 0 })
   public amount!: number;
 
-  @Prop({default: false})
+  @Prop({ default: false })
   public liked!: boolean;
 
-
-  @Prop({default: false})
+  @Prop({ default: false })
   public blocked!: boolean;
 
-
   public handleClick() {
-    this.$emit("onLike");
+    if (this.liked === false) {
+      this.$emit("onLike");
+    } else {
+      this.$emit("onDislike");
+    }
   }
 }
 </script>

@@ -22,6 +22,7 @@
                   :liked="photoInfo.likedByYou"
                   :blocked="lockTheLikes"
                   @onLike="handleLike"
+                  @onDislike="handleDislike"
                 )
             .details__data    
               .details__title {{photoInfo.title}}
@@ -60,6 +61,9 @@ export default class ModalsPhotoDetails extends Vue {
   @photos.Action("likeIt")
   public likeIt;
 
+  @photos.Action("dislikeIt")
+  public dislikeIt;
+
   public currentItemIndex: number = 0;
   public lockTheLikes: boolean = false;
 
@@ -67,6 +71,17 @@ export default class ModalsPhotoDetails extends Vue {
     this.lockTheLikes = true;
     try {
       await this.likeIt(this.photoInfo.id);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.lockTheLikes = false;
+    }
+  }
+
+  public async handleDislike(): Promise<any> {
+    this.lockTheLikes = true;
+    try {
+      await this.dislikeIt(this.photoInfo.id);
     } catch (error) {
       console.log(error);
     } finally {

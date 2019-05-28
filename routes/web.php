@@ -31,6 +31,7 @@ Route::prefix('api')->group(function () {
         Route::get('photos/{albumId}', 'PhotosController@view');
 
         Route::post('/like', 'LikesController@add');
+        Route::post('/dislike', 'LikesController@remove');
     });
 });
 

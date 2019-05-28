@@ -36,4 +36,5 @@ export interface RenderedPhoto {
 export interface LikesPayload {
   likes: number;
   photoId: number;
+  likedByYou: boolean;
 }

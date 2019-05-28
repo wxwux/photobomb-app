@@ -33,7 +33,7 @@ const mutations: MutationTree<PhotosState> = {
     photosState.recentPhotos = photosState.recentPhotos.map((photo: Photo) => {
       if (photo.id === payload.photoId) {
         photo.likes = payload.likes;
-        photo.likedByYou = true;
+        photo.likedByYou = payload.likedByYou;
       }
 
       return photo;
@@ -151,7 +151,27 @@ const actions: ActionTree<PhotosState, RootState> = {
 
       const payload: LikesPayload = {
         photoId,
-        likes: response.data.likes
+        likes: response.data.likes,
+        likedByYou: true
+      };
+
+      commit("updateLikes", payload);
+
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  async dislikeIt({ commit }, photoId): Promise<any> {
+    try {
+      const response: AxiosResponse = await this.$axios.post("/dislike", {
+        id: photoId
+      });
+
+      const payload: LikesPayload = {
+        photoId,
+        likes: response.data.likes,
+        likedByYou: false
       };
 
       commit("updateLikes", payload);
