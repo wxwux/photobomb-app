@@ -1,7 +1,8 @@
 .card-photo {
   overflow: hidden;
   border-radius: 7px;
-  box-shadow: 0 1px 4px 0 rgba(#000, .15);
+  box-shadow: 0 1px 4px 0 rgba(#000, 0.15);
+  position: relative;
 
   &_simple-view {
     .card-photo__title {
@@ -14,6 +15,62 @@
       padding: 15px;
     }
   }
+
+  &.blocked {
+    .card-photo__inner {
+      position: relative;
+      &:after {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        user-select: none;
+        background: rgba(#fff, 0.8);
+      }
+    }
+
+    .card-photo__picture:after {
+      display: none;
+    }
+  }
+
+  &.shadowed {
+    filter: blur(1px);
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+    
+    .card-photo__inner {
+      position: relative;
+      &:after {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        user-select: none;
+        background: rgba(#000, 0.2);
+      }
+    }
+
+    .card-photo__picture:after {
+      display: none;
+    }
+
+  }
+}
+
+.card-photo__loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
 }
 
 .card-photo__picture {
@@ -30,7 +87,7 @@
   }
 
   &:before {
-    opacity: .8;
+    opacity: 0.8;
     content: "";
     position: absolute;
     top: 0;
@@ -38,7 +95,11 @@
     left: 0;
     right: 0;
     background: #000;
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 100%
+    );
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
   }
 
@@ -47,13 +108,15 @@
     display: block;
     position: absolute;
     top: 50%;
-    left: 50%;    
-    transform: translate(-50%, -50%) scale(.3);
-    background: svg-load('icons/loupe.svg', fill=white, width=100%, height=100%) center center no-repeat;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.3);
+    background: svg-load("icons/loupe.svg", fill=white, width=100%, height=100%)
+      center center no-repeat;
     width: 40px;
     height: 40px;
     opacity: 0;
-    transition: opacity .2s, transform .3s cubic-bezier(.31,1.53,.32,1.65) ;
+    transition: opacity 0.2s,
+      transform 0.3s cubic-bezier(0.31, 1.53, 0.32, 1.65);
   }
 }
 
@@ -97,14 +160,15 @@
     width: 20px;
     height: 18px;
     vertical-align: middle;
-    background: svg-load('icons/album.svg', fill=#c5c5c5) center center no-repeat / contain;
+    background: svg-load("icons/album.svg", fill=#c5c5c5) center center
+      no-repeat / contain;
     margin-right: 10px;
   }
 }
 
 .card-photo__album-name {
   font-weight: 500;
-  color: rgba(#323232, .8);
+  color: rgba(#323232, 0.8);
 }
 
 .card-photo__picture-wrap {

@@ -14,6 +14,8 @@
               template(slot-scope="{item: card}")
                 card-photo(
                   :card="card"
+                  :shadowed="cardCurrentlyLoadedId && cardCurrentlyLoadedId !== card.id"
+                  @onLoading="blurOthers"
                 )
           .section__load-btn
             .section__load-btn-container
@@ -90,6 +92,12 @@ export default class MainPage extends Vue {
 
   @photos.State(state => state.recentPhotos)
   public recentPhotos!: Photo[];
+
+  public cardCurrentlyLoadedId: number | null = null;
+
+  public blurOthers(cardId) {
+    this.cardCurrentlyLoadedId = cardId;
+  }
 
   public created() {
     this.fetchUserAlbums();

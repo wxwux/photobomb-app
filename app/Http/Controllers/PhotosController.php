@@ -51,6 +51,10 @@ class PhotosController extends Controller
         ]);
     }
 
+    public function getPhotoInfo() {
+        //code
+    }
+
     public function edit(Request $request, $photoId) {
         Validator::make($request->all(), [
             'title' => 'required',

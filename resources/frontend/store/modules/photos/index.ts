@@ -18,6 +18,7 @@ const state: PhotosState = {
     folder: "",
     photos: []
   },
+  photoInfo: []
 };
 
 const mutations: MutationTree<PhotosState> = {
@@ -111,6 +112,10 @@ const actions: ActionTree<PhotosState, RootState> = {
     } catch (error) {
       console.error(error);
     }
+  },
+
+  async getInfoById({commit}, photoId: number): Promise<any> {
+    // test
   }
 };
 
