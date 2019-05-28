@@ -32,6 +32,8 @@ Route::prefix('api')->group(function () {
 
         Route::post('/like', 'LikesController@add');
         Route::post('/dislike', 'LikesController@remove');
+
+        Route::post('/comments', 'CommentsController@add');
     });
 });
 

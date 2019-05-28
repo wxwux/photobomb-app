@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Likes;
 use App\Photo;
 use App\Albums;
+use App\Comments;
 use App\AlbumsPhotos;
 use Illuminate\Http\Request;
 use App\Traits\Uploader\Uploader;
@@ -107,7 +108,7 @@ class PhotosController extends Controller
             $photo['album_name'] = $album->title;
             $photo['likes'] = count($likes);
             $photo['likedByYou'] = (bool)$likedByUser;
-            $photo['comments'] = [];
+            $photo['comments'] = Comments::where('photo_id', $photo['id'])->get();
 
             $shuffled[] = $photo;
         };

@@ -28,7 +28,9 @@
               .details__title {{photoInfo.title}}
               .details__text 
                 p {{photoInfo.description}}
-          comments
+          comments(
+            :belongsTo="photoInfo"
+          )
 </template>
 
 <script lang="ts">

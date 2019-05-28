@@ -12,9 +12,12 @@
           rounded-input(
             element="textarea"
             placeholder="Добавить комментарий"
+            v-model="comment.content"
           ).comment__input
           button-round(
             text="Добавить"
+            @click="addNewComment"
+            :blocked="btnBlocked"
           )
 
       template(
@@ -26,19 +29,52 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {Component, Prop} from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 import roundedInput from "./inputRounded.vue";
 import buttonRound from "./buttonRound.vue";
+import { namespace } from "vuex-class";
+import { BindingHelpers } from "vuex-class/lib/bindings";
+import { Comment, Photo } from "../store/modules/photos/types";
+
+const photos: BindingHelpers = namespace("photos");
 
 @Component({
   name: "CommentsNew",
   components: {
-    roundedInput, buttonRound
+    roundedInput,
+    buttonRound
   }
 })
 export default class CommentsItem extends Vue {
-  @Prop({default: false})
+  @Prop({ default: false })
   public createmode!: boolean;
+
+  @Prop()
+  public belongsTo!: Photo;
+
+  public comment: Comment = {
+    photo_id: 0,
+    content: ""
+  };
+
+  public btnBlocked: boolean = false;
+
+  @photos.Action("addComment")
+  public addComment;
+
+  public async addNewComment(): Promise<any> {
+    this.btnBlocked = true;
+    try {
+      this.comment.photo_id = this.belongsTo.id as number;
+      await this.addComment(this.comment);
+
+      this.comment.content = "";
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.btnBlocked = false;
+    }
+  }
 }
 </script>
 

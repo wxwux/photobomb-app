@@ -38,3 +38,8 @@ export interface LikesPayload {
   photoId: number;
   likedByYou: boolean;
 }
+
+export interface Comment {
+  photo_id: number;
+  content: string;
+}

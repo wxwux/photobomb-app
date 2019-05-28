@@ -1,6 +1,6 @@
 import { Module, MutationTree, ActionTree, GetterTree } from "vuex";
 import { RootState } from "../../types";
-import { PhotosState, PhotoItem, UploadedPhotos, Photo, LikesPayload } from "./types";
+import { PhotosState, PhotoItem, UploadedPhotos, Photo, LikesPayload, Comment } from "./types";
 import { AxiosResponse } from "axios";
 
 const namespaced: boolean = true;
@@ -162,7 +162,7 @@ const actions: ActionTree<PhotosState, RootState> = {
     }
   },
 
-  async dislikeIt({ commit }, photoId): Promise<any> {
+  async dislikeIt({ commit }, photoId: number): Promise<any> {
     try {
       const response: AxiosResponse = await this.$axios.post("/dislike", {
         id: photoId
@@ -179,7 +179,15 @@ const actions: ActionTree<PhotosState, RootState> = {
     } catch (error) {
       console.log(error);
     }
+  },
+
+  async addComment({ commit }, comment: Comment) {
+    const response: AxiosResponse = await this.$axios.post("/comments", {
+      photo_id: comment.photo_id,
+      content: comment.content
+    });
   }
+
 };
 
 const photos: Module<PhotosState, RootState> = {

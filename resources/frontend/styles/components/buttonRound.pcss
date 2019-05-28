@@ -17,41 +17,76 @@
   font-size: 14px;
   font-family: "panton";
   font-weight: bold;
-  transition: .3s;
+  transition: 0.3s;
   outline: none;
   cursor: pointer;
   text-align: center;
+  overflow: hidden;
+  position: relative;
 
   &:disabled {
     background: #5e5e5e;
-    opacity: .2;
+    opacity: 0.2;
     pointer-events: none;
     border-color: transparent;
   }
-  &:hover,
-  &:focus {
-    background: $blue;
+  &:hover {
+    background-color: $blue;
     color: #fff;
   }
   &--iconed {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    &.round-btn--icon_ {
-      &trash {
-        &:before {
-          background: svg-load('../../assets/img/icons/delete.svg', 'fill=#fff') center center / contain no-repeat;
+    .round-btn__text {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      &.round-btn--icon_ {
+        &trash {
+          &:before {
+            background: svg-load(
+                "../../assets/img/icons/delete.svg",
+                "fill=#fff"
+              )
+              center center / contain no-repeat;
+          }
         }
       }
-    }
-    &:before {
-      content: "";
-      width: 16px;
-      height: 16px;
-      display: block;
-      margin-right: 10px;
+      &:before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        display: block;
+        margin-right: 10px;
+      }
     }
   }
+
+  &.blocked {
+    background-color: transparent !important;
+    pointer-events: none;
+    cursor: default !important;
+    opacity: .8;
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: linear-gradient(
+        45deg,
+        rgba($blue, 0.15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba($blue, 0.15) 50%,
+        rgba($blue, 0.15) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 1rem 1rem;
+      animation: progress 0.4s infinite linear;
+    }
+  }
+
   &--filled {
     background: $blue;
     color: #fff;
@@ -76,5 +111,15 @@
       background: firebrick;
       border-color: firebrick;
     }
+  }
+}
+
+@keyframes progress {
+  0% {
+    background-position-x: 0;
+  }
+
+  100% {
+    background-position-x: 16px;
   }
 }

@@ -3,9 +3,10 @@
     v-if="purpose ==='button'"
     v-bind="$attrs"
     :type="type"
-    :class="[{'round-btn--filled': filled }, `round-btn--bg_${bgClass}`, {'round-btn--iconed': icon.length}, `round-btn--icon_${icon}`]"
+    :class="[{'round-btn--filled': filled }, `round-btn--bg_${bgClass}`, { 'round-btn--iconed': icon.length }, `round-btn--icon_${icon}`, { 'blocked': blocked }]"
     v-on="$listeners"
-  ).round-btn {{text}}
+  ).round-btn 
+    span.round-btn__text {{text}}
 
   label(v-else-if="purpose === 'file'")#round-file-input
     .round-btn {{text}}
@@ -25,23 +26,26 @@ import { Prop } from "vue-property-decorator";
   inheritAttrs: false
 })
 export default class RoundButton extends Vue {
-  @Prop({default: "Загрузить"})
+  @Prop({ default: "Загрузить" })
   public text!: string;
 
-  @Prop({default: false})
+  @Prop({ default: false })
   public filled!: boolean;
 
-  @Prop({default: "button"})
+  @Prop({ default: "button" })
   public type!: string;
 
-  @Prop({default: "button"})
+  @Prop({ default: "button" })
   public purpose!: string;
 
-  @Prop({default: "blue"})
+  @Prop({ default: "blue" })
   public bgClass!: string;
 
-  @Prop({default: ""})
+  @Prop({ default: "" })
   public icon!: string;
+
+  @Prop({ default: false })
+  public blocked!: boolean;
 
   public mounted() {
     // console.log("listen", this.$listeners);
