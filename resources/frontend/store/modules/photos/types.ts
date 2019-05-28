@@ -20,6 +20,7 @@ export interface Photo {
   title: string;
   likes?: number;
   comments?: object[];
+  likedByYou?: boolean;
 }
 
 export interface PhotoItem {
@@ -30,4 +31,9 @@ export interface PhotoItem {
 export interface RenderedPhoto {
   id: string;
   url: string;
+}
+
+export interface LikesPayload {
+  likes: number;
+  photoId: number;
 }

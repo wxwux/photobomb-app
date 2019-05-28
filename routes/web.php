@@ -29,6 +29,8 @@ Route::prefix('api')->group(function () {
         Route::post('photos/{photoId}', 'PhotosController@edit');
         Route::get('photos/{photoId}', 'PhotosController@getPhotoInfo');
         Route::get('photos/{albumId}', 'PhotosController@view');
+
+        Route::post('/like', 'LikesController@add');
     });
 });
 

@@ -19,6 +19,9 @@
               .details__likes
                 likes-button(
                   :amount="photoInfo.likes"
+                  :liked="photoInfo.likedByYou"
+                  :blocked="lockTheLikes"
+                  @onLike="handleLike"
                 )
             .details__data    
               .details__title {{photoInfo.title}}
@@ -54,7 +57,22 @@ export default class ModalsPhotoDetails extends Vue {
   @photos.Mutation("setDetailedPhoto")
   public setDetailedPhoto;
 
+  @photos.Action("likeIt")
+  public likeIt;
+
   public currentItemIndex: number = 0;
+  public lockTheLikes: boolean = false;
+
+  public async handleLike(): Promise<any> {
+    this.lockTheLikes = true;
+    try {
+      await this.likeIt(this.photoInfo.id);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.lockTheLikes = false;
+    }
+  }
 
   public makeInfiniteScroll(value: number): void {
     const recentPhotos = this.recentPhotos;

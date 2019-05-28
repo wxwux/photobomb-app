@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Likes;
 use App\Photo;
 use App\Albums;
 use App\AlbumsPhotos;
@@ -98,8 +99,14 @@ class PhotosController extends Controller
 
         foreach ($photosArray as $photo) {
             $album = Albums::find($photo['albums_id']);
+            $likes = Likes::where('photo_id', $photo['id'])->get();
+            $likedByUser = Likes::where('photo_id', $photo['id'])
+                ->where('user_id', Auth::id())
+                ->first();
+
             $photo['album_name'] = $album->title;
-            $photo['likes'] = 0;
+            $photo['likes'] = count($likes);
+            $photo['likedByYou'] = (bool)$likedByUser;
             $photo['comments'] = [];
 
             $shuffled[] = $photo;

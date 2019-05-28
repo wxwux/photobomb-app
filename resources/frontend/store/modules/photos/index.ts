@@ -1,6 +1,6 @@
 import { Module, MutationTree, ActionTree, GetterTree } from "vuex";
 import { RootState } from "../../types";
-import { PhotosState, PhotoItem, UploadedPhotos, Photo } from "./types";
+import { PhotosState, PhotoItem, UploadedPhotos, Photo, LikesPayload } from "./types";
 import { AxiosResponse } from "axios";
 
 const namespaced: boolean = true;
@@ -29,6 +29,17 @@ const state: PhotosState = {
 };
 
 const mutations: MutationTree<PhotosState> = {
+  updateLikes(photosState: PhotosState, payload: LikesPayload) {
+    photosState.recentPhotos = photosState.recentPhotos.map((photo: Photo) => {
+      if (photo.id === payload.photoId) {
+        photo.likes = payload.likes;
+        photo.likedByYou = true;
+      }
+
+      return photo;
+    });
+  },
+
   setDetailedPhoto(photosState: PhotosState, choosedPhotoId: number) {
     photosState.photoInfo = photosState.recentPhotos.filter((photo: Photo) => {
       return photo.id === choosedPhotoId;
@@ -129,8 +140,25 @@ const actions: ActionTree<PhotosState, RootState> = {
 
   async getInfoById({ commit }, photoId: number): Promise<any> {
     const response: AxiosResponse = await this.$axios.get(`/photos/${photoId}`);
-    console.log(response);
+  },
 
+  async likeIt({ commit }, photoId): Promise<any> {
+    try {
+
+      const response: AxiosResponse = await this.$axios.post("/like", {
+        id: photoId
+      });
+
+      const payload: LikesPayload = {
+        photoId,
+        likes: response.data.likes
+      };
+
+      commit("updateLikes", payload);
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 
