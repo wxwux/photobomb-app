@@ -7,6 +7,7 @@
     .modal__block-control.cover__right-col
       .cover__btn
         button-round(
+          v-bind="$attrs"
           :text="buttonText"
           purpose="file"
           @change.native="gatherData"
@@ -33,6 +34,7 @@ interface HTMLInputEvent extends Event {
 
 @Component({
   name: "CoverLoader",
+  inheritAttrs: false,
   components: {
     buttonRound
   }

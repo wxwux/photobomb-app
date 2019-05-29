@@ -11,4 +11,20 @@ export interface NewUser {
 
 export interface UserState {
   user: object | null;
+  userDetails: UserDetails;
+}
+
+export interface UserDetails {
+  name: string;
+  description: string;
+  avatar?: File | any;
+  background?: File | any;
+  socials?: Socials;
+}
+
+export interface Socials {
+  vk?: string;
+  fb?: string;
+  email: string;
+  tw?: string;
 }

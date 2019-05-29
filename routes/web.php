@@ -19,6 +19,8 @@ Route::prefix('api')->group(function () {
     Route::middleware(['jwt.auth'])->group(function () {
         Route::get('user', 'AuthController@getUser');
 
+        Route::post('updateUser', 'UsersController@update');
+
         Route::post('albums', 'AlbumsController@create');
         Route::get('albums', 'AlbumsController@view');
         Route::get('albums/{id}', 'AlbumsController@getById');

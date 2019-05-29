@@ -11,7 +11,8 @@
               input-rounded(
                 placeholder="Введите название альбома"
                 v-model="newAlbum.title"
-                :error="validation.hasError('newAlbum.title')"
+                :error="validation.firstError('newAlbum.title')"
+                hideErrorText
               )
         .modal__row
           label.modal__block
@@ -20,7 +21,8 @@
               input-rounded(
                 element="textarea"
                 v-model="newAlbum.desc"
-                :error="validation.hasError('newAlbum.desc')"
+                :error="validation.firstError('newAlbum.desc')"
+                hideErrorText
               )
 
         .modal__row
@@ -54,8 +56,7 @@
 </template>
 
 <script lang="ts">
-import SimpleVueValidator from "simple-vue-validator";
-import { Validator } from "simple-vue-validator";
+import SimpleVueValidator, { Validator } from "simple-vue-validator";
 import Vue from "vue";
 import { mixins } from "vue-class-component";
 import { Component, Prop } from "vue-property-decorator";
@@ -83,9 +84,9 @@ const alerts = namespace("alerts");
     "newAlbum.cover"(value) {
       return Validator.custom(() => {
         if (
-          ["image/jpeg", "image/png", "image/gif"].indexOf(value.type) === -1
+          ["image/jpeg", "image/png", "image/jpg"].indexOf(value.type) === -1
         ) {
-          return "Файл должен быть изображением (jpeg, png, gif)";
+          return "Файл должен быть изображением (jpg, png)";
         }
 
         if (value.size > 1500000) {
@@ -111,17 +112,6 @@ export default class ModalsAlbum extends mixins() {
     desc: "",
     cover: null
   };
-
-  // public gatherData(e: any) {
-  //   if (!e.target.files.length) {
-  //     return;
-  //   }
-  //   const file = e.target.files[0];
-  //   const cover = this.$refs.cover as HTMLElement;
-
-  //   this.newAlbum.cover = file;
-  //   renderFile(file, cover);
-  // }
 
   public clearFormData() {
     const coverElem: HTMLElement = this.$refs.cover as HTMLElement;
