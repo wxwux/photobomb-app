@@ -14,8 +14,6 @@
               template(slot-scope="{item: card}")
                 card-photo(
                   :card="card"
-                  :shadowed="cardCurrentlyLoadedId && cardCurrentlyLoadedId !== card.id"
-                  @onLoading="blurOthers"
                 )
           .section__load-btn
             .section__load-btn-container

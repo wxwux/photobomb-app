@@ -40,6 +40,7 @@ export interface LikesPayload {
 }
 
 export interface Comment {
+  id?: number;
   photo_id: number;
   content: string;
 }

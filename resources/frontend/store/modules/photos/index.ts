@@ -40,6 +40,20 @@ const mutations: MutationTree<PhotosState> = {
     });
   },
 
+  addNewComment(photosState: PhotosState, payload: Comment) {
+    const addComments = (photo: Photo): Photo => {
+      if (payload.photo_id === photo.id) {
+        const comments = photo.comments as Comment[];
+        comments.push(payload);
+      }
+      return photo;
+    };
+
+    photosState.recentPhotos = photosState.recentPhotos.map(addComments);
+
+    // const currentComments = photosState.photoInfo.comments as Comment[];
+    // currentComments.push(payload);
+  },
   setDetailedPhoto(photosState: PhotosState, choosedPhotoId: number) {
     photosState.photoInfo = photosState.recentPhotos.filter((photo: Photo) => {
       return photo.id === choosedPhotoId;
@@ -182,11 +196,17 @@ const actions: ActionTree<PhotosState, RootState> = {
   },
 
   async addComment({ commit }, comment: Comment) {
-    const response: AxiosResponse = await this.$axios.post("/comments", {
-      photo_id: comment.photo_id,
-      content: comment.content
-    });
-  }
+    try {
+      const response: AxiosResponse = await this.$axios.post("/comments", {
+        photo_id: comment.photo_id,
+        content: comment.content
+      });
+
+      commit("addNewComment", response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
 };
 

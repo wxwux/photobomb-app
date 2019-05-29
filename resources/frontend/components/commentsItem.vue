@@ -24,7 +24,7 @@
         v-else
       )
         .comment__texts
-          p Душа моя озарена неземной радостью, как эти чудесные весенние утра, которыми я наслаждаюсь от всего сердца. Я совсем один и блаженствую в здешнем краю, словно созданном для таких, как я. Я так счастлив, мой друг, так упоен ощущением. Душа моя озарена неземной радостью, как эти чудесные весенние утра, которыми я наслаждаюсь от всего сердца.
+          p {{data.content}}
 </template>
 
 <script lang="ts">
@@ -51,6 +51,9 @@ export default class CommentsItem extends Vue {
 
   @Prop()
   public belongsTo!: Photo;
+
+  @Prop()
+  public data!: Comment;
 
   public comment: Comment = {
     photo_id: 0,

@@ -30,6 +30,7 @@
                 p {{photoInfo.description}}
           comments(
             :belongsTo="photoInfo"
+            :comments="photoInfo.comments"
           )
 </template>
 
