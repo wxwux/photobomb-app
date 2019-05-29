@@ -1,5 +1,6 @@
 <template lang="pug">
   button(
+    v-on="$listeners"
   ).slide-button
     .slide-button__content
       .slide-button__icon(

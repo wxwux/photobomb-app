@@ -14,6 +14,7 @@
       v-bind="$attrs"
       v-on="$listeners"
       type="file"
+      accept="image/jpeg,image/png,image/jpg"
     ).round-btn__file
 </template>
 <script lang="ts">

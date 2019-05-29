@@ -22,21 +22,13 @@
                 v-model="newAlbum.desc"
                 :error="validation.hasError('newAlbum.desc')"
               )
-        .modal__row.cover
-          .modal__block-title.cover__left-col
-            .cover__thumb(
-              ref="cover"
-            )
-          .modal__block-control.cover__right-col
-            .cover__btn
-              button-round(
-                text="Загрузить обложку"
-                purpose="file"
-                @change.native="gatherData"
-              )
-            .cover__desc.error(v-if="validation.hasError('newAlbum.cover')") {{validation.firstError('newAlbum.cover')}}
-            .cover__desc(v-else-if="newAlbum.cover === null")
-              | (файл должен быть размером менее 1.5 МБ)
+
+        .modal__row
+          cover-loader(
+            @onCoverUploaded="file => newAlbum.cover = file"
+            :errorText="validation.firstError('newAlbum.cover')"
+            fileRestrictionText="1.5 МБ"
+          )
 
       template(slot="modal-buttons")
         .modal__buttons-common
@@ -73,6 +65,7 @@ import { AlbumItem } from "../store/modules/albums/types";
 import buttonRound from "./buttonRound.vue";
 import inputRounded from "./inputRounded.vue";
 import modalsItem from "./modalsItem.vue";
+import coverLoader from "./coverLoader.vue";
 
 const albums = namespace("albums");
 const modals = namespace("modals");
@@ -101,7 +94,7 @@ const alerts = namespace("alerts");
       });
     }
   },
-  components: { inputRounded, buttonRound, modalsItem }
+  components: { inputRounded, buttonRound, modalsItem, coverLoader }
 })
 export default class ModalsAlbum extends mixins() {
   @albums.Action("createNewAlbum")
@@ -119,35 +112,34 @@ export default class ModalsAlbum extends mixins() {
     cover: null
   };
 
-  public gatherData(e: any) {
-    if (!e.target.files.length) {
-      return;
-    }
-    const file = e.target.files[0];
-    const cover = this.$refs.cover as HTMLElement;
+  // public gatherData(e: any) {
+  //   if (!e.target.files.length) {
+  //     return;
+  //   }
+  //   const file = e.target.files[0];
+  //   const cover = this.$refs.cover as HTMLElement;
 
-    this.newAlbum.cover = file;
-    renderFile(file, cover);
-  }
+  //   this.newAlbum.cover = file;
+  //   renderFile(file, cover);
+  // }
 
   public clearFormData() {
-    const coverElem = this.$refs.cover as HTMLElement;
+    const coverElem: HTMLElement = this.$refs.cover as HTMLElement;
 
     this.newAlbum.title = "";
     this.newAlbum.desc = "";
     this.newAlbum.cover = "";
-    coverElem.style.background = "";
   }
 
   public async createNewAlbum() {
-    const formData: any = new FormData();
+    const formData: FormData = new FormData();
     const success = await this.$validate();
 
     if (!success) {
       return;
     }
 
-    Object.keys(this.newAlbum).forEach((prop) => {
+    Object.keys(this.newAlbum).forEach(prop => {
       formData.append(prop, this.newAlbum[prop]);
     });
 

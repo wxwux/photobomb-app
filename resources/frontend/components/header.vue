@@ -8,6 +8,7 @@
           slide-button(
             text="Редактировать"
             type="edit"
+            @click="showModal('user-edit')"
           )
 
       template(v-if="view === 'album-view'")
@@ -45,6 +46,11 @@ import { AlbumItem } from "../store/modules/albums/types";
 import slideButton from "./buttonSlide.vue";
 import user from "./user.vue";
 
+import { namespace } from "vuex-class";
+import { BindingHelpers } from "vuex-class/lib/bindings";
+
+const modals: BindingHelpers = namespace("modals");
+
 @Component({
   components: {
     slideButton,
@@ -58,6 +64,9 @@ export default class Header extends Vue {
 
   @Prop({ default: () => ({}) })
   public headerData!: any;
+
+  @modals.Mutation("showModal")
+  public showModal;
 
   public get headerBg(): string {
     console.log("data", this.headerData.cover);
