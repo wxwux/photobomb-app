@@ -117,6 +117,17 @@ export default class ModalsPhotoDetails extends Vue {
     this.makeInfiniteScroll(value);
   }
 
+  public slideByKeys(event: KeyboardEvent): void {
+    switch (event.keyCode) {
+      case 39:
+        this.slide("next");
+        break;
+      case 37:
+        this.slide("prev");
+        break;
+    }
+  }
+
   public slide(direction: string) {
     switch (direction) {
       case "next":
@@ -131,6 +142,14 @@ export default class ModalsPhotoDetails extends Vue {
 
   public created() {
     this.setCurrentItemsIndex();
+  }
+
+  public mounted() {
+    document.addEventListener("keydown", this.slideByKeys);
+  }
+
+  public destroyed() {
+    document.removeEventListener("keydown", this.slideByKeys);
   }
 }
 </script>
