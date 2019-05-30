@@ -20,6 +20,7 @@ Route::prefix('api')->group(function () {
         Route::get('user', 'AuthController@getUser');
 
         Route::post('updateUser', 'UsersController@update');
+        Route::get('userInfo', 'UsersController@info');
 
         Route::post('albums', 'AlbumsController@create');
         Route::get('albums', 'AlbumsController@view');

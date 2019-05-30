@@ -10,7 +10,6 @@ export interface NewUser {
 }
 
 export interface UserState {
-  user: object | null;
   userDetails: UserDetails;
 }
 

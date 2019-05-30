@@ -26,7 +26,7 @@
                     name="description"
                     placeholder="Расскажите о себе"
                     v-model="userDetails.description"
-                    :error="validation.hasError('userDetails.description')"
+                    :error="validation.firstError('userDetails.description')"
                     hideErrorText
                   )
             .modals__row
@@ -35,7 +35,7 @@
                 buttonText="Загрузить фотографию"
                 name="avatar"
                 @onCoverUploaded="file => userDetails.avatar = file"
-                :errorText="validation.hasError('userDetails.avatar')"
+                :errorText="validation.firstError('userDetails.avatar')"
               )
             .modals__row
               cover-loader(
@@ -43,7 +43,7 @@
                 buttonText="Загрузить фон"
                 name="background"
                 @onCoverUploaded="file => userDetails.background = file"
-                :errorText="validation.hasError('userDetails.background')"
+                :errorText="validation.firstError('userDetails.background')"
               )
 
           .modal__part.modal__socials
@@ -55,7 +55,7 @@
                     name="vk"
                     placeholder="http://vk.com/"
                     v-model="userDetails.socials.vk"
-                    :error="validation.hasError('userDetails.socials.vk')"
+                    :error="validation.firstError('userDetails.socials.vk')"
                   )
             .modal__row
               label.modal__block
@@ -65,7 +65,7 @@
                     name="fb"
                     placeholder="http://facebook.com/"
                     v-model="userDetails.socials.fb"
-                    :error="validation.hasError('userDetails.socials.fb')"
+                    :error="validation.firstError('userDetails.socials.fb')"
                   )
             .modal__row
               label.modal__block
@@ -75,7 +75,7 @@
                     name="email"
                     placeholder="name@domain.com"
                     v-model="userDetails.socials.email"
-                    :error="validation.hasError('userDetails.socials.email')"
+                    :error="validation.firstError('userDetails.socials.email')"
                   )
             .modal__row
               label.modal__block
@@ -85,7 +85,7 @@
                     name="tw"
                     placeholder="http://twitter.com/"
                     v-model="userDetails.socials.tw"
-                    :error="validation.hasError('userDetails.socials.tw')"
+                    :error="validation.firstError('userDetails.socials.tw')"
                   )
       template(slot="modal-buttons")
         .modal__buttons-common
@@ -100,6 +100,7 @@
             button-round(
               text="Отменить"
               bgClass="transparent"
+              @click="clearModal"
             )
 </template>
 
@@ -112,11 +113,12 @@ import coverLoader from "./coverLoader.vue";
 import { namespace } from "vuex-class";
 import buttonRound from "./buttonRound.vue";
 import { mixins } from "vue-class-component";
-import { UserDetails } from "../store/modules/user/types";
+import { UserDetails, UserState } from "../store/modules/user/types";
 import { BindingHelpers } from "vuex-class/lib/bindings";
 import SimpleVueValidator, { Validator } from "simple-vue-validator";
 
 const user: BindingHelpers = namespace("user");
+const modals: BindingHelpers = namespace("modals");
 
 @Component({
   name: "ModalsUserEdit",
@@ -190,12 +192,23 @@ export default class ModalsUserEdit extends mixins() {
   @user.Action("updateProfile")
   public updateProfile;
 
+  @user.State((state: UserState) => state.userDetails)
+  public user!: UserDetails;
+
+  @modals.Mutation("clearModal")
+  public clearModal;
+
   public saveProfile() {
     const form: HTMLFormElement = this.$refs.form as HTMLFormElement;
     const data: FormData = new FormData(form);
 
     this.updateProfile(data);
   }
+
+  public async created(): Promise<any> {
+    this.userDetails = this.user;
+  }
+
 }
 </script>
 

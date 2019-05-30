@@ -55,6 +55,24 @@ class UsersController extends Controller
         return $user;
     }
 
+    public function info() {
+        $userId = Auth::id();
+        $user = User::find($userId);
+
+        return response()->json([
+            'name' => $user->name,
+            'description' => $user->description,
+            'avatar' => $user->avatar,
+            'background' => $user->background,
+            'socials' => [
+                'vk' => $user->vk,
+                'fb' => $user->fb,
+                'tw' => $user->tw,
+                'email' => $user->email,
+            ]
+        ]);
+    } 
+
     private function removeFileIfExists($filename) {
         $path = public_path("uploads/$this->folder/$filename");
 

@@ -61,6 +61,7 @@ import { Photo } from "../../store/modules/photos/types";
 const modals: BindingHelpers = namespace("modals");
 const albums: BindingHelpers = namespace("albums");
 const photos: BindingHelpers = namespace("photos");
+const user: BindingHelpers = namespace("user");
 
 @Component({
   components: {
@@ -76,6 +77,9 @@ const photos: BindingHelpers = namespace("photos");
   name: "MainPage"
 })
 export default class MainPage extends Vue {
+  @user.Action("getUserInfo")
+  public getUserInfo;
+
   @modals.Mutation("showModal")
   public showModal!: void;
 
@@ -100,6 +104,7 @@ export default class MainPage extends Vue {
   public created() {
     this.fetchUserAlbums();
     this.getRecentPhotos();
+    this.getUserInfo();
   }
 }
 </script>
