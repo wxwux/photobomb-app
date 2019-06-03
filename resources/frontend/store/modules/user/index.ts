@@ -1,6 +1,6 @@
 import { ActionTree, Module, MutationTree } from "vuex";
 import { RootState } from "../../types";
-import { NewUser, User, UserState, UserDetails } from "./types";
+import { NewUser, User, UserState, UserDetails, Socials } from "./types";
 import { AxiosResponse, AxiosError } from "axios";
 import requests from "../../../requests";
 
@@ -50,9 +50,18 @@ const actions: ActionTree<UserState, RootState> = {
 
   async updateProfile({ commit }, profileData: UserDetails): Promise<any> {
     try {
-      const response: AxiosResponse = this.$axios.post("/updateUser", profileData);
+      const response: AxiosResponse = await this.$axios.post("/updateUser", profileData);
+      const updatedUser: UserDetails = response.data as UserDetails;
+      const { vk, fb, tw, email } = response.data;
 
-      console.log(response);
+      const socials: Socials = {
+        vk, fb, tw, email
+      };
+
+      updatedUser.socials = socials;
+
+      commit("setUserDetails", updatedUser);
+
     } catch (error) {
       console.log(error);
     }

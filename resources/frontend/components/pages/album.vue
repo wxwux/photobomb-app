@@ -4,6 +4,8 @@
       app-header(
         view="album-view"
         :headerData="currentAlbum"
+        :coverFileName="currentAlbum.cover"
+        coverPath="/uploads/albums_covers/origin"
       )
         template(slot="header-bottom")
           likes-display
@@ -27,6 +29,8 @@
     .root__footer
       app-footer(
         :footerData="currentAlbum"
+        :coverFileName="currentAlbum.cover"
+        coverPath="/uploads/albums_covers/origin"
       )
 </template>
 

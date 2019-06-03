@@ -1,13 +1,14 @@
 <template lang="pug">
   .new-comment-component
-    .comment__avatar
-      img(src="https://picsum.photos/100/100").comment__avatar-pic
-    .comment__data
-      .comment__user Антон Черепов
-
-      template(
-        v-if="createmode"
-      )
+    template(
+      v-if="createmode"
+    )
+      .comment__avatar
+        avatar(
+          :avatar="user.avatar"
+        )
+      .comment__data
+        .comment__user {{user.name}}
         .comment__input-fields
           rounded-input(
             element="textarea"
@@ -20,9 +21,15 @@
             :blocked="btnBlocked"
           )
 
-      template(
-        v-else
-      )
+    template(
+      v-else
+    )
+      .comment__avatar
+        avatar(
+          :avatar="data.user.avatar"
+        )
+      .comment__data
+        .comment__user {{user.name}}
         .comment__texts
           p {{data.content}}
 </template>
@@ -35,14 +42,18 @@ import buttonRound from "./buttonRound.vue";
 import { namespace } from "vuex-class";
 import { BindingHelpers } from "vuex-class/lib/bindings";
 import { Comment, Photo } from "../store/modules/photos/types";
+import avatar from "./avatar.vue";
+import { UserState, UserDetails } from "../store/modules/user/types";
 
 const photos: BindingHelpers = namespace("photos");
+const user: BindingHelpers = namespace("user");
 
 @Component({
   name: "CommentsNew",
   components: {
     roundedInput,
-    buttonRound
+    buttonRound,
+    avatar
   }
 })
 export default class CommentsItem extends Vue {
@@ -54,6 +65,9 @@ export default class CommentsItem extends Vue {
 
   @Prop()
   public data!: Comment;
+
+  @user.State((state: UserState) => state.userDetails)
+  public user!: UserDetails;
 
   public comment: Comment = {
     photo_id: 0,
@@ -82,4 +96,4 @@ export default class CommentsItem extends Vue {
 </script>
 
 
-<style lang="pcss" scoped src="styles/commentsNew.pcss"></style>
+<style lang="pcss" scoped src="styles/commentsItem.pcss"></style>

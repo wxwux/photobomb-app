@@ -3,6 +3,7 @@
     .modal__block-title.cover__left-col
       .cover__thumb(
         ref="cover"
+        :style="cover ? presettedCover : {}"
       )
     .modal__block-control.cover__right-col
       .cover__btn
@@ -51,6 +52,15 @@ export default class CoverLoader extends Vue {
 
   @Prop({default: "Загрузить обложку"})
   public buttonText!: string;
+
+  @Prop({default: ""})
+  public cover!: string;
+
+  get presettedCover() {
+    return {
+      backgroundImage: `url('${this.cover}')`
+    }
+  }
 
   public gatherData(e: HTMLInputEvent) {
     const files: FileList = e.target.files as FileList;

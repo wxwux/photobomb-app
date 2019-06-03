@@ -23,15 +23,23 @@ export default class Footer extends Vue {
   @Prop({default: () => ({})})
   public footerData!: AlbumItem;
 
-  public get footerBg(): string {
-      // const path = require("@/img/content/header-bg.jpg");
+  @Prop()
+  public coverFileName!: string;
 
-    if (this.footerData.cover) {
-      const path = `/uploads/albums_covers/origin/${this.footerData.cover}`;
-      return `url(${path})`;
-    } else {
-      return "none";
-    }
+  @Prop()
+  public coverPath!: string;
+
+  public get footerBg(): string {
+    return this.coverFileName
+      ? `url(${this.coverPath}/${this.coverFileName})`
+      : "none";
+      // const path = require("@/img/content/header-bg.jpg");
+    // if (this.footerData.cover) {
+    //   const path = `/uploads/albums_covers/origin/${this.footerData.cover}`;
+    //   return `url(${path})`;
+    // } else {
+    //   return "none";
+    // }
   }
 }
 

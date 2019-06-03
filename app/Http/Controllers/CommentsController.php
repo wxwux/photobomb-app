@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comments;
+use App\AlbumsPhotos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -23,6 +24,13 @@ class CommentsController extends Controller
 
         $comment->save();
 
+        $comment['user'] = $comment->user;
+
         return $comment;
+    }
+
+    public function get($photoId) {
+        $data = Comments::with('user')->find(7);
+        return $data;
     }
 }

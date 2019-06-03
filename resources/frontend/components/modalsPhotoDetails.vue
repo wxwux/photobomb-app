@@ -14,8 +14,11 @@
             .details__header
               .details__user
                 .user
-                  img(src="https://picsum.photos/100/100").user__avatar
-                  .user__name Анна Богданова
+                  .user__avatar
+                    avatar(
+                      :avatar="photoInfo.user.avatar"
+                    )
+                  .user__name {{photoInfo.user.name}}
               .details__likes
                 likes-button(
                   :amount="photoInfo.likes"
@@ -44,12 +47,14 @@ import comments from "./comments.vue";
 import { namespace } from "vuex-class";
 import { BindingHelpers } from "vuex-class/lib/bindings";
 import { PhotosState, Photo } from "../store/modules/photos/types";
+import avatar from "./avatar.vue";
 
 const photos: BindingHelpers = namespace("photos");
+const user: BindingHelpers = namespace("user");
 
 @Component({
   name: "ModalsPhotoDetails",
-  components: { modalsItem, slider, likesButton, comments }
+  components: { modalsItem, slider, likesButton, comments, avatar }
 })
 export default class ModalsPhotoDetails extends Vue {
   @photos.State((state: PhotosState) => state.photoInfo)

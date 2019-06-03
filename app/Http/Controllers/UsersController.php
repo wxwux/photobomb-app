@@ -20,7 +20,7 @@ class UsersController extends Controller
         Validator::make($request->all(), [
             'name' => 'required|string',
             'description' => 'required|string',
-            'avatar' => 'required|image|max:500',
+            'avatar' => 'image|max:500',
             'email' => 'required|email',
             'background' => 'image|max:1500',
         ])->validate();
@@ -55,9 +55,14 @@ class UsersController extends Controller
         return $user;
     }
 
-    public function info() {
-        $userId = Auth::id();
-        $user = User::find($userId);
+    public function info($userId = null) {
+        if ($userId) {
+            $reqestedUser = $userId;
+        } else {
+            $reqestedUser = Auth::id();
+        }
+
+        $user = User::find($reqestedUser);
 
         return response()->json([
             'name' => $user->name,

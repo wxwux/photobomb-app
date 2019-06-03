@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Likes;
 use App\Photo;
 use App\Albums;
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class PhotosController extends Controller
 {
     public $folder = "photos";
+
     use Uploader;
 
     public function uploadPhotos(UploadRequest $request) {
@@ -93,6 +95,7 @@ class PhotosController extends Controller
             ->limit(6)
             ->get();
 
+
         $photosArray = $photos->toArray();
         shuffle($photosArray);
 
@@ -104,11 +107,17 @@ class PhotosController extends Controller
             $likedByUser = Likes::where('photo_id', $photo['id'])
                 ->where('user_id', Auth::id())
                 ->first();
+            $user = User::find($photo['user_id']);
+
+            $comments = Comments::with('user')->where('photo_id', $photo['id'])->get();
 
             $photo['album_name'] = $album->title;
             $photo['likes'] = count($likes);
             $photo['likedByYou'] = (bool)$likedByUser;
-            $photo['comments'] = Comments::where('photo_id', $photo['id'])->get();
+
+            $photo['comments'] = $comments;
+            
+            $photo['user'] = $user;
 
             $shuffled[] = $photo;
         };

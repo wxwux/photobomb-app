@@ -1,7 +1,10 @@
 <template lang="pug">
   div
     .root__header
-      app-header
+      app-header(
+        :coverFileName="userDetails.background"
+        coverPath="/uploads/user/origin"
+      )
         template(slot="header-bottom")
           .search-container
             search
@@ -15,9 +18,11 @@
                 card-photo(
                   :card="card"
                 )
-          .section__load-btn
-            .section__load-btn-container
-              round-button 
+          //- .section__load-btn
+          //-   .section__load-btn-container
+          //-     round-button(
+
+          //-     )
       section.x-section.x-section--gray
         .x-container
           .albums-title
@@ -39,7 +44,10 @@
                 :href="`/album/${item.id}`"
               )
     .root__footer
-      app-footer
+      app-footer(
+        :coverFileName="userDetails.background"
+        coverPath="/uploads/user/origin"
+      )
 </template>
 
 <script lang="ts">
@@ -57,6 +65,7 @@ import header from "../header.vue";
 import search from "../search.vue";
 import { BindingHelpers } from "vuex-class/lib/bindings";
 import { Photo } from "../../store/modules/photos/types";
+import { UserState, UserDetails } from "../../store/modules/user/types";
 
 const modals: BindingHelpers = namespace("modals");
 const albums: BindingHelpers = namespace("albums");
@@ -79,6 +88,9 @@ const user: BindingHelpers = namespace("user");
 export default class MainPage extends Vue {
   @user.Action("getUserInfo")
   public getUserInfo;
+
+  @user.State((state: UserState) => state.userDetails)
+  public userDetails!: UserDetails;
 
   @modals.Mutation("showModal")
   public showModal!: void;

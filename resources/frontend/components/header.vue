@@ -32,10 +32,10 @@
               text="Редактировать"
               icon="edit"
             )
-    .header__search
-      .header__bar
-        .x-container.header__bar-container
-          slot(name="header-bottom")
+    //- .header__search
+    //-   .header__bar
+    //-     .x-container.header__bar-container
+    //-       slot(name="header-bottom")
 
 </template>
 <script lang="ts">
@@ -48,8 +48,10 @@ import user from "./user.vue";
 
 import { namespace } from "vuex-class";
 import { BindingHelpers } from "vuex-class/lib/bindings";
+import { UserState, UserDetails } from "../store/modules/user/types";
 
 const modals: BindingHelpers = namespace("modals");
+const userModule: BindingHelpers = namespace("user");
 
 @Component({
   components: {
@@ -65,18 +67,35 @@ export default class Header extends Vue {
   @Prop({ default: () => ({}) })
   public headerData!: any;
 
+  @Prop()
+  public coverFileName!: string;
+
+  @Prop()
+  public coverPath!: string;
+
+  @userModule.State((state: UserState) => state.userDetails)
+  public userDetails!: UserDetails;
+
   @modals.Mutation("showModal")
   public showModal;
 
   public get headerBg(): string {
-    console.log("data", this.headerData.cover);
-
-    if (this.headerData.cover) {
-      const path = `/uploads/albums_covers/origin/${this.headerData.cover}`;
-      return `url(${path})`;
-    } else {
-      return "none";
-    }
+    return this.coverFileName
+      ? `url(${this.coverPath}/${this.coverFileName})`
+      : "none";
+    // let cover: string = "";
+    // if (this.view === "user-view") {
+    //   const bgFilename = this.userDetails.background;
+    //   cover = `url(/uploads/user/origin/${bgFilename})`;
+    // } else {
+    //   if (this.headerData.cover) {
+    //     const path = `/uploads/albums_covers/origin/${this.headerData.cover}`;
+    //     cover = `url(${path})`;
+    //   } else {
+    //     cover = "none";
+    //   }
+    // }
+    // return cover;
   }
 }
 </script>

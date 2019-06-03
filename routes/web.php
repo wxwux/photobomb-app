@@ -20,7 +20,7 @@ Route::prefix('api')->group(function () {
         Route::get('user', 'AuthController@getUser');
 
         Route::post('updateUser', 'UsersController@update');
-        Route::get('userInfo', 'UsersController@info');
+        Route::get('userInfo/{userId?}', 'UsersController@info');
 
         Route::post('albums', 'AlbumsController@create');
         Route::get('albums', 'AlbumsController@view');
@@ -30,13 +30,16 @@ Route::prefix('api')->group(function () {
         Route::get('photos/recent/', 'PhotosController@getRecent');
 
         Route::post('photos/{photoId}', 'PhotosController@edit');
-        Route::get('photos/{photoId}', 'PhotosController@getPhotoInfo');
         Route::get('photos/{albumId}', 'PhotosController@view');
+
+        Route::get('photo/{photoId}', 'PhotosController@getPhotoInfo');
 
         Route::post('/like', 'LikesController@add');
         Route::post('/dislike', 'LikesController@remove');
 
         Route::post('/comments', 'CommentsController@add');
+
+        Route::get('/comments/{photoId}', 'CommentsController@get');
     });
 });
 

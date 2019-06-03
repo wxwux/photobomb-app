@@ -13,4 +13,8 @@ class AlbumsPhotos extends Model
     public function likes() {
         return $this->hasMany('App\Likes');
     }
+
+    public function comments() {
+        return $this->hasMany('App\Comments', 'photo_id');
+    }
 }

@@ -39,7 +39,6 @@ const mutations: MutationTree<PhotosState> = {
       return photo;
     });
   },
-
   addNewComment(photosState: PhotosState, payload: Comment) {
     const addComments = (photo: Photo): Photo => {
       if (payload.photo_id === photo.id) {
@@ -153,7 +152,7 @@ const actions: ActionTree<PhotosState, RootState> = {
   },
 
   async getInfoById({ commit }, photoId: number): Promise<any> {
-    const response: AxiosResponse = await this.$axios.get(`/photos/${photoId}`);
+    const response: AxiosResponse = await this.$axios.get(`/photo/${photoId}`);
   },
 
   async likeIt({ commit }, photoId): Promise<any> {

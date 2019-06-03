@@ -29,20 +29,22 @@
                     :error="validation.firstError('userDetails.description')"
                     hideErrorText
                   )
-            .modals__row
+            .modal__row
               cover-loader(
                 fileRestrictionText="500 КБ"
                 buttonText="Загрузить фотографию"
                 name="avatar"
+                :cover="userDetails.avatar ? `uploads/user/${userDetails.avatar}` : ''"
                 @onCoverUploaded="file => userDetails.avatar = file"
                 :errorText="validation.firstError('userDetails.avatar')"
               )
-            .modals__row
+            .modal__row
               cover-loader(
                 fileRestrictionText="1.5 МБ"
                 buttonText="Загрузить фон"
                 name="background"
                 @onCoverUploaded="file => userDetails.background = file"
+                :cover="userDetails.background ? `uploads/user/${userDetails.background}` : ''"
                 :errorText="validation.firstError('userDetails.background')"
               )
 
