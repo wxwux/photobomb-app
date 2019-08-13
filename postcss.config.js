@@ -2,6 +2,9 @@ module.exports = {
   syntax: "postcss-scss",
   parser: 'postcss-scss',
   plugins: [
+    require("postcss-easy-import")({
+      extensions: ".pcss"
+    }),
     require("autoprefixer"),
     require("postcss-advanced-variables")({
       variables: require("./resources/frontend/styles/variables")
@@ -14,6 +17,11 @@ module.exports = {
       removeFill: true,
       path: "./resources/frontend/assets/img"
     }),
-    require("postcss-svgo")
+    require("postcss-svgo"),
+    require("postcss-pxtorem")({
+      rootValue: 16,
+      propList: ["*", "!*border*"],
+      selectorBlackList: [/^html$/]
+    })
   ]
 };
