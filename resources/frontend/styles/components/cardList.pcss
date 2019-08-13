@@ -1,4 +1,6 @@
+@import "../mixins.pcss";
 $items-margin: 20px;
+
 .cards-list {
   display: flex;
   flex-wrap: wrap;
@@ -14,4 +16,12 @@ $items-margin: 20px;
   width: calc(100% / 3 - $items-margin);
   margin-left: $items-margin;
   margin-bottom: 20px;
+
+  @include tablets {
+    width: calc(100% / 2 - $items-margin);
+  }
+
+  @include phones {
+    width: calc(100% / 1 - $items-margin);
+  }
 }
