@@ -89,12 +89,14 @@ class PhotosController extends Controller
     }
 
     public function getRecent() {
-        $photos = AlbumsPhotos::where('user_id', '<>', Auth::id())
+        $photos = AlbumsPhotos::with(['album', 'likes', 'comments', 'user'])
+            ->where('user_id', '<>', Auth::id())
             ->orderBy('created_at', 'desc')
             ->offset(0)
             ->limit(6)
             ->get();
 
+        return $photos;
 
         $photosArray = $photos->toArray();
         shuffle($photosArray);
@@ -102,14 +104,16 @@ class PhotosController extends Controller
         $shuffled = [];
 
         foreach ($photosArray as $photo) {
-            $album = Albums::find($photo['albums_id']);
-            $likes = Likes::where('photo_id', $photo['id'])->get();
-            $likedByUser = Likes::where('photo_id', $photo['id'])
-                ->where('user_id', Auth::id())
-                ->first();
-            $user = User::find($photo['user_id']);
+            // $album = Albums::find($photo['albums_id']);
 
-            $comments = Comments::with('user')->where('photo_id', $photo['id'])->get();
+            // $likes = Likes::where('photo_id', $photo['id'])->get();
+            // $likedByUser = Likes::where('photo_id', $photo['id'])
+            //     ->where('user_id', Auth::id())
+            //     ->first();
+
+            // $user = User::find($photo['user_id']);
+
+            // $comments = Comments::with('user')->where('photo_id', $photo['id'])->get();
 
             $photo['album_name'] = $album->title;
             $photo['likes'] = count($likes);
