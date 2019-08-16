@@ -89,21 +89,21 @@ class PhotosController extends Controller
     }
 
     public function getRecent() {
-        $photos = AlbumsPhotos::with(['album', 'likes', 'comments', 'user'])
+        $photos = AlbumsPhotos::with(['album', 'comments', 'user'])
             ->where('user_id', '<>', Auth::id())
             ->orderBy('created_at', 'desc')
             ->offset(0)
             ->limit(6)
             ->get();
 
-        return $photos;
+        // return $photos;
 
-        $photosArray = $photos->toArray();
-        shuffle($photosArray);
+        // $photosArray = $photos->toArray();
+        // shuffle($photosArray);
 
         $shuffled = [];
 
-        foreach ($photosArray as $photo) {
+        foreach ($photos as $photo) {
             // $album = Albums::find($photo['albums_id']);
 
             // $likes = Likes::where('photo_id', $photo['id'])->get();
@@ -115,19 +115,19 @@ class PhotosController extends Controller
 
             // $comments = Comments::with('user')->where('photo_id', $photo['id'])->get();
 
-            $photo['album_name'] = $album->title;
-            $photo['likes'] = count($likes);
-            $photo['likedByYou'] = (bool)$likedByUser;
+            // $photo['album_name'] = $album->title;
+            // $photo['likes'] = count($likes);
+            // $photo['likedByYou'] = (bool)$likedByUser;
 
-            $photo['comments'] = $comments;
+            // $photo['comments'] = $comments;
             
-            $photo['user'] = $user;
+            // $photo['user'] = $user;
 
-            $shuffled[] = $photo;
+            // $shuffled[] = $photo->totalLikes;
         };
 
         return response()->json([
-            'photos' => $shuffled
+            'photos' => $photos
         ]);
 
     }

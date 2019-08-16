@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AlbumsPhotos extends Model
 {
+    protected $appends = ['total_likes'];
+
     public function album() {
         return $this->belongsTo('App\Albums', 'albums_id');
     }
@@ -20,5 +22,9 @@ class AlbumsPhotos extends Model
 
     public function user() {
         return $this->belongsTo('App\User');
+    }
+
+    public function getTotalLikesAttribute() {
+        return $this->likes->count();
     }
 }

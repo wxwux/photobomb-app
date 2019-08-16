@@ -9,4 +9,5 @@ class Likes extends Model
     public function photo() {
         $this->belongsTo('App/AlbumsPhotos');
     }
+
 }
