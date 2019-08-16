@@ -1,6 +1,13 @@
 .lac {
   display: flex;
   align-items: center;
+
+  &.liked {
+    .lac__likes:before {
+      background: svg-load("icons/heart.svg", fill=#a1a1a1) center center
+        no-repeat / contain;
+    }
+  }
 }
 
 .lac__comments,
@@ -19,10 +26,12 @@ $iconsFill: #d6d6d6;
 .lac__comments {
   margin-right: 18px;
   &:before {
-    background: svg-load('icons/comments.svg', fill=$iconsFill) center center no-repeat / contain;
+    background: svg-load("icons/comments.svg", fill=$iconsFill) center center
+      no-repeat / contain;
   }
 }
 
 .lac__likes:before {
-  background: svg-load('icons/heart.svg', fill=$iconsFill) center center no-repeat / contain;
+  background: svg-load("icons/heart.svg", fill=$iconsFill) center center
+    no-repeat / contain;
 }

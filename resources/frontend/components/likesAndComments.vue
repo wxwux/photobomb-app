@@ -1,5 +1,7 @@
 <template lang="pug">
-  .lac
+  .lac(
+    :class="{'liked': liked}"
+  )
     .lac__comments {{comments}}
     .lac__likes {{likes}}
 </template>
@@ -14,6 +16,9 @@ import { Prop } from "vue-property-decorator";
 export default class LikesAndComments extends Vue {
   @Prop({default: 0})
   public likes!: number;
+
+  @Prop({default: false})
+  public liked!: boolean;
 
   @Prop({default: 0})
   public comments!: number;

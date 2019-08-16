@@ -22,8 +22,9 @@
           h3.card-photo__title {{card.title}}
           .card-photo__social
             likes-and-comments(
+              :liked="card.isLikedByUser"
               :comments="card.comments.length"
-              :likes="card.likes"
+              :likes="card['total_likes']"
             )
       .card-photo__photo-info
         .card-photo__album-name {{card['album_name']}}
