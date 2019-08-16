@@ -94,42 +94,15 @@ class PhotosController extends Controller
             ->orderBy('created_at', 'desc')
             ->offset(0)
             ->limit(6)
-            ->get();
-
-        // return $photos;
-
-        // $photosArray = $photos->toArray();
-        // shuffle($photosArray);
-
-        $shuffled = [];
-
-        foreach ($photos as $photo) {
-            // $album = Albums::find($photo['albums_id']);
-
-            // $likes = Likes::where('photo_id', $photo['id'])->get();
-            // $likedByUser = Likes::where('photo_id', $photo['id'])
-            //     ->where('user_id', Auth::id())
-            //     ->first();
-
-            // $user = User::find($photo['user_id']);
-
-            // $comments = Comments::with('user')->where('photo_id', $photo['id'])->get();
-
-            // $photo['album_name'] = $album->title;
-            // $photo['likes'] = count($likes);
-            // $photo['likedByYou'] = (bool)$likedByUser;
-
-            // $photo['comments'] = $comments;
-            
-            // $photo['user'] = $user;
-
-            // $shuffled[] = $photo->totalLikes;
-        };
+            ->get()
+            ->map(function($item, $key) {
+                $item['isLikedByUser'] = $item->isLikedByUser(Auth::id()); 
+                return $item;
+            });
 
         return response()->json([
             'photos' => $photos
         ]);
-
     }
 
 }

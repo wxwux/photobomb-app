@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AlbumsPhotos extends Model
 {
     protected $appends = ['total_likes'];
+    protected $hidden = ['likes'];
 
     public function album() {
         return $this->belongsTo('App\Albums', 'albums_id');
@@ -14,6 +15,10 @@ class AlbumsPhotos extends Model
 
     public function likes() {
         return $this->hasMany('App\Likes', 'photo_id');
+    }
+
+    public function isLikedByUser($userId) {
+        return $this->likes()->where('user_id', $userId)->exists();
     }
 
     public function comments() {
