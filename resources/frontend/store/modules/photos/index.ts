@@ -145,7 +145,7 @@ const actions: ActionTree<PhotosState, RootState> = {
   async getRecentPhotos({ commit }): Promise<any> {
     try {
       const response: AxiosResponse = await this.$axios.get("/photos/recent");
-      commit("addRecentPhotos", response.data.photos);
+      commit("addRecentPhotos", response.data.data);
     } catch (error) {
       console.error(error);
     }
