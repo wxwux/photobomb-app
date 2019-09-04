@@ -14,6 +14,7 @@ use App\Http\Requests\UploadRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Resources\AlbumsPhotos as AlbumsPhotosResource;
 
 class PhotosController extends Controller
 {
@@ -103,6 +104,15 @@ class PhotosController extends Controller
         return response()->json([
             'photos' => $photos
         ]);
+    }
+
+    public function testico(Request $request) {
+        $photos = AlbumsPhotos::where('user_id', '<>', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(6);
+
+        return AlbumsPhotosResource::collection($photos);
+        // return AlbumsPhotos::all();
     }
 
 }
