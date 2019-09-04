@@ -39,8 +39,6 @@ Route::prefix('api')->group(function () {
 
         Route::post('/comments', 'CommentsController@add');
 
-        Route::get('/testico', "PhotosController@testico");
-
         Route::get('/comments/{photoId}', 'CommentsController@get');
     });
 });

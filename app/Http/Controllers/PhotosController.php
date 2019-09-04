@@ -89,24 +89,24 @@ class PhotosController extends Controller
         }
     }
 
+    // public function getRecent() {
+    //     $photos = AlbumsPhotos::with(['album', 'comments', 'user'])
+    //         ->where('user_id', '<>', Auth::id())
+    //         ->orderBy('created_at', 'desc')
+    //         ->offset(0)
+    //         ->limit(6)
+    //         ->get()
+    //         ->map(function($item, $key) {
+    //             $item['isLikedByUser'] = $item->isLikedByUser(Auth::id()); 
+    //             return $item;
+    //         });
+
+    //     return response()->json([
+    //         'photos' => $photos
+    //     ]);
+    // }
+
     public function getRecent() {
-        $photos = AlbumsPhotos::with(['album', 'comments', 'user'])
-            ->where('user_id', '<>', Auth::id())
-            ->orderBy('created_at', 'desc')
-            ->offset(0)
-            ->limit(6)
-            ->get()
-            ->map(function($item, $key) {
-                $item['isLikedByUser'] = $item->isLikedByUser(Auth::id()); 
-                return $item;
-            });
-
-        return response()->json([
-            'photos' => $photos
-        ]);
-    }
-
-    public function testico(Request $request) {
         $photos = AlbumsPhotos::where('user_id', '<>', Auth::id())
             ->orderBy('created_at', 'desc')
             ->paginate(6);
