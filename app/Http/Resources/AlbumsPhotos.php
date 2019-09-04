@@ -19,6 +19,8 @@ class AlbumsPhotos extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'total_likes' => $this->total_likes,
+            'filename' => $this->filename,
+            'description' => $this->description,
             'liked_by_user' => $this->isLikedByUser(Auth::id()),
             'comments' => $this->comments,
             'album' => $this->album,
