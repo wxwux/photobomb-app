@@ -18,11 +18,12 @@
                 card-photo(
                   :card="card"
                 )
-          //- .section__load-btn
-          //-   .section__load-btn-container
-          //-     round-button(
-
-          //-     )
+          .section__load-btn
+            .section__load-btn-container
+              pre {{nextUrl}}
+              round-button(
+                :blocked="true"
+              )
       section.x-section.x-section--gray
         .x-container
           .albums-title
@@ -53,7 +54,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Mutation, namespace, State } from "vuex-class";
+import { Mutation, namespace, State, Getter } from "vuex-class";
 import { AlbumItem } from "../../store/modules/albums/types";
 import roundButton from "../buttonRound.vue";
 import slideButton from "../buttonSlide.vue";
@@ -106,6 +107,9 @@ export default class MainPage extends Vue {
 
   @photos.State(state => state.recentPhotos)
   public recentPhotos!: Photo[];
+
+  @photos.Getter("getNextUrl")
+  public nextUrl!: string;
 
   public cardCurrentlyLoadedId: number | null = null;
 

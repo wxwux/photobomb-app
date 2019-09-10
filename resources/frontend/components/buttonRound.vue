@@ -3,7 +3,7 @@
     v-if="purpose ==='button'"
     v-bind="$attrs"
     :type="type"
-    :class="[{'round-btn--filled': filled }, `round-btn--bg_${bgClass}`, { 'round-btn--iconed': icon.length }, `round-btn--icon_${icon}`, { 'blocked': blocked }]"
+    :class="[`round-btn--bg_${bgClass}`, `round-btn--icon_${icon}`, buttonClasses]"
     v-on="$listeners"
   ).round-btn 
     span.round-btn__text {{text}}
@@ -48,8 +48,12 @@ export default class RoundButton extends Vue {
   @Prop({ default: false })
   public blocked!: boolean;
 
-  public mounted() {
-    // console.log("listen", this.$listeners);
+  get buttonClasses() {
+    return {
+      "round-btn--filled": this.filled,
+      "round-btn--iconed": Boolean(this.icon.length),
+      "blocked": this.blocked
+    };
   }
 }
 </script>

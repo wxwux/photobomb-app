@@ -4,12 +4,20 @@ export interface PhotosState {
   uploadedPhotos: UploadedPhotos;
   photoToEdit: Photo;
   recentPhotos: Photo[];
+  recentPhotosPagination: Pagination;
   photoInfo: Photo;
 }
 
 export interface UploadedPhotos {
   folder: string;
   photos: Photo[];
+}
+
+export interface Pagination {
+  first: string;
+  last: string;
+  next: string;
+  prev: string;
 }
 
 export interface Photo {

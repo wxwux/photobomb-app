@@ -1,6 +1,6 @@
 import { Module, MutationTree, ActionTree, GetterTree } from "vuex";
 import { RootState } from "../../types";
-import { PhotosState, PhotoItem, UploadedPhotos, Photo, LikesPayload, Comment } from "./types";
+import { PhotosState, PhotoItem, UploadedPhotos, Photo, LikesPayload, Comment, Pagination } from "./types";
 import { AxiosResponse } from "axios";
 
 const namespaced: boolean = true;
@@ -9,6 +9,12 @@ const state: PhotosState = {
   photosToUpload: [],
   photosWithErrors: [],
   recentPhotos: [],
+  recentPhotosPagination: {
+    first: "",
+    last: "",
+    next: "",
+    prev: ""
+  },
   photoToEdit: {
     id: 0,
     title: "",
@@ -60,8 +66,9 @@ const mutations: MutationTree<PhotosState> = {
   },
 
   addRecentPhotos(photosState: PhotosState, recentPhotos: Photo[]) {
-    photosState.recentPhotos = recentPhotos;
+    photosState.recentPhotos = photosState.recentPhotos.concat(recentPhotos);
   },
+
   setUploadedPhotos(photosState: PhotosState, data: UploadedPhotos): void {
     photosState.uploadedPhotos = data;
   },
@@ -94,12 +101,23 @@ const mutations: MutationTree<PhotosState> = {
     photosState.photosToUpload = photosState.photosToUpload.filter(
       (pic: any) => pic.rendered.id !== removedPhotoId
     );
+  },
+  setRecentPhotosPagination(photosState: PhotosState, data: Pagination): void {
+    photosState.recentPhotosPagination = data;
   }
 };
 
 const getters: GetterTree<PhotosState, RootState> = {
   getOnlyOriginalFiles(photosState: PhotosState): File[] {
     return photosState.photosToUpload.map((uploadedPhoto: PhotoItem) => uploadedPhoto.original);
+  },
+  getNextUrl(photosState: PhotosState): string | null {
+    const nextLink: string = photosState.recentPhotosPagination.next;
+    if (nextLink.length) {
+      return "/" + nextLink.split("/").filter((item, ndx) => ndx > 2).join("/");
+    } else {
+      return null;
+    }
   }
 };
 
@@ -146,10 +164,14 @@ const actions: ActionTree<PhotosState, RootState> = {
     try {
       const response: AxiosResponse = await this.$axios.get("/photos/recent");
       commit("addRecentPhotos", response.data.data);
+      commit("setRecentPhotosPagination", response.data.links);
     } catch (error) {
       console.error(error);
     }
   },
+
+  // async getMoreRecentPhotos({commit}): Promise<any> {
+  // },
 
   async getInfoById({ commit }, photoId: number): Promise<any> {
     const response: AxiosResponse = await this.$axios.get(`/photo/${photoId}`);
