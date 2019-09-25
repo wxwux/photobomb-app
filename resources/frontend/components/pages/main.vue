@@ -20,7 +20,6 @@
                 )
           .section__load-btn
             .section__load-btn-container
-              pre {{nextUrl}}
               round-button(
                 :blocked="true"
               )
@@ -65,7 +64,7 @@ import footer from "../footer.vue";
 import header from "../header.vue";
 import search from "../search.vue";
 import { BindingHelpers } from "vuex-class/lib/bindings";
-import { Photo } from "../../store/modules/photos/types";
+import { Photo, Pagination } from "../../store/modules/photos/types";
 import { UserState, UserDetails } from "../../store/modules/user/types";
 
 const modals: BindingHelpers = namespace("modals");
@@ -105,8 +104,11 @@ export default class MainPage extends Vue {
   @photos.Action("getRecentPhotos")
   public getRecentPhotos;
 
-  @photos.State(state => state.recentPhotos)
+  @photos.State(state => state.recentPhotos.data)
   public recentPhotos!: Photo[];
+
+  @photos.State(state => state.recentPhotos.links)
+  public pagination!: Pagination;
 
   @photos.Getter("getNextUrl")
   public nextUrl!: string;

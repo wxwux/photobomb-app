@@ -3,8 +3,10 @@ export interface PhotosState {
   photosWithErrors: PhotoItem[];
   uploadedPhotos: UploadedPhotos;
   photoToEdit: Photo;
-  recentPhotos: Photo[];
-  recentPhotosPagination: Pagination;
+  recentPhotos: {
+    data: Photo[],
+    links: Pagination
+  };
   photoInfo: Photo;
 }
 
@@ -14,10 +16,10 @@ export interface UploadedPhotos {
 }
 
 export interface Pagination {
-  first: string;
-  last: string;
-  next: string;
-  prev: string;
+  first?: string;
+  last?: string;
+  next?: string;
+  prev?: string;
 }
 
 export interface Photo {

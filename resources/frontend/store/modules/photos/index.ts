@@ -8,12 +8,9 @@ const namespaced: boolean = true;
 const state: PhotosState = {
   photosToUpload: [],
   photosWithErrors: [],
-  recentPhotos: [],
-  recentPhotosPagination: {
-    first: "",
-    last: "",
-    next: "",
-    prev: ""
+  recentPhotos: {
+    data: [],
+    links: {}
   },
   photoToEdit: {
     id: 0,
@@ -36,14 +33,16 @@ const state: PhotosState = {
 
 const mutations: MutationTree<PhotosState> = {
   updateLikes(photosState: PhotosState, payload: LikesPayload) {
-    photosState.recentPhotos = photosState.recentPhotos.map((photo: Photo) => {
+    const updateLikes = (photo: Photo): Photo => {
       if (photo.id === payload.photoId) {
         photo.likes = payload.likes;
         photo.likedByYou = payload.likedByYou;
       }
 
       return photo;
-    });
+    };
+
+    photosState.recentPhotos.data = photosState.recentPhotos.data.map(updateLikes);
   },
   addNewComment(photosState: PhotosState, payload: Comment) {
     const addComments = (photo: Photo): Photo => {
@@ -54,19 +53,23 @@ const mutations: MutationTree<PhotosState> = {
       return photo;
     };
 
-    photosState.recentPhotos = photosState.recentPhotos.map(addComments);
+    photosState.recentPhotos.data = photosState.recentPhotos.data.map(addComments);
 
     // const currentComments = photosState.photoInfo.comments as Comment[];
     // currentComments.push(payload);
   },
   setDetailedPhoto(photosState: PhotosState, choosedPhotoId: number) {
-    photosState.photoInfo = photosState.recentPhotos.filter((photo: Photo) => {
+    photosState.photoInfo = photosState.recentPhotos.data.filter((photo: Photo) => {
       return photo.id === choosedPhotoId;
     })[0];
   },
 
   addRecentPhotos(photosState: PhotosState, recentPhotos: Photo[]) {
-    photosState.recentPhotos = photosState.recentPhotos.concat(recentPhotos);
+    photosState.recentPhotos.data = photosState.recentPhotos.data.concat(recentPhotos);
+  },
+
+  addRecentPagination(photosState: PhotosState, pagination: Pagination) {
+    photosState.recentPhotos.links = pagination;
   },
 
   setUploadedPhotos(photosState: PhotosState, data: UploadedPhotos): void {
@@ -102,23 +105,20 @@ const mutations: MutationTree<PhotosState> = {
       (pic: any) => pic.rendered.id !== removedPhotoId
     );
   },
-  setRecentPhotosPagination(photosState: PhotosState, data: Pagination): void {
-    photosState.recentPhotosPagination = data;
-  }
 };
 
 const getters: GetterTree<PhotosState, RootState> = {
   getOnlyOriginalFiles(photosState: PhotosState): File[] {
     return photosState.photosToUpload.map((uploadedPhoto: PhotoItem) => uploadedPhoto.original);
   },
-  getNextUrl(photosState: PhotosState): string | null {
-    const nextLink: string = photosState.recentPhotosPagination.next;
-    if (nextLink.length) {
-      return "/" + nextLink.split("/").filter((item, ndx) => ndx > 2).join("/");
-    } else {
-      return null;
-    }
-  }
+  // getNextUrl(photosState: PhotosState): string | null {
+  //   const nextLink: string = photosState.recentPhotosPagination.next;
+  //   if (nextLink.length) {
+  //     return "/" + nextLink.split("/").filter((item, ndx) => ndx > 2).join("/");
+  //   } else {
+  //     return null;
+  //   }
+  // }
 };
 
 const actions: ActionTree<PhotosState, RootState> = {
@@ -136,7 +136,6 @@ const actions: ActionTree<PhotosState, RootState> = {
       const response: AxiosResponse = await this.$axios.post("/photos", formData);
 
       console.log("response", response);
-
     } catch (error) {
       console.log(error);
     }
@@ -164,7 +163,7 @@ const actions: ActionTree<PhotosState, RootState> = {
     try {
       const response: AxiosResponse = await this.$axios.get("/photos/recent");
       commit("addRecentPhotos", response.data.data);
-      commit("setRecentPhotosPagination", response.data.links);
+      commit("addRecentPagination", response.data.links);
     } catch (error) {
       console.error(error);
     }
