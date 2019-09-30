@@ -18,10 +18,11 @@
                 card-photo(
                   :card="card"
                 )
-          .section__load-btn
+          .section__load-btn(v-if="Boolean(pagination.next)")
             .section__load-btn-container
               round-button(
-                :blocked="true"
+                @click="loadMore"
+                :blocked="loadBtnBlocked"
               )
       section.x-section.x-section--gray
         .x-container
@@ -113,7 +114,14 @@ export default class MainPage extends Vue {
   @photos.Getter("getNextUrl")
   public nextUrl!: string;
 
+  @photos.Action("getMoreRecentPhotos")
+  public getMoreRecentPhotos;
+
   public cardCurrentlyLoadedId: number | null = null;
+
+  public loadBtnBlocked: boolean = false;
+
+  public loadBtnShown: boolean = true;
 
   public blurOthers(cardId) {
     this.cardCurrentlyLoadedId = cardId;
@@ -123,6 +131,19 @@ export default class MainPage extends Vue {
     this.fetchUserAlbums();
     this.getRecentPhotos();
     this.getUserInfo();
+  }
+
+  public async loadMore() {
+    const nextLink: string = this.pagination.next;
+    this.loadBtnBlocked = true;
+
+    try {
+      await this.getMoreRecentPhotos(nextLink);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      this.loadBtnBlocked = false;
+    }
   }
 }
 </script>

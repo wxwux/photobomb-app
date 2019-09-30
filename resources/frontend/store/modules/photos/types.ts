@@ -18,7 +18,7 @@ export interface UploadedPhotos {
 export interface Pagination {
   first?: string;
   last?: string;
-  next?: string;
+  next: string;
   prev?: string;
 }
 

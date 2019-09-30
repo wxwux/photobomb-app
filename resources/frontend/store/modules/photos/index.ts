@@ -10,7 +10,9 @@ const state: PhotosState = {
   photosWithErrors: [],
   recentPhotos: {
     data: [],
-    links: {}
+    links: {
+      next: ""
+    }
   },
   photoToEdit: {
     id: 0,
@@ -111,6 +113,7 @@ const getters: GetterTree<PhotosState, RootState> = {
   getOnlyOriginalFiles(photosState: PhotosState): File[] {
     return photosState.photosToUpload.map((uploadedPhoto: PhotoItem) => uploadedPhoto.original);
   },
+
   // getNextUrl(photosState: PhotosState): string | null {
   //   const nextLink: string = photosState.recentPhotosPagination.next;
   //   if (nextLink.length) {
@@ -169,8 +172,15 @@ const actions: ActionTree<PhotosState, RootState> = {
     }
   },
 
-  // async getMoreRecentPhotos({commit}): Promise<any> {
-  // },
+  async getMoreRecentPhotos({ commit }, link: string): Promise<any> {
+    try {
+      const response: AxiosResponse = await this.$axios.get(link);
+      commit("addRecentPhotos", response.data.data);
+      commit("addRecentPagination", response.data.links);
+    } catch (error) {
+      console.error(error);
+    }
+  },
 
   async getInfoById({ commit }, photoId: number): Promise<any> {
     const response: AxiosResponse = await this.$axios.get(`/photo/${photoId}`);
