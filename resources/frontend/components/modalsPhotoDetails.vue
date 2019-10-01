@@ -60,7 +60,7 @@ export default class ModalsPhotoDetails extends Vue {
   @photos.State((state: PhotosState) => state.photoInfo)
   public photoInfo!: Photo;
 
-  @photos.State((state: PhotosState) => state.recentPhotos)
+  @photos.State((state: PhotosState) => state.recentPhotos.data)
   public recentPhotos!: Photo[];
 
   @photos.Mutation("setDetailedPhoto")
