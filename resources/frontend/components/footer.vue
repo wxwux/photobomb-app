@@ -5,7 +5,7 @@
     .x-container.footer__container
       .footer__col.footer__desc 
         | Перед вами сервис, который поможет вам организовать свои фотографии в альбомы и поделиться ими со всем миром!
-      a(href="").footer__up-btn
+      button(@click="scrollTop").footer__up-btn
       .footer__col.footer__copyright
         | 2018 | Создано командой профессионалов на продвинутом курсе по веб-разработке от LoftSchool
 
@@ -20,7 +20,7 @@ import { AlbumItem } from "../store/modules/albums/types";
   name: "Footer"
 })
 export default class Footer extends Vue {
-  @Prop({default: () => ({})})
+  @Prop({ default: () => ({}) })
   public footerData!: AlbumItem;
 
   @Prop()
@@ -33,7 +33,7 @@ export default class Footer extends Vue {
     return this.coverFileName
       ? `url(${this.coverPath}/${this.coverFileName})`
       : "none";
-      // const path = require("@/img/content/header-bg.jpg");
+    // const path = require("@/img/content/header-bg.jpg");
     // if (this.footerData.cover) {
     //   const path = `/uploads/albums_covers/origin/${this.footerData.cover}`;
     //   return `url(${path})`;
@@ -41,8 +41,16 @@ export default class Footer extends Vue {
     //   return "none";
     // }
   }
-}
 
+  public scrollTop() {
+    const header = document.querySelector(".header") as Element;
+    if (header) {
+      header.scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+  }
+}
 </script>
 
 <style lang="pcss" src="styles/footer.pcss" scoped></style>
