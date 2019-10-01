@@ -1,24 +1,21 @@
 import { RouteConfig } from "vue-router";
 
-import album from "../components/pages/album";
-import auth from "../components/pages/auth";
-import main from "../components/pages/main";
 
 const routes: RouteConfig[] = [
   {
-    component: main,
+    component: () => import("../components/pages/main.vue"),
     path: "/",
     meta: {
       public: true
     }
   },
   {
-    component: album,
+    component: () =>  import("../components/pages/album"),
     path: "/album/:id"
   },
   {
     path: "/auth",
-    component: auth
+    component: () => import("../components/pages/auth"),
   }
 ];
 
