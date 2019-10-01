@@ -15,9 +15,7 @@
       .card-photo__user-info
         .card-photo__pics
           .card-photo__avatar
-            img(
-              src="https://picsum.photos/100/100", alt=""
-            ).card-photo__avatar-pic
+            img( :src="pathToAvatar", alt="").card-photo__avatar-pic
         .card-photo__data
           h3.card-photo__title {{card.title}}
           .card-photo__social
@@ -62,6 +60,11 @@ interface Card {
   id: number;
   title: string;
   filename: string;
+  user: User;
+}
+
+interface User {
+  avatar?: string;
 }
 
 @Component({
@@ -100,6 +103,12 @@ export default class CardPhoto extends Vue {
     return getPhotoPath(this.card.filename, "photos");
   }
 
+  get pathToAvatar() {
+    const avatar = this.card.user.avatar;
+    const defaultAvatar = require("../assets/img/defaults/avatar.png");
+    return Boolean(avatar) ? avatar : defaultAvatar;
+  }
+
   public showDetails() {
     this.showModal("photo-details");
     this.setDetailedPhoto(this.card.id);
@@ -107,7 +116,6 @@ export default class CardPhoto extends Vue {
     // // this.$emit("onLoading", this.card.id);
 
     // this.getInfoById(this.card.id);
-
   }
 
   public onEditHandler(): void {
