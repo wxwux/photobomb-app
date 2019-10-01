@@ -6,7 +6,10 @@
         :createmode="true"
         :belongsTo="belongsTo"
       )
-    .comments__row(v-for="comment in comments" :key="comment.id")
+    .comments__row(
+      v-for="comment in comments" :key="comment.id"
+      v-if="comments.length"
+    )
       comments-item(
         :data="comment"
       )
