@@ -111,9 +111,6 @@ export default class MainPage extends Vue {
   @photos.State(state => state.recentPhotos.links)
   public pagination!: Pagination;
 
-  @photos.Getter("getNextUrl")
-  public nextUrl!: string;
-
   @photos.Action("getMoreRecentPhotos")
   public getMoreRecentPhotos;
 
