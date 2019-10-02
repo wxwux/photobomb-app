@@ -27,7 +27,7 @@ const state: PhotosState = {
     id: 0,
     title: "",
     description: "",
-    likes: 0,
+    total_likes: 0,
     comments: [],
     filename: ""
   }
@@ -37,8 +37,8 @@ const mutations: MutationTree<PhotosState> = {
   updateLikes(photosState: PhotosState, payload: LikesPayload) {
     const updateLikes = (photo: Photo): Photo => {
       if (photo.id === payload.photoId) {
-        photo.likes = payload.likes;
-        photo.likedByYou = payload.likedByYou;
+        photo.total_likes = payload.likes;
+        photo.liked_by_user = payload.likedByYou;
       }
 
       return photo;
@@ -186,7 +186,7 @@ const actions: ActionTree<PhotosState, RootState> = {
     const response: AxiosResponse = await this.$axios.get(`/photo/${photoId}`);
   },
 
-  async likeIt({ commit }, photoId): Promise<any> {
+  async likeIt({ commit }, photoId: number): Promise<any> {
     try {
 
       const response: AxiosResponse = await this.$axios.post("/like", {

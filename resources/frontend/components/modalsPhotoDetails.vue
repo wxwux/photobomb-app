@@ -21,8 +21,8 @@
                   .user__name {{photoInfo.user.name}}
               .details__likes
                 likes-button(
-                  :amount="photoInfo.likes"
-                  :liked="photoInfo.likedByYou"
+                  :amount="photoInfo['total_likes']"
+                  :liked="photoInfo['liked_by_user']"
                   :blocked="lockTheLikes"
                   @onLike="handleLike"
                   @onDislike="handleDislike"

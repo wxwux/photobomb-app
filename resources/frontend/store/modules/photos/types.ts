@@ -28,9 +28,9 @@ export interface Photo {
   description: string;
   filename?: string;
   title: string;
-  likes?: number;
+  total_likes?: number;
   comments?: object[];
-  likedByYou?: boolean;
+  liked_by_user?: boolean;
 }
 
 export interface PhotoItem {
