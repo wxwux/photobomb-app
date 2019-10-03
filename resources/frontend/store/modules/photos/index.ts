@@ -66,6 +66,10 @@ const mutations: MutationTree<PhotosState> = {
     })[0];
   },
 
+  setRecentPhotos(photosState: PhotosState, recentPhotos: Photo[]) {
+    photosState.recentPhotos.data = recentPhotos;
+  },
+
   addRecentPhotos(photosState: PhotosState, recentPhotos: Photo[]) {
     photosState.recentPhotos.data = photosState.recentPhotos.data.concat(recentPhotos);
   },
@@ -165,7 +169,7 @@ const actions: ActionTree<PhotosState, RootState> = {
   async getRecentPhotos({ commit }): Promise<any> {
     try {
       const response: AxiosResponse = await this.$axios.get("/photos/recent");
-      commit("addRecentPhotos", response.data.data);
+      commit("setRecentPhotos", response.data.data);
       commit("addRecentPagination", response.data.links);
     } catch (error) {
       console.error(error);
