@@ -15,7 +15,7 @@ module.exports = {
     require("postcss-rgb"),
     require("postcss-inline-svg")({
       removeFill: true,
-      path: "./resources/frontend/assets/img"
+      paths: ["./resources/frontend/assets/img"]
     }),
     require("postcss-svgo"),
     require("postcss-pxtorem")({
