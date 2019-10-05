@@ -56,9 +56,6 @@ const mutations: MutationTree<PhotosState> = {
     };
 
     photosState.recentPhotos.data = photosState.recentPhotos.data.map(addComments);
-
-    // const currentComments = photosState.photoInfo.comments as Comment[];
-    // currentComments.push(payload);
   },
   setDetailedPhoto(photosState: PhotosState, choosedPhotoId: number) {
     photosState.photoInfo = photosState.recentPhotos.data.filter((photo: Photo) => {
