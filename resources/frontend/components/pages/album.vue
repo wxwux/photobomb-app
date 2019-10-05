@@ -70,10 +70,10 @@ export default class MainPage extends Vue {
   @albums.Action("fetchAlbumById")
   public fetchAlbumById!: any;
 
-  @photos.Action("fetchPhotos")
+  @albums.Action("fetchPhotos")
   public fetchPhotos!: any;
 
-  @photos.State((state) => state.uploadedPhotos)
+  @albums.State((state) => state.photos)
   public uploadedPhotos!: UploadedPhotos;
 
   @photos.Mutation("setPhotoToEdit")

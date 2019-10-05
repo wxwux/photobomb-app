@@ -1,6 +1,8 @@
+import { Photo } from "../../types";
 export interface AlbumState {
   data: AlbumItem[];
   currentAlbum: CurrentAlbum;
+  photos: Photo[];
 }
 
 export interface AlbumItem {

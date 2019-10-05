@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { ActionTree, Module, MutationTree, GetterTree } from "vuex";
-import { RootState } from "../../types";
+import { RootState, Photo } from "../../types";
 import { AlbumState, AlbumItem, CurrentAlbum } from "./types";
 
 const namespaced: boolean = true;
@@ -12,7 +12,8 @@ const state: AlbumState = {
     title: "",
     desc: "",
     cover: ""
-  }
+  },
+  photos: []
 };
 
 const getters: GetterTree<AlbumState, RootState> = {
@@ -22,20 +23,32 @@ const getters: GetterTree<AlbumState, RootState> = {
 };
 
 const mutations: MutationTree<AlbumState> = {
-  addAllUserAlbums(albumsState, userAlbums: AlbumItem[]) {
+  addAllUserAlbums(albumsState: AlbumState, userAlbums: AlbumItem[]) {
     albumsState.data = userAlbums;
   },
 
-  addNewUserAlbum(albumsState, newAlbum: AlbumItem) {
+  addNewUserAlbum(albumsState: AlbumState, newAlbum: AlbumItem) {
     albumsState.data.push(newAlbum);
   },
 
-  addCurrentAlbum(albumsState, currentAlbum: CurrentAlbum) {
+  addCurrentAlbum(albumsState: AlbumState, currentAlbum: CurrentAlbum) {
     albumsState.currentAlbum = currentAlbum;
+  },
+  setAlbumsPhotos(albumsState: AlbumState, photos: Photo[]) {
+    albumsState.photos = photos;
   }
 };
 
 const actions: ActionTree<AlbumState, RootState> = {
+  async fetchPhotos({ commit }, albumId: number): Promise<any> {
+    try {
+      const response: AxiosResponse = await this.$axios.get(`/photos/${albumId}`);
+      commit("setAlbumsPhotos", response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   async createNewAlbum({ commit }, newAlbum: AlbumItem): Promise<any> {
     try {
       const response: AxiosResponse = await this.$axios.post("/albums", newAlbum);
