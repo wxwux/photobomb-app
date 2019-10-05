@@ -2,7 +2,11 @@ import { Photo } from "../../types";
 export interface AlbumState {
   data: AlbumItem[];
   currentAlbum: CurrentAlbum;
-  photos: Photo[];
+  photos: {
+    folder: string,
+    photos: Photo[]
+  };
+  photoToEdit: Photo;
 }
 
 export interface AlbumItem {

@@ -13,7 +13,14 @@ const state: AlbumState = {
     desc: "",
     cover: ""
   },
-  photos: []
+  photos: {
+    folder: "",
+    photos: []
+  },
+  photoToEdit: {
+    title: "",
+    description: ""
+  }
 };
 
 const getters: GetterTree<AlbumState, RootState> = {
@@ -34,9 +41,14 @@ const mutations: MutationTree<AlbumState> = {
   addCurrentAlbum(albumsState: AlbumState, currentAlbum: CurrentAlbum) {
     albumsState.currentAlbum = currentAlbum;
   },
-  setAlbumsPhotos(albumsState: AlbumState, photos: Photo[]) {
-    albumsState.photos = photos;
-  }
+  setAlbumsPhotos(albumsState: AlbumState, data) {
+    albumsState.photos = data;
+  },
+  setPhotoToEdit(photosState: AlbumState, editedPhotoId: number) {
+    const getPhotoById = (photo: Photo): boolean => photo.id === editedPhotoId;
+
+    photosState.photoToEdit = photosState.photos.photos.filter(getPhotoById)[0];
+  },
 };
 
 const actions: ActionTree<AlbumState, RootState> = {

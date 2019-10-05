@@ -76,7 +76,7 @@ export default class MainPage extends Vue {
   @albums.State((state) => state.photos)
   public uploadedPhotos!: UploadedPhotos;
 
-  @photos.Mutation("setPhotoToEdit")
+  @albums.Mutation("setPhotoToEdit")
   public setPhotoToEdit;
 
   @albums.State((state) => state.currentAlbum)

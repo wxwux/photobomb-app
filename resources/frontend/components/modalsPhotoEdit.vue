@@ -63,6 +63,7 @@ import { BindingHelpers, BindingHelper } from "vuex-class/lib/bindings";
 const modals: BindingHelpers = namespace("modals");
 const photos: BindingHelpers = namespace("photos");
 const alerts: BindingHelpers = namespace("alerts");
+const albums: BindingHelpers = namespace("albums");
 
 @Component({
   name: "ModalsPhotoEdit",
@@ -86,7 +87,7 @@ export default class ModalsAlbum extends mixins() {
   @photos.Action("updatePhoto")
   public updatePhoto;
 
-  @photos.State(state => state.photoToEdit)
+  @albums.State(state => state.photoToEdit)
   public photoToEdit;
 
   public editedPhotoItem: Photo = {
