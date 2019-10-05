@@ -41,7 +41,7 @@ import { AlbumState } from "../store/modules/albums/types";
 
 const album: BindingHelpers = namespace("albums");
 const modals: BindingHelpers = namespace("modals");
-const photos: BindingHelpers = namespace("photos");
+const photos: BindingHelpers = namespace("uploadedPhotos");
 
 @Component({
   name: "ModalsUploadPhoto",
@@ -80,7 +80,7 @@ export default class ModalsUploadPhotos extends Vue {
       this.clearUploadedPhotos();
       this.clearModal();
     } catch (error) {
-      console.error();
+      console.error(error);
     } finally {
       this.uploaderIsLocked = false;
     }

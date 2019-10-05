@@ -46,7 +46,8 @@ import slider from "./slider.vue";
 import comments from "./comments.vue";
 import { namespace } from "vuex-class";
 import { BindingHelpers } from "vuex-class/lib/bindings";
-import { PhotosState, Photo } from "../store/modules/photos/types";
+import { PhotosState } from "../store/modules/photos/types.ts";
+import { Photo } from "../store/types";
 import avatar from "./avatar.vue";
 
 const photos: BindingHelpers = namespace("photos");

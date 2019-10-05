@@ -57,7 +57,7 @@ import { Action, Mutation, namespace } from "vuex-class";
 import buttonRound from "./buttonRound.vue";
 import inputRounded from "./inputRounded.vue";
 import modalsItem from "./modalsItem.vue";
-import { Photo } from "../store/modules/photos/types";
+import { Photo } from "../store/types";
 import { BindingHelpers, BindingHelper } from "vuex-class/lib/bindings";
 
 const modals: BindingHelpers = namespace("modals");

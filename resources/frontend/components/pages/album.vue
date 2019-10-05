@@ -46,7 +46,7 @@ import footer from "../footer.vue";
 import header from "../header.vue";
 import likesDisplay from "../likes-display.vue";
 import { BindingHelpers } from "vuex-class/lib/bindings";
-import { UploadedPhotos } from "../../store/modules/photos/types";
+import { UploadedPhotos } from "../../store/types";
 
 const modals: BindingHelpers = namespace("modals");
 const albums: BindingHelpers = namespace("albums");

@@ -50,7 +50,7 @@ import likesAndComments from "./likesAndComments.vue";
 import { namespace } from "vuex-class";
 import { BindingHelpers } from "vuex-class/lib/bindings";
 import { getPhotoPath } from "helpers/files";
-import { UploadedPhotos } from "../store/modules/photos/types";
+import { UploadedPhotos } from "../store/types";
 import loader from "./loader.vue";
 
 const modals: BindingHelpers = namespace("modals");

@@ -53,7 +53,7 @@ interface PicData {
   url: string;
 }
 
-const photos: BindingHelpers = namespace("photos");
+const photos: BindingHelpers = namespace("uploadedPhotos");
 
 @Component({
   name: "Uploader",

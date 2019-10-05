@@ -65,7 +65,7 @@ import footer from "../footer.vue";
 import header from "../header.vue";
 import search from "../search.vue";
 import { BindingHelpers } from "vuex-class/lib/bindings";
-import { Photo, Pagination } from "../../store/modules/photos/types";
+import { Photo, Pagination } from "../../store/types";
 import { UserState, UserDetails } from "../../store/modules/user/types";
 
 const modals: BindingHelpers = namespace("modals");

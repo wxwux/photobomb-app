@@ -19,7 +19,7 @@
 import Vue from "vue";
 import commentsItem from "./commentsItem.vue";
 import { Component, Prop } from "vue-property-decorator";
-import { Photo, Comment } from "../store/modules/photos/types";
+import { Photo, Comment } from "../store/types";
 @Component({
   name: "Comments",
   components: {

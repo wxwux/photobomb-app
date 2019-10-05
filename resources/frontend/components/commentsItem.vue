@@ -41,7 +41,7 @@ import roundedInput from "./inputRounded.vue";
 import buttonRound from "./buttonRound.vue";
 import { namespace } from "vuex-class";
 import { BindingHelpers } from "vuex-class/lib/bindings";
-import { Comment, Photo } from "../store/modules/photos/types";
+import { Comment, Photo } from "../store/types";
 import avatar from "./avatar.vue";
 import { UserState, UserDetails } from "../store/modules/user/types";
 
