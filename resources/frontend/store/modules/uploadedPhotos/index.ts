@@ -51,7 +51,7 @@ const getters: GetterTree<PhotosState, RootState> = {
 };
 
 const actions: ActionTree<PhotosState, RootState> = {
-  async uploadPhotosToAlbum({ getters: photoGetters, rootGetters }): Promise<any> {
+  async uploadPhotosToAlbum({ getters: photoGetters, rootGetters, commit }): Promise<any> {
     const formData: FormData = new FormData();
     const photosToUpload = photoGetters.getOnlyOriginalFiles;
 
@@ -64,7 +64,7 @@ const actions: ActionTree<PhotosState, RootState> = {
     try {
       const response: AxiosResponse = await this.$axios.post("/photos", formData);
 
-      console.log("response", response);
+      commit("albums/setAlbumsPhotos", response.data, { root: true });
     } catch (error) {
       console.log(error);
     }
