@@ -56,6 +56,16 @@ const mutations: MutationTree<AlbumState> = {
 
     photosState.photos.photos = uploadedPhotos.map(replaceExistedPhotoWithEdited);
   },
+
+  removePhoto(photosState: AlbumState, removedPhotoId: number) {
+    const uploadedPhotos: Photo[] = photosState.photos.photos;
+    const removeExistedPhoto = (photo: Photo): boolean => (photo.id !== removedPhotoId);
+
+    photosState.photos.photos = uploadedPhotos.filter(removeExistedPhoto);
+
+    console.log("photosState.photos.photos", removedPhotoId);
+
+  }
 };
 
 const actions: ActionTree<AlbumState, RootState> = {
@@ -76,6 +86,17 @@ const actions: ActionTree<AlbumState, RootState> = {
       console.log(error);
     }
   },
+
+  async removePhoto({ commit }, photoId: number): Promise<any> {
+    try {
+      const response: AxiosResponse = await this.$axios.delete(`/photos/${photoId}`);
+
+      commit("removePhoto", response.data.photo.id);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
 
   async createNewAlbum({ commit }, newAlbum: AlbumItem): Promise<any> {
     try {

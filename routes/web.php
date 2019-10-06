@@ -31,6 +31,7 @@ Route::prefix('api')->group(function () {
 
         Route::post('photos/{photoId}', 'PhotosController@edit');
         Route::get('photos/{albumId}', 'PhotosController@view');
+        Route::delete('photos/{photoId}', 'PhotosController@remove');
 
         Route::get('photo/{photoId}', 'PhotosController@getPhotoInfo');
 

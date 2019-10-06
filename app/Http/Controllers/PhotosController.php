@@ -89,6 +89,27 @@ class PhotosController extends Controller
         }
     }
 
+    public function remove($photoId) {
+        try {
+            $photo = AlbumsPhotos::with(['likes', 'comments'])
+                    ->where('id', $photoId)
+                    ->where('user_id', Auth::id())
+                    ->with([])
+                    ->first();
+
+            $photo->delete();
+
+            return response()->json([
+                'photo' => $photo
+            ]);
+
+        } catch (ModelNotFoundException $error) {
+            return response()->json([
+                'message' => 'Такой записи нет, либо она вам не принадлежит' 
+            ], 404);
+        }
+    }
+
     // public function getRecent() {
     //     $photos = AlbumsPhotos::with(['album', 'comments', 'user'])
     //         ->where('user_id', '<>', Auth::id())

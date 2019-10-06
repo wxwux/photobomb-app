@@ -44,6 +44,7 @@
             bgClass="red"
             icon="trash"
             :filled="true"
+            @click="removePhoto"
           )  
 </template>
 
@@ -57,6 +58,7 @@ import { Action, Mutation, namespace } from "vuex-class";
 import buttonRound from "./buttonRound.vue";
 import inputRounded from "./inputRounded.vue";
 import modalsItem from "./modalsItem.vue";
+import loader from './loader';
 import { Photo } from "../store/types";
 import { BindingHelpers, BindingHelper } from "vuex-class/lib/bindings";
 
@@ -75,7 +77,7 @@ const albums: BindingHelpers = namespace("albums");
       return Validator.value(value).required("Описание не может быть пустым");
     }
   },
-  components: { inputRounded, buttonRound, modalsItem }
+  components: { inputRounded, buttonRound, modalsItem, loader }
 })
 export default class ModalsAlbum extends mixins() {
   @modals.Mutation("clearModal")
@@ -86,6 +88,9 @@ export default class ModalsAlbum extends mixins() {
 
   @albums.Action("updatePhoto")
   public updatePhoto;
+
+  @albums.Action("removePhoto")
+  public removeExistedPhoto;
 
   @albums.State(state => state.photoToEdit)
   public photoToEdit;
@@ -98,6 +103,23 @@ export default class ModalsAlbum extends mixins() {
 
   public mounted() {
     this.editedPhotoItem = this.photoToEdit;
+  }
+
+  public async removePhoto() {
+    try {
+      await this.removeExistedPhoto(this.photoToEdit.id);
+      this.showAlerts({
+        type: "success",
+        messages: ["Фотография удалена"]
+      });
+    } catch (error) {
+      this.showAlerts({
+        type: "error",
+        messages: ["Ошибка. Не удалось удалить фото"]
+      });
+    } finally {
+      this.clearModal();
+    }
   }
 
   public async editPhoto() {
