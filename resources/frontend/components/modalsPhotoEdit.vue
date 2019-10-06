@@ -2,6 +2,7 @@
   #modal-album-wrapper
     modals-item(
       title="Редактировать фотографию"
+      :blocked="modalIsBlocked"
     )
       template(slot="modal-content")
         .modal__row
@@ -58,7 +59,6 @@ import { Action, Mutation, namespace } from "vuex-class";
 import buttonRound from "./buttonRound.vue";
 import inputRounded from "./inputRounded.vue";
 import modalsItem from "./modalsItem.vue";
-import loader from './loader';
 import { Photo } from "../store/types";
 import { BindingHelpers, BindingHelper } from "vuex-class/lib/bindings";
 
@@ -77,7 +77,7 @@ const albums: BindingHelpers = namespace("albums");
       return Validator.value(value).required("Описание не может быть пустым");
     }
   },
-  components: { inputRounded, buttonRound, modalsItem, loader }
+  components: { inputRounded, buttonRound, modalsItem }
 })
 export default class ModalsAlbum extends mixins() {
   @modals.Mutation("clearModal")
@@ -101,11 +101,14 @@ export default class ModalsAlbum extends mixins() {
     description: ""
   };
 
+  public modalIsBlocked = false;
+
   public mounted() {
     this.editedPhotoItem = this.photoToEdit;
   }
 
   public async removePhoto() {
+    this.modalIsBlocked = true;
     try {
       await this.removeExistedPhoto(this.photoToEdit.id);
       this.showAlerts({
@@ -118,6 +121,7 @@ export default class ModalsAlbum extends mixins() {
         messages: ["Ошибка. Не удалось удалить фото"]
       });
     } finally {
+      this.modalIsBlocked = false;
       this.clearModal();
     }
   }
@@ -128,6 +132,7 @@ export default class ModalsAlbum extends mixins() {
       return;
     }
 
+    this.modalIsBlocked = true;
     try {
       await this.updatePhoto(this.editedPhotoItem);
       this.showAlerts({
@@ -141,6 +146,7 @@ export default class ModalsAlbum extends mixins() {
       });
     } finally {
       this.clearModal();
+      this.modalIsBlocked = false;
     }
   }
 }
