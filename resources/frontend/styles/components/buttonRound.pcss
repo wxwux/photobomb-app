@@ -39,17 +39,6 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      &.round-btn--icon_ {
-        &trash {
-          &:before {
-            background: svg-load(
-                "../../assets/img/icons/delete.svg",
-                "fill=#fff"
-              )
-              center center / contain no-repeat;
-          }
-        }
-      }
       &:before {
         content: "";
         width: 16px;
@@ -58,13 +47,23 @@
         margin-right: 10px;
       }
     }
+    &.round-btn--icon_ {
+      &trash {
+        .round-btn__text {
+          &:before {
+            background: svg-load("icons/delete.svg", "fill=#fff") center center /
+              contain no-repeat;
+          }
+        }
+      }
+    }
   }
 
   &.blocked {
     background-color: transparent !important;
     pointer-events: none;
     cursor: default !important;
-    opacity: .8;
+    opacity: 0.8;
     &:after {
       content: "";
       position: absolute;
