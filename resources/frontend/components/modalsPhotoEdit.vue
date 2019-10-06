@@ -12,7 +12,7 @@
               input-rounded(
                 placeholder="Введите название фотографии"
                 v-model="editedPhotoItem.title"
-                :error="validation.hasError('editedPhotoItem.title')"
+                :error="validation.firstError('editedPhotoItem.title')"
               )
         .modal__row
           label.modal__block
@@ -22,7 +22,7 @@
                 element="textarea"
                 placeholder="Введите описание фотографии"
                 v-model="editedPhotoItem.description"
-                :error="validation.hasError('editedPhotoItem.description')"
+                :error="validation.firstError('editedPhotoItem.description')"
               )
       template(slot="modal-buttons")
         .modal__buttons-common
