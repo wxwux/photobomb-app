@@ -19,12 +19,6 @@ const mutations: MutationTree<PhotosState> = {
   // setUploadedPhotos(photosState: PhotosState, data: UploadedPhotos): void {
   //   photosState.uploadedPhotos = data;
   // },
-  replaceEditedPhoto(photosState: PhotosState, editedPhoto: Photo) {
-    const uploadedPhotos = photosState.uploadedPhotos.photos;
-    const replaceExistedPhotoWithEdited = (photo: Photo): Photo => (photo.id === editedPhoto.id ? editedPhoto : photo);
-
-    photosState.uploadedPhotos.photos = uploadedPhotos.map(replaceExistedPhotoWithEdited);
-  },
   addUploadedPhoto(photosState: PhotosState, photo: PhotoItem): void {
     photosState.photosToUpload.push(photo);
   },
@@ -71,14 +65,6 @@ const actions: ActionTree<PhotosState, RootState> = {
   },
 
 
-  async updatePhoto({ commit }, photo: Photo): Promise<any> {
-    try {
-      const response: AxiosResponse = await this.$axios.post(`/photos/${photo.id}`, photo);
-      commit("replaceEditedPhoto", response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 };
 
 const photos: Module<PhotosState, RootState> = {

@@ -84,7 +84,7 @@ export default class ModalsAlbum extends mixins() {
   @alerts.Mutation("showAlerts")
   public showAlerts;
 
-  @photos.Action("updatePhoto")
+  @albums.Action("updatePhoto")
   public updatePhoto;
 
   @albums.State(state => state.photoToEdit)

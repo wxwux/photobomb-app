@@ -49,6 +49,13 @@ const mutations: MutationTree<AlbumState> = {
 
     photosState.photoToEdit = photosState.photos.photos.filter(getPhotoById)[0];
   },
+
+  replaceEditedPhoto(photosState: AlbumState, editedPhoto: Photo) {
+    const uploadedPhotos: Photo[] = photosState.photos.photos;
+    const replaceExistedPhotoWithEdited = (photo: Photo): Photo => (photo.id === editedPhoto.id ? editedPhoto : photo);
+
+    photosState.photos.photos = uploadedPhotos.map(replaceExistedPhotoWithEdited);
+  },
 };
 
 const actions: ActionTree<AlbumState, RootState> = {
@@ -58,6 +65,15 @@ const actions: ActionTree<AlbumState, RootState> = {
       commit("setAlbumsPhotos", response.data);
     } catch (error) {
       console.error(error);
+    }
+  },
+
+  async updatePhoto({ commit }, photo: Photo): Promise<any> {
+    try {
+      const response: AxiosResponse = await this.$axios.post(`/photos/${photo.id}`, photo);
+      commit("replaceEditedPhoto", response.data);
+    } catch (error) {
+      console.log(error);
     }
   },
 
