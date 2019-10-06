@@ -9,6 +9,8 @@
       slot(name="modal-content")
     .modal__buttons
       slot(name="modal-buttons")
+    .blocked-layer(v-if="blocked")
+      loader
 
   .modal.modal--view_blank(v-else-if="view === 'blank'")
     slot(name="modal-content")
@@ -18,18 +20,23 @@
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import { Mutation, namespace } from "vuex-class";
+import loader from "./loader.vue";
 
 const modals = namespace("modals");
 
 @Component({
-  name: "ModalsItem"
+  name: "ModalsItem",
+  components: { loader }
 })
 export default class ModalsItem extends Vue {
   @Prop({ default: "Модальное окно" })
   public title!: string;
 
-  @Prop({default: "template"})
+  @Prop({ default: "template" })
   public view!: string;
+
+  @Prop({default: false})
+  public blocked!: boolean;
 
   @modals.Mutation("clearModal")
   public clearModal;
