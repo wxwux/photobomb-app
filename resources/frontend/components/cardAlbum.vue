@@ -8,7 +8,10 @@
         :style="`background-image: url(${fullCoverUrl})`"
       )
     .album-card__data 
-      card-edit-line(:title="title")
+      card-edit-line(
+        :title="title"
+        @onEdit="onEdit"
+      )
       
 
 </template>
@@ -33,6 +36,10 @@ export default class CardAlbum extends Vue {
 
   get fullCoverUrl() {
     return `/uploads/albums_covers/${this.cover}`;
+  }
+
+  public onEdit() {
+    console.log("asdasd");
   }
 }
 </script>

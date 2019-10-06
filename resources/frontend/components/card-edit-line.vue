@@ -1,6 +1,6 @@
 <template lang="pug">
   .card-edit-line(
-    @click="() => $emit('onEdit')"
+    @click="$emit('onEdit')"
   ) {{title}}
 </template>
 <script lang="ts">

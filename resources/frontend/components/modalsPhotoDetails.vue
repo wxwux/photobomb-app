@@ -9,6 +9,8 @@
             :imgPath="`/uploads/photos/origin/${photoInfo.filename}`"
             @onNext="slide('next')"
             @onPrev="slide('prev')"
+            :nextIsHidden="nextBtnHidden"
+            :prevIsHidden="prevBtnHidden"
           )
           .details
             .details__header
@@ -76,6 +78,9 @@ export default class ModalsPhotoDetails extends Vue {
   public currentItemIndex: number = 0;
   public lockTheLikes: boolean = false;
 
+  public nextBtnHidden = false;
+  public prevBtnHidden = false;
+
   public async handleLike(): Promise<any> {
     this.lockTheLikes = true;
     try {
@@ -98,19 +103,24 @@ export default class ModalsPhotoDetails extends Vue {
     }
   }
 
-  public makeInfiniteScroll(value: number): void {
-    const recentPhotos = this.recentPhotos;
-
-    if (value >= recentPhotos.length) {
-      this.currentItemIndex = 0;
-    }
-    if (value < 0) {
-      this.currentItemIndex = recentPhotos.length - 1;
-    }
-
-    const targetItemInRecentPhotos = recentPhotos[this.currentItemIndex];
-
+  public makeScroll(value: number): void {
+    const targetItemInRecentPhotos = this.recentPhotos[this.currentItemIndex];
     this.setDetailedPhoto(targetItemInRecentPhotos.id);
+    this.showHideButtons();
+  }
+
+  public showHideButtons() {
+    switch (this.currentItemIndex) {
+      case 0:
+        this.prevBtnHidden = true;
+        break;
+      case this.recentPhotos.length - 1:
+        this.nextBtnHidden = true;
+        break;
+      default:
+        this.prevBtnHidden = false;
+        this.nextBtnHidden = false;
+    }
   }
 
   public setCurrentItemsIndex() {
@@ -120,7 +130,7 @@ export default class ModalsPhotoDetails extends Vue {
 
   @Watch("currentItemIndex")
   public onCurrentIndexChanged(value: number): void {
-    this.makeInfiniteScroll(value);
+    this.makeScroll(value);
   }
 
   public slideByKeys(event: KeyboardEvent): void {
@@ -148,6 +158,7 @@ export default class ModalsPhotoDetails extends Vue {
 
   public created() {
     this.setCurrentItemsIndex();
+    this.showHideButtons();
   }
 
   public mounted() {

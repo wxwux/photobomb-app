@@ -5,10 +5,12 @@
         img(:src="imgPath").slider__picture-display
       .slider__buttons
         button(
+          v-if="prevIsHidden === false"
           type="button"
           @click="$emit('onPrev')"
         ).slider__btn.slider__btn--left
         button(
+          v-if="nextIsHidden === false"
           type="button"
           @click="$emit('onNext')"
         ).slider__btn.slider__btn--right
@@ -24,6 +26,12 @@ import { Component, Prop } from "vue-property-decorator";
 export default class ModalsAlbum extends Vue {
   @Prop({ default: "" })
   public imgPath!: string;
+
+  @Prop({ default: false })
+  public nextIsHidden!: boolean;
+
+  @Prop({ default: false })
+  public prevIsHidden!: boolean;
 }
 </script>
 

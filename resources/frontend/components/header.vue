@@ -27,11 +27,11 @@
               icon="home"
               @click.native="$router.push('/')"
             )
-          .header__edit-button-row
-            slide-button(
-              text="Редактировать"
-              icon="edit"
-            )
+          //- .header__edit-button-row
+          //-   slide-button(
+          //-     text="Редактировать"
+          //-     icon="edit"
+          //-   )
     //- .header__search
     //-   .header__bar
     //-     .x-container.header__bar-container
