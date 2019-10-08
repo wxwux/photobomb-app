@@ -52,6 +52,7 @@
             bgClass="red"
             icon="trash"
             :filled="true"
+            @click="removeCurrentAlbum"
           )  
 </template>
 
@@ -107,6 +108,12 @@ export default class ModalsAlbum extends mixins() {
   @alerts.Mutation("showAlerts")
   public showAlerts;
 
+  @albums.State(state => state.currentAlbum)
+  public currentAlbum;
+
+  @albums.Action("removeAlbum")
+  public removeAlbum;
+
   public newAlbum: AlbumItem = {
     title: "",
     desc: "",
@@ -146,6 +153,10 @@ export default class ModalsAlbum extends mixins() {
       });
     }
     this.closeModal();
+  }
+
+  public removeCurrentAlbum() {
+    this.removeAlbum(this.currentAlbum.id);
   }
 
   public beforeDestroy() {

@@ -97,7 +97,6 @@ const actions: ActionTree<AlbumState, RootState> = {
     }
   },
 
-
   async createNewAlbum({ commit }, newAlbum: AlbumItem): Promise<any> {
     try {
       const response: AxiosResponse = await this.$axios.post("/albums", newAlbum);
@@ -105,6 +104,10 @@ const actions: ActionTree<AlbumState, RootState> = {
     } catch (error) {
       throw new Error(error);
     }
+  },
+
+  async removeAlbum({ commit }, albumId: number): Promise<any> {
+    console.log(albumId);
   },
 
   fetchAlbumById({ commit }, albumId: number) {
