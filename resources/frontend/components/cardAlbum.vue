@@ -2,15 +2,15 @@
   .album-card
     router-link(
       tag="div"
-      :to="href"
+      :to="`/album/${item.id}`"
     ).album-cart__display
       .album-card__photo(
         :style="`background-image: url(${fullCoverUrl})`"
       )
     .album-card__data 
       card-edit-line(
-        :title="title"
-        @onEdit="onEdit"
+        :title="item.title"
+        @onEdit="$emit('onEdit', item)"
       )
       
 
@@ -20,26 +20,31 @@
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import CardEditLine from "./card-edit-line.vue";
+import { Mutation, namespace, State, Getter } from "vuex-class";
+import { BindingHelpers } from "vuex-class/lib/bindings";
+const modals: BindingHelpers = namespace("modals");
+const albums: BindingHelpers = namespace("albums");
+
+interface Card {
+  id: string;
+  cover: string;
+  href: string;
+}
 
 @Component({
   name: "CardAlbum",
   components: { CardEditLine }
 })
+
 export default class CardAlbum extends Vue {
-  @Prop({ default: "Новый альбом" })
-  public title!: string;
+  @Prop({ default: {} })
+  public item!: Card;
 
-  @Prop() public cover!: string;
-
-  @Prop({ default: "/" })
-  public href!: string;
+  @modals.Mutation("showModal")
+  public showModal;
 
   get fullCoverUrl() {
-    return `/uploads/albums_covers/${this.cover}`;
-  }
-
-  public onEdit() {
-    console.log("asdasd");
+    return `/uploads/albums_covers/${this.item.cover}`;
   }
 }
 </script>

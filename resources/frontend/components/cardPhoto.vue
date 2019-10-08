@@ -29,9 +29,8 @@
 
   .card-photo.card-photo_simple-view(v-else-if="view === 'simple'")
     .card-photo__picture-wrap
-      .card-photo__picture(
+      .card-photo__simple-picture(
         :style="photoStyle"
-        @click="showModal('photo-details')"
       )
       .card-photo__onpicture-data
         likes-and-comments
@@ -110,8 +109,8 @@ export default class CardPhoto extends Vue {
   }
 
   public showDetails() {
-    this.showModal("photo-details");
     this.setDetailedPhoto(this.card.id);
+    this.showModal("photo-details");
     // // this.blocked = true;
     // // this.$emit("onLoading", this.card.id);
 

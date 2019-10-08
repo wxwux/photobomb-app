@@ -40,9 +40,8 @@
           )
             div(slot-scope="{item}")
               card-album(
-                :title="item.title"
-                :cover="item.cover"
-                :href="`/album/${item.id}`"
+                :item="item"
+                @onEdit="editAlbum"
               )
     .root__footer
       app-footer(
@@ -94,7 +93,10 @@ export default class MainPage extends Vue {
   public userDetails!: UserDetails;
 
   @modals.Mutation("showModal")
-  public showModal!: void;
+  public showModal;
+
+  @albums.Mutation("addCurrentAlbum")
+  public addCurrentAlbum;
 
   @albums.Action("fetchUserAlbums")
   public fetchUserAlbums!: any;
@@ -128,6 +130,11 @@ export default class MainPage extends Vue {
     this.fetchUserAlbums();
     this.getRecentPhotos();
     this.getUserInfo();
+  }
+
+  public editAlbum(album) {
+    this.addCurrentAlbum(album);
+    this.showModal("albums");
   }
 
   public async loadMore() {
