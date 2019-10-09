@@ -94,7 +94,6 @@ class PhotosController extends Controller
             $photo = AlbumsPhotos::with(['likes', 'comments'])
                     ->where('id', $photoId)
                     ->where('user_id', Auth::id())
-                    ->with([])
                     ->first();
 
             $photo->delete();

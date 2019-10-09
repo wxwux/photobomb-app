@@ -40,6 +40,25 @@ class AlbumsController extends Controller
         return $createdAlbum;
     }
 
+    public function remove($albumId) {
+        try {
+            $album = Albums::where('id', $albumId)
+                    ->where('user_id', Auth::id())
+                    ->first();
+
+            $album->delete();
+
+            return response()->json([
+                'album' => $album
+            ]);
+
+        } catch (ModelNotFoundException $error) {
+            return response()->json([
+                'message' => 'Такой записи нет, либо она вам не принадлежит' 
+            ], 404);
+        }
+    }
+
     public function view(Request $request)
     {
         return Albums::where('user_id', Auth::id())->get();

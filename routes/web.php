@@ -25,6 +25,7 @@ Route::prefix('api')->group(function () {
         Route::post('albums', 'AlbumsController@create');
         Route::get('albums', 'AlbumsController@view');
         Route::get('albums/{id}', 'AlbumsController@getById');
+        Route::delete('albums/{id}', 'AlbumsController@remove');
 
         Route::post('photos', 'PhotosController@uploadPhotos');
         Route::get('photos/recent/', 'PhotosController@getRecent');
