@@ -1,7 +1,7 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { ActionTree, Module, MutationTree, GetterTree } from "vuex";
 import { RootState, Photo } from "../../types";
-import { AlbumState, AlbumItem, CurrentAlbum } from "./types";
+import { AlbumState, AlbumItem } from "./types";
 
 const namespaced: boolean = true;
 
@@ -38,16 +38,22 @@ const mutations: MutationTree<AlbumState> = {
     albumsState.data.push(newAlbum);
   },
 
-  addCurrentAlbum(albumsState: AlbumState, currentAlbum: CurrentAlbum) {
+  addCurrentAlbum(albumsState: AlbumState, currentAlbum: AlbumItem) {
     albumsState.currentAlbum = currentAlbum;
   },
   setAlbumsPhotos(albumsState: AlbumState, data) {
     albumsState.photos = data;
   },
+
   setPhotoToEdit(photosState: AlbumState, editedPhotoId: number) {
     const getPhotoById = (photo: Photo): boolean => photo.id === editedPhotoId;
 
     photosState.photoToEdit = photosState.photos.photos.filter(getPhotoById)[0];
+  },
+
+  removeAlbum(photosState: AlbumState, removedPhotoId: number) {
+    const removeItemById = (item: AlbumItem): boolean => (item.id !== removedPhotoId);
+    photosState.data = photosState.data.filter(removeItemById);
   },
 
   replaceEditedPhoto(photosState: AlbumState, editedPhoto: Photo) {
@@ -107,7 +113,12 @@ const actions: ActionTree<AlbumState, RootState> = {
   },
 
   async removeAlbum({ commit }, albumId: number): Promise<any> {
-    console.log(albumId);
+    try {
+      const response: AxiosResponse = await this.$axios.delete(`/albums/${albumId}`);
+      commit("removeAlbum", response.data.album.id);
+    } catch (error) {
+      throw new Error(error);
+    }
   },
 
   fetchAlbumById({ commit }, albumId: number) {

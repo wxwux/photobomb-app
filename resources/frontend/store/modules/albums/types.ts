@@ -1,7 +1,7 @@
 import { Photo } from "../../types";
 export interface AlbumState {
   data: AlbumItem[];
-  currentAlbum: CurrentAlbum;
+  currentAlbum: AlbumItem;
   photos: {
     folder: string,
     photos: Photo[]
@@ -10,15 +10,8 @@ export interface AlbumState {
 }
 
 export interface AlbumItem {
-  title: string;
-  desc: string;
-  cover?: any;
-}
-
-
-export interface CurrentAlbum {
   id: number;
   title: string;
   desc: string;
-  cover: any;
+  cover?: any;
 }
