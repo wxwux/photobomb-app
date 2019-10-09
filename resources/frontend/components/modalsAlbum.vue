@@ -31,6 +31,7 @@
             @onCoverUploaded="file => newAlbum.cover = file"
             :errorText="validation.firstError('newAlbum.cover')"
             fileRestrictionText="1.5 МБ"
+            :cover="albumCoverPreview"
           )
 
       template(slot="modal-buttons")
@@ -63,7 +64,7 @@ import Vue from "vue";
 import { mixins } from "vue-class-component";
 import { Component, Prop } from "vue-property-decorator";
 import { Action, Mutation, namespace } from "vuex-class";
-import { renderFile } from "../helpers/files";
+import { renderFile, getPhotoPath } from "../helpers/files";
 import { AlbumItem } from "../store/modules/albums/types";
 import buttonRound from "./buttonRound.vue";
 import inputRounded from "./inputRounded.vue";
@@ -127,6 +128,8 @@ export default class ModalsAlbum extends mixins() {
 
   public formIsBlocked: boolean = false;
 
+  public albumCoverPreview: string = "";
+
   public clearFormData() {
     const coverElem: HTMLElement = this.$refs.cover as HTMLElement;
 
@@ -189,6 +192,11 @@ export default class ModalsAlbum extends mixins() {
       (this.newAlbum[field] = this.currentAlbum[field]);
 
     fields.forEach(setDefaultField);
+
+    this.albumCoverPreview = getPhotoPath(
+      this.currentAlbum.cover,
+      "albums_covers"
+    );
   }
 
   public mounted() {
