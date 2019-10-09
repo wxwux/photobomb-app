@@ -11,8 +11,6 @@ const state: ModalsState = {
 
 const mutations: MutationTree<ModalsState> = {
   showModal(modalsState: any, modalToShow: ModalsState | any): void {
-    console.log(modalToShow);
-
     if (typeof modalToShow === "string") {
       modalsState.currentModal = modalToShow;
     } else {

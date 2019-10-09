@@ -183,6 +183,20 @@ export default class ModalsAlbum extends mixins() {
     }
   }
 
+  public setDefaultValues() {
+    const fields = ["id", "title", "desc"];
+    const setDefaultField = field =>
+      (this.newAlbum[field] = this.currentAlbum[field]);
+
+    fields.forEach(setDefaultField);
+  }
+
+  public mounted() {
+    if (this.options.mode === "edit") {
+      this.setDefaultValues();
+    }
+  }
+
   public beforeDestroy() {
     this.clearFormData();
   }
