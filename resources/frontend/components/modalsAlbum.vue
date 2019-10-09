@@ -2,6 +2,7 @@
   #modal-album-wrapper
     modals-item(
       title="Добавить альбом"
+      :blocked="formIsBlocked"
     )
       template(slot="modal-content")
         .modal__row
@@ -114,15 +115,22 @@ export default class ModalsAlbum extends mixins() {
   @albums.Action("removeAlbum")
   public removeAlbum;
 
+  @Prop({ default: () => ({}) })
+  public options;
+
   public newAlbum: AlbumItem = {
+    id: 0,
     title: "",
     desc: "",
     cover: null
   };
 
+  public formIsBlocked: boolean = false;
+
   public clearFormData() {
     const coverElem: HTMLElement = this.$refs.cover as HTMLElement;
 
+    this.newAlbum.id = 0;
     this.newAlbum.title = "";
     this.newAlbum.desc = "";
     this.newAlbum.cover = "";
@@ -155,8 +163,24 @@ export default class ModalsAlbum extends mixins() {
     this.closeModal();
   }
 
-  public removeCurrentAlbum() {
-    this.removeAlbum(this.currentAlbum.id);
+  public async removeCurrentAlbum() {
+    this.formIsBlocked = true;
+
+    try {
+      await this.removeAlbum(this.currentAlbum.id);
+      this.showAlerts({
+        type: "success",
+        messages: ["Альбом удален"]
+      });
+    } catch (error) {
+      this.showAlerts({
+        type: "error",
+        messages: ["Ошибка. Альбом не удалось добвить"]
+      });
+    } finally {
+      this.closeModal();
+      this.formIsBlocked = false;
+    }
   }
 
   public beforeDestroy() {

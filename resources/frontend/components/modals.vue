@@ -10,6 +10,7 @@
         component(
           :is="currentModal"
           :key="currentModal"
+          :options="options"
         ) 
           
 </template>
@@ -36,6 +37,9 @@ const modals: BindingHelpers = namespace("modals");
 export default class Modals extends Vue {
   @modals.State((state: ModalsState) => state.currentModal)
   public currentModal!: string;
+
+  @modals.State((state: ModalsState) => state.options)
+  public options!: string;
 
   @modals.Mutation("clearModal")
   public clearModal!: void;

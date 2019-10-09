@@ -5,15 +5,24 @@ import { ModalsState } from "./types";
 const namespaced: boolean = true;
 
 const state: ModalsState = {
-  currentModal: ""
+  currentModal: "",
+  options: {}
 };
 
 const mutations: MutationTree<ModalsState> = {
-  showModal(modalsState: any, modalToShow: ModalsState): void {
-    modalsState.currentModal = modalToShow;
+  showModal(modalsState: any, modalToShow: ModalsState | any): void {
+    console.log(modalToShow);
+
+    if (typeof modalToShow === "string") {
+      modalsState.currentModal = modalToShow;
+    } else {
+      modalsState.currentModal = modalToShow.name;
+      modalsState.options = modalToShow;
+    }
   },
   clearModal(modalsState: any): void {
     modalsState.currentModal = "";
+    modalsState.options = {};
   }
 };
 

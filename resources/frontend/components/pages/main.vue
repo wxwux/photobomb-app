@@ -134,7 +134,7 @@ export default class MainPage extends Vue {
 
   public editAlbum(album) {
     this.addCurrentAlbum(album);
-    this.showModal("albums");
+    this.showModal({ name: "albums", mode: "edit" });
   }
 
   public async loadMore() {
