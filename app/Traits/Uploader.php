@@ -2,6 +2,7 @@
 namespace App\Traits\Uploader;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
 trait Uploader {
@@ -29,5 +30,15 @@ trait Uploader {
     {
         $md5 = substr(md5($file->getClientOriginalName().$_SERVER ['HTTP_USER_AGENT']), 3, 10);
         return Auth::id().'q'.$md5.'.'.$file->getClientOriginalExtension();
+    }
+
+    private function removeFileIfExists($filename, $folder) {
+        $path = public_path("uploads/$folder/$filename");
+
+        if (File::exists($path)) {
+            $origin = public_path("uploads/$folder/origin/$filename");
+            File::delete($path);
+            File::delete($origin);
+        }
     }
 }
