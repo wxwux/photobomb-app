@@ -40,6 +40,39 @@ class AlbumsController extends Controller
         return $createdAlbum;
     }
 
+    public function update(Request $request, $id) {
+        Validator::make($request->all(), [
+            'title' => 'required|string',
+            'desc' => 'required|string',
+        ])->validate();
+        $userId = Auth::id();
+        try {
+            $album = Albums::where('id', $id)->where("user_id", $userId)->first();
+
+            $album->title = $request->title;
+            $album->desc = $request->desc;
+
+            if ($request->hasFile('cover')) {
+                $this->removeFileIfExists($album->cover, $this->folder);
+
+                $albumCover = $this->uploadImage($request->file('cover'), $this->folder, 300);
+                $album->cover = $albumCover['name'];
+            }
+
+            $album->save();
+
+            return response()->json([
+                'album' => $album
+            ]);
+        } catch (ModelNotFoundException $error) {
+            return response()->json([
+                'message' => 'Такой записи нет, либо она вам не принадлежит' 
+            ], 404);
+        };
+
+
+    }
+
     public function remove($albumId) {
         try {
             $album = Albums::where('id', $albumId)
