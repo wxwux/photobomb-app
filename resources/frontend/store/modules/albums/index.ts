@@ -112,6 +112,21 @@ const actions: ActionTree<AlbumState, RootState> = {
     }
   },
 
+  async editAlbum({ commit }, album: AlbumItem): Promise<any> {
+    const formData: FormData = new FormData();
+    Object.keys(album).forEach((prop) => {
+      formData.append(prop, album[prop]);
+      console.log(prop, album[prop]);
+
+    });
+
+    try {
+      const response: AxiosResponse = await this.$axios.post(`/albums/${album.id}`, formData);
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   async removeAlbum({ commit }, albumId: number): Promise<any> {
     try {
       const response: AxiosResponse = await this.$axios.delete(`/albums/${albumId}`);

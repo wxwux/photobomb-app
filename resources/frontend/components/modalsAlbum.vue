@@ -1,7 +1,7 @@
 <template lang="pug">
   #modal-album-wrapper
     modals-item(
-      title="Добавить альбом"
+      :title="modalTitle"
       :blocked="formIsBlocked"
     )
       template(slot="modal-content")
@@ -40,7 +40,7 @@
             button-round(
               text="Сохранить"
               :filled="true"
-              @click="createNewAlbum"
+              @click="options.mode === 'edit' ? editExistedAlbum() : createNewAlbum()"
               :disabled="!!validation.allErrors().length"
             )
           .modal__buttons-elem
@@ -116,6 +116,9 @@ export default class ModalsAlbum extends mixins() {
   @albums.Action("removeAlbum")
   public removeAlbum;
 
+  @albums.Action("editAlbum")
+  public editAlbum;
+
   @Prop({ default: () => ({}) })
   public options;
 
@@ -129,6 +132,10 @@ export default class ModalsAlbum extends mixins() {
   public formIsBlocked: boolean = false;
 
   public albumCoverPreview: string = "";
+
+  get modalTitle() {
+    return this.options.mode === "edit" ? "Изменить альбом" : "Добавить альбом";
+  }
 
   public clearFormData() {
     const coverElem: HTMLElement = this.$refs.cover as HTMLElement;
@@ -183,6 +190,18 @@ export default class ModalsAlbum extends mixins() {
     } finally {
       this.closeModal();
       this.formIsBlocked = false;
+    }
+  }
+
+  public async editExistedAlbum() {
+    // if ((await this.$validate()) === false) {
+    //   return null;
+    // }
+
+    try {
+      await this.editAlbum(this.newAlbum);
+    } catch (error) {
+      console.error(error);
     }
   }
 
