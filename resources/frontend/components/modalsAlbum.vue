@@ -86,6 +86,10 @@ const alerts = namespace("alerts");
     },
     "newAlbum.cover"(value) {
       return Validator.custom(() => {
+        if (Boolean(value) === false) {
+          return "У альбома должна быть обложка";
+        }
+
         if (
           ["image/jpeg", "image/png", "image/jpg"].indexOf(value.type) === -1
         ) {
@@ -194,14 +198,25 @@ export default class ModalsAlbum extends mixins() {
   }
 
   public async editExistedAlbum() {
-    // if ((await this.$validate()) === false) {
-    //   return null;
-    // }
+    if ((await this.$validate()) === false) {
+      return;
+    }
 
+    this.formIsBlocked = true;
     try {
       await this.editAlbum(this.newAlbum);
+      this.showAlerts({
+        type: "success",
+        messages: ["Альбом изменен"]
+      });
     } catch (error) {
-      console.error(error);
+      this.showAlerts({
+        type: "error",
+        messages: ["Ошибка во время редактирования"]
+      });
+    } finally {
+      this.closeModal();
+      this.formIsBlocked = false;
     }
   }
 

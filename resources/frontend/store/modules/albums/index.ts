@@ -68,9 +68,10 @@ const mutations: MutationTree<AlbumState> = {
     const removeExistedPhoto = (photo: Photo): boolean => (photo.id !== removedPhotoId);
 
     photosState.photos.photos = uploadedPhotos.filter(removeExistedPhoto);
+  },
 
-    console.log("photosState.photos.photos", removedPhotoId);
-
+  editAlbum(photosState: AlbumState, editedAlbum: AlbumItem) {
+    photosState.data = photosState.data.map((album: AlbumItem) => album.id === editedAlbum.id ? editedAlbum : album);
   }
 };
 
@@ -116,12 +117,11 @@ const actions: ActionTree<AlbumState, RootState> = {
     const formData: FormData = new FormData();
     Object.keys(album).forEach((prop) => {
       formData.append(prop, album[prop]);
-      console.log(prop, album[prop]);
-
     });
 
     try {
       const response: AxiosResponse = await this.$axios.post(`/albums/${album.id}`, formData);
+      commit("editAlbum", response.data.album);
     } catch (error) {
       console.error(error);
     }
