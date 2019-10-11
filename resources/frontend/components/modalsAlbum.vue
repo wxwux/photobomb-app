@@ -51,6 +51,7 @@
         .modal__button-right
           button-round(
             text="Удалить"
+            v-if="options.mode === 'edit'"
             bgClass="red"
             icon="trash"
             :filled="true"
@@ -85,20 +86,50 @@ const alerts = namespace("alerts");
       return Validator.value(value).required("Описание не может быть пустым");
     },
     "newAlbum.cover"(value) {
-      return Validator.custom(() => {
-        if (Boolean(value) === false) {
-          return "У альбома должна быть обложка";
-        }
+      const validate = value =>
+        new Promise((resolve, reject) => {
+          const checkType = () => {
+            if (
+              ["image/jpeg", "image/png", "image/jpg"].indexOf(value.type) ===
+              -1
+            ) {
+              resolve("Файл должен быть изображением (jpg, png)");
+            }
+          };
 
-        if (
-          ["image/jpeg", "image/png", "image/jpg"].indexOf(value.type) === -1
-        ) {
-          return "Файл должен быть изображением (jpg, png)";
-        }
+          const checkSize = () => {
+            if (value.size > 1500000) {
+              resolve("Файл весит больше чем 1.5 Мб");
+            }
+          };
 
-        if (value.size > 1500000) {
-          return "Файл весит больше чем 1.5 Мб";
-        }
+          const fileExists = () => Boolean(value);
+
+          const checkFileInEditMode = () => {
+            if (fileExists()) {
+              checkType();
+              checkSize();
+            } else {
+              resolve(false);
+            }
+          };
+
+          const checkFileInCreateMode = () => {
+            if (fileExists() === false) {
+              resolve("У альбома должна быть обложка");
+            }
+            checkType();
+            checkSize();
+          };
+
+          if (this.options.mode === "edit") {
+            checkFileInEditMode();
+          } else {
+            checkFileInCreateMode();
+          }
+        });
+      return Validator.custom(async () => {
+        return await validate(value);
       });
     }
   },
