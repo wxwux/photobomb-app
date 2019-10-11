@@ -20,7 +20,7 @@
       )
     div(slot="buttons")
       .auth-page__remember
-        a(href="").x-blue-link Забыли пароль?
+      //-   a(href="").x-blue-link Забыли пароль?
       .auth-page__btns-container
         .auth-page__btns-wrap
           buttonRound(
@@ -29,7 +29,7 @@
             :filled="true"
           )
         .auth-page__btns-ps
-          span Нет аккаунта
+          span Нет аккаунта?
           a.x-blue-link(
             @click.prevent="$emit('switchForm', 'auth-form-register')"
           ) Зарегистрироваться  
