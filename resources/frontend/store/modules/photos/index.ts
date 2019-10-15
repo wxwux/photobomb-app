@@ -2,6 +2,7 @@ import { Module, MutationTree, ActionTree, GetterTree } from "vuex";
 import { RootState, Photo, LikesPayload, Comment, Pagination } from "../../types";
 import { PhotosState } from "./types";
 import { AxiosResponse } from "axios";
+import { generateStdError } from "../../../helpers/errorHandler";
 
 const namespaced: boolean = true;
 
@@ -77,7 +78,7 @@ const actions: ActionTree<PhotosState, RootState> = {
       const response: AxiosResponse = await this.$axios.get(`/photos/${albumId}`);
       commit("setUploadedPhotos", response.data);
     } catch (error) {
-      console.error(error);
+      generateStdError(error);
     }
   },
 
@@ -87,7 +88,7 @@ const actions: ActionTree<PhotosState, RootState> = {
       commit("setRecentPhotos", response.data.data);
       commit("addRecentPagination", response.data.links);
     } catch (error) {
-      console.error(error);
+      generateStdError(error);
     }
   },
 
@@ -97,7 +98,7 @@ const actions: ActionTree<PhotosState, RootState> = {
       commit("addRecentPhotos", response.data.data);
       commit("addRecentPagination", response.data.links);
     } catch (error) {
-      console.error(error);
+      generateStdError(error);
     }
   },
 
@@ -121,7 +122,7 @@ const actions: ActionTree<PhotosState, RootState> = {
       commit("updateLikes", payload);
 
     } catch (error) {
-      console.log(error);
+      generateStdError(error);
     }
   },
 
@@ -140,7 +141,7 @@ const actions: ActionTree<PhotosState, RootState> = {
       commit("updateLikes", payload);
 
     } catch (error) {
-      console.log(error);
+      generateStdError(error);
     }
   },
 
@@ -153,7 +154,7 @@ const actions: ActionTree<PhotosState, RootState> = {
 
       commit("addNewComment", response.data);
     } catch (error) {
-      console.log(error);
+      generateStdError(error);
     }
   },
 

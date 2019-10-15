@@ -2,6 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { ActionTree, Module, MutationTree, GetterTree } from "vuex";
 import { RootState, Photo } from "../../types";
 import { AlbumState, AlbumItem } from "./types";
+import { generateStdError } from "../../../helpers/errorHandler";
 
 const namespaced: boolean = true;
 
@@ -81,7 +82,7 @@ const actions: ActionTree<AlbumState, RootState> = {
       const response: AxiosResponse = await this.$axios.get(`/photos/${albumId}`);
       commit("setAlbumsPhotos", response.data);
     } catch (error) {
-      console.error(error);
+      generateStdError(error);
     }
   },
 
@@ -90,7 +91,7 @@ const actions: ActionTree<AlbumState, RootState> = {
       const response: AxiosResponse = await this.$axios.post(`/photos/${photo.id}`, photo);
       commit("replaceEditedPhoto", response.data);
     } catch (error) {
-      console.log(error);
+      generateStdError(error);
     }
   },
 
@@ -100,7 +101,7 @@ const actions: ActionTree<AlbumState, RootState> = {
 
       commit("removePhoto", response.data.photo.id);
     } catch (error) {
-      console.log(error);
+      generateStdError(error);
     }
   },
 
@@ -109,7 +110,7 @@ const actions: ActionTree<AlbumState, RootState> = {
       const response: AxiosResponse = await this.$axios.post("/albums", newAlbum);
       commit("addNewUserAlbum", response.data);
     } catch (error) {
-      throw new Error(error);
+      generateStdError(error);
     }
   },
 
@@ -123,7 +124,7 @@ const actions: ActionTree<AlbumState, RootState> = {
       const response: AxiosResponse = await this.$axios.post(`/albums/${album.id}`, formData);
       commit("editAlbum", response.data.album);
     } catch (error) {
-      console.error(error);
+      generateStdError(error);
     }
   },
 
@@ -132,7 +133,7 @@ const actions: ActionTree<AlbumState, RootState> = {
       const response: AxiosResponse = await this.$axios.delete(`/albums/${albumId}`);
       commit("removeAlbum", response.data.album.id);
     } catch (error) {
-      throw new Error(error);
+      generateStdError(error);
     }
   },
 

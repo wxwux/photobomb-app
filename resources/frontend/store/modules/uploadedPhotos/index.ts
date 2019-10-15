@@ -3,6 +3,7 @@ import { Module, MutationTree, ActionTree, GetterTree } from "vuex";
 import { RootState, PhotoItem, UploadedPhotos, Photo } from "../../types";
 import { PhotosState } from "./types";
 import { AxiosResponse } from "axios";
+import { generateStdError } from "../../../helpers/errorHandler";
 
 const namespaced: boolean = true;
 
@@ -60,7 +61,7 @@ const actions: ActionTree<PhotosState, RootState> = {
 
       commit("albums/setAlbumsPhotos", response.data, { root: true });
     } catch (error) {
-      console.log(error);
+      generateStdError(error);
     }
   },
 
