@@ -2,7 +2,7 @@ import { ActionTree, Module, MutationTree } from "vuex";
 import { RootState } from "../../types";
 import { NewUser, User, UserState, UserDetails, Socials } from "./types";
 import { AxiosResponse, AxiosError } from "axios";
-import requests from "../../../requests";
+import { generateStdError } from "../../../helpers/errorHandler";
 
 const namespaced: boolean = true;
 
@@ -32,7 +32,7 @@ const actions: ActionTree<UserState, RootState> = {
 
       return response;
     } catch (error) {
-      throw new Error(error.response.data.error);
+      generateStdError(error);
     }
   },
   async register({ commit }, newUser: NewUser): Promise<any> {
@@ -63,7 +63,7 @@ const actions: ActionTree<UserState, RootState> = {
       commit("setUserDetails", updatedUser);
 
     } catch (error) {
-      console.log(error);
+      generateStdError(error);
     }
   },
 
@@ -73,13 +73,10 @@ const actions: ActionTree<UserState, RootState> = {
       const userInfo: UserDetails = response.data as UserDetails;
 
       commit("setUserDetails", userInfo);
-
-      console.log(response);
     } catch (error) {
-      console.log(error);
+      generateStdError(error);
     }
   }
-
 };
 
 const user: Module<UserState, RootState> = {
