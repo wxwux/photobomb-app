@@ -23,8 +23,6 @@ requests.interceptors.response.use(
 
     originalRequest.baseURL = "";
 
-    console.log(originalRequest);
-
     return requests.post("/refreshToken").then((response: AxiosResponse) => {
       const newToken: string = response.data.token;
 
